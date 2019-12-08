@@ -31,6 +31,11 @@
             <artifactId>flatlaf</artifactId>
             <version>0.20</version>
         </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.2.2</version>
+        </dependency>
     </dependencies>
 
 </project>

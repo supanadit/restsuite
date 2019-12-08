@@ -1,6 +1,6 @@
 package com.supanadit.restsuite;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -9,13 +9,29 @@ import java.awt.*;
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-//            FlatDarculaLaf.install();
+            FlatLightLaf.install();
             JFrame frame = new JFrame("Rest Suite");
 
+            JLabel apiName = new JLabel("API Name");
+            JTextField apiUrl = new JTextField("http://www.google.com");
+            JButton sendButton = new JButton("Send");
+
+            JComboBox<String> apiType = new JComboBox<>();
+
+            apiType.addItem("Get");
+            apiType.addItem("Post");
+            apiType.addItem("Put");
+            apiType.addItem("Delete");
+
             JPanel panel = new JPanel(new MigLayout());
-            panel.add(new Label("API Name"), "wrap");
-            panel.add(new JTextField("http://www.google.com"), "growx,pushx");
-            panel.add(new JButton("Send"), "wrap");
+            panel.add(apiName, "wrap");
+            panel.add(apiUrl, "growx, pushx");
+            panel.add(apiType);
+            panel.add(sendButton, "wrap");
+
+            sendButton.addActionListener((e) -> {
+                System.out.println(apiUrl.getText());
+            });
 
             JTabbedPane tabRequest = new JTabbedPane();
 
@@ -66,9 +82,9 @@ public class Main {
 
             JTextArea bodyRequest = new JTextArea();
 
-            panelBody.add(bodyRequest, "grow, push, span 2");
+            panelBody.add(bodyRequest, "grow, push, span 3");
 
-            panel.add(tabRequest, "growx, pushx, span 2, wrap, hmax 250");
+            panel.add(tabRequest, "growx, pushx, span 3, wrap, hmax 250");
 
             JTabbedPane tabResponse = new JTabbedPane();
 
@@ -80,11 +96,35 @@ public class Main {
 
             panelBodyResponse.add(responseBody, "grow, push");
 
-            panel.add(tabResponse, "growx, growy, pushy, pushx, span 2");
+            panel.add(tabResponse, "growx, growy, pushy, pushx, span 3");
+
+            JPanel panelApi = new JPanel(new MigLayout("w 250, wrap"));
+
+            JPanel panelApiSpaceTop = new JPanel(new MigLayout("h 1"));
+            JPanel panelApiSpaceLeft = new JPanel(new MigLayout("w 1"));
+            JPanel panelApiSpaceRight = new JPanel(new MigLayout("w 1"));
+
+            panelApi.add(panelApiSpaceTop, "north");
+            panelApi.add(panelApiSpaceLeft, "west");
+            panelApi.add(panelApiSpaceRight, "east");
+
+            JLabel apiCollection = new JLabel("API Collection");
+            panelApi.add(apiCollection);
+
+            JTextField searchAPI = new JTextField();
+            panelApi.add(searchAPI, "growx, pushx");
+
+            panel.add(panelApi, "east");
+
+            JPanel spaceTop = new JPanel(new MigLayout("h 1"));
+            JPanel spaceLeft = new JPanel(new MigLayout("w 1"));
+
+            panel.add(spaceTop, "north");
+            panel.add(spaceLeft, "west");
 
             frame.add(panel, BorderLayout.CENTER);
             frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-            frame.setSize(new Dimension(600, 600));
+            frame.setSize(new Dimension(1024, 600));
             frame.setVisible(true);
         });
     }
