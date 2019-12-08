@@ -1,5 +1,7 @@
 package com.supanadit.restsuite;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import com.supanadit.restsuite.component.ParamsMenuListener;
 import net.miginfocom.swing.MigLayout;
 import okhttp3.OkHttpClient;
@@ -14,7 +16,7 @@ import java.util.Objects;
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-//            FlatLightLaf.install();
+            FlatDarculaLaf.install();
             JFrame frame = new JFrame("Rest Suite");
 
             JLabel apiName = new JLabel("API Name");

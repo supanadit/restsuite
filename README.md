@@ -1,5 +1,13 @@
 # Rest Suite
-Open Source Rest API Testing
+Open Source Rest API Testing, an alternative of Postman, Insomnia, Soap UI, etc
+
+### Light Mode
+
+![Light Mode](http://supanadit.com/wp-content/uploads/2019/12/1-1.png)
+
+### Dark Mode
+
+![Dark Mode](http://supanadit.com/wp-content/uploads/2019/12/2.png)
 
 ## Requirements
 - Java 11
