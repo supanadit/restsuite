@@ -1,15 +1,20 @@
 package com.supanadit.restsuite;
 
-import com.formdev.flatlaf.FlatLightLaf;
+import com.supanadit.restsuite.component.ParamsMenuListener;
 import net.miginfocom.swing.MigLayout;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            FlatLightLaf.install();
+//            FlatLightLaf.install();
             JFrame frame = new JFrame("Rest Suite");
 
             JLabel apiName = new JLabel("API Name");
@@ -29,9 +34,8 @@ public class Main {
             panel.add(apiType);
             panel.add(sendButton, "wrap");
 
-            sendButton.addActionListener((e) -> {
-                System.out.println(apiUrl.getText());
-            });
+            OkHttpClient client = new OkHttpClient();
+
 
             JTabbedPane tabRequest = new JTabbedPane();
 
@@ -53,9 +57,13 @@ public class Main {
 
             panelParams.add(scrollPaneTableParams, "growx,pushx");
 
+            scrollPaneTableParams.addMouseListener(new ParamsMenuListener());
+
             // Table Headers
 
-            String[][] dataHeaders = {};
+            String[][] dataHeaders = {
+                    {"accept", "application/text"}
+            };
             String[] columnHeaders = {"Key", "Value"};
             JTable tableHeaders = new JTable(dataHeaders, columnHeaders);
 
@@ -82,7 +90,9 @@ public class Main {
 
             JTextArea bodyRequest = new JTextArea();
 
-            panelBody.add(bodyRequest, "grow, push, span 3");
+            JScrollPane scrollRequestBody = new JScrollPane(bodyRequest);
+
+            panelBody.add(scrollRequestBody, "grow, push, span 3");
 
             panel.add(tabRequest, "growx, pushx, span 3, wrap, hmax 250");
 
@@ -94,33 +104,52 @@ public class Main {
 
             JTextArea responseBody = new JTextArea();
 
-            panelBodyResponse.add(responseBody, "grow, push");
+            JScrollPane scrollResponseBody = new JScrollPane(responseBody);
+
+//            TextLineNumber textLineNumberResponseBody = new TextLineNumber(responseBody);
+
+//            scrollResponseBody.setRowHeaderView(textLineNumberResponseBody);
+
+            panelBodyResponse.add(scrollResponseBody, "grow, push");
 
             panel.add(tabResponse, "growx, growy, pushy, pushx, span 3");
 
-            JPanel panelApi = new JPanel(new MigLayout("w 250, wrap"));
+//            JPanel panelApi = new JPanel(new MigLayout("w 250, wrap"));
+//
+//            JPanel panelApiSpaceTop = new JPanel(new MigLayout("h 1"));
+//            JPanel panelApiSpaceLeft = new JPanel(new MigLayout("w 1"));
+//            JPanel panelApiSpaceRight = new JPanel(new MigLayout("w 1"));
+//
+//            panelApi.add(panelApiSpaceTop, "north");
+//            panelApi.add(panelApiSpaceLeft, "west");
+//            panelApi.add(panelApiSpaceRight, "east");
+//
+//            JLabel apiCollection = new JLabel("API Collection");
+//            panelApi.add(apiCollection);
+//
+//            JTextField searchAPI = new JTextField();
+//            panelApi.add(searchAPI, "growx, pushx");
+//
+//            panel.add(panelApi, "east");
+//
+//            JPanel spaceTop = new JPanel(new MigLayout("h 1"));
+//            JPanel spaceLeft = new JPanel(new MigLayout("w 1"));
+//
+//            panel.add(spaceTop, "north");
+//            panel.add(spaceLeft, "west");
 
-            JPanel panelApiSpaceTop = new JPanel(new MigLayout("h 1"));
-            JPanel panelApiSpaceLeft = new JPanel(new MigLayout("w 1"));
-            JPanel panelApiSpaceRight = new JPanel(new MigLayout("w 1"));
+            sendButton.addActionListener((e) -> {
+                System.out.println(apiUrl.getText());
+                Request request = new Request.Builder()
+                        .url(apiUrl.getText())
+                        .build();
 
-            panelApi.add(panelApiSpaceTop, "north");
-            panelApi.add(panelApiSpaceLeft, "west");
-            panelApi.add(panelApiSpaceRight, "east");
-
-            JLabel apiCollection = new JLabel("API Collection");
-            panelApi.add(apiCollection);
-
-            JTextField searchAPI = new JTextField();
-            panelApi.add(searchAPI, "growx, pushx");
-
-            panel.add(panelApi, "east");
-
-            JPanel spaceTop = new JPanel(new MigLayout("h 1"));
-            JPanel spaceLeft = new JPanel(new MigLayout("w 1"));
-
-            panel.add(spaceTop, "north");
-            panel.add(spaceLeft, "west");
+                try (Response response = client.newCall(request).execute()) {
+                    responseBody.setText(Objects.requireNonNull(response.body()).string());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
 
             frame.add(panel, BorderLayout.CENTER);
             frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
