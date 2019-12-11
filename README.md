@@ -1,5 +1,5 @@
 # Rest Suite
-Open Source Rest API Testing, an alternative of Postman, Insomnia, Soap UI, etc
+Open Source Rest API Testing, an alternative software such as Postman, Insomnia, Soap UI, etc
 
 ### Light Mode
 
