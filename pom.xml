@@ -8,6 +8,8 @@
     <artifactId>restsuite</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <packaging>jar</packaging>
+
     <build>
         <plugins>
             <plugin>
@@ -16,6 +18,20 @@
                 <version>3.8.0</version>
                 <configuration>
                     <release>11</release>
+                </configuration>
+            </plugin>
+            <!-- Make this jar executable -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.supanadit.restsuite.Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
                 </configuration>
             </plugin>
         </plugins>

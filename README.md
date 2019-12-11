@@ -13,6 +13,12 @@ Open Source Rest API Testing, an alternative of Postman, Insomnia, Soap UI, etc
 - Java 11
 - Maven
 
+## How to Build Jar
+
+```shell script
+mvn clean compile assembly:single
+```
+
 ## License
 Copyright 2019 Supan Adit Pratama
 
