@@ -1,16 +1,10 @@
 package com.supanadit.restsuite;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import com.supanadit.restsuite.component.*;
-import net.miginfocom.swing.MigLayout;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import com.supanadit.restsuite.component.RequestApiPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) {

@@ -4,6 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class ParamsMenuListener extends MouseAdapter {
+
     public void mousePressed(MouseEvent e) {
         if (e.isPopupTrigger())
             doPop(e);

@@ -8,6 +8,6 @@ public class HeadersPanel extends JPanel {
     public HeadersPanel() {
         super(new MigLayout());
 
-        this.add(new RequestHeaderTable(), "growx,pushx");
+        this.add(new RequestTable(), "growx,pushx");
     }
 }

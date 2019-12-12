@@ -1,10 +1,10 @@
 package com.supanadit.restsuite.model;
 
-public class RequestHeader {
+public class Request {
     protected String key;
     protected String value;
 
-    public RequestHeader(String key, String value) {
+    public Request(String key, String value) {
         this.key = key;
         this.value = value;
     }

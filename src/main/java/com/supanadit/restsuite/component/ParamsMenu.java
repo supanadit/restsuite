@@ -3,10 +3,10 @@ package com.supanadit.restsuite.component;
 import javax.swing.*;
 
 class ParamsMenu extends JPopupMenu {
-    JMenuItem anItem;
+    JMenuItem addData;
 
     public ParamsMenu() {
-        anItem = new JMenuItem("Add New Params");
-        add(anItem);
+        addData = new JMenuItem("Add");
+        add(addData);
     }
 }
