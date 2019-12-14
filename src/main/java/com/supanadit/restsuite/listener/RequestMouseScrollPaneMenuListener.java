@@ -1,16 +1,15 @@
 package com.supanadit.restsuite.listener;
 
-import com.supanadit.restsuite.model.Request;
-import io.reactivex.subjects.BehaviorSubject;
+import com.supanadit.restsuite.component.RequestTable;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class RequestMouseMenuListener extends MouseAdapter {
-    protected BehaviorSubject<Request> subject;
+public class RequestMouseScrollPaneMenuListener extends MouseAdapter {
+    protected RequestTable table;
 
-    public RequestMouseMenuListener(BehaviorSubject<Request> subject) {
-        this.subject = subject;
+    public RequestMouseScrollPaneMenuListener(RequestTable table) {
+        this.table = table;
     }
 
     public void mousePressed(MouseEvent e) {
@@ -24,7 +23,7 @@ public class RequestMouseMenuListener extends MouseAdapter {
     }
 
     private void doPop(MouseEvent e) {
-        RequestMouseMenu menu = new RequestMouseMenu(this.subject);
+        RequestMouseScrollPaneMenu menu = new RequestMouseScrollPaneMenu(this.table);
         menu.show(e.getComponent(), e.getX(), e.getY());
     }
 }

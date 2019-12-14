@@ -1,9 +1,8 @@
 package com.supanadit.restsuite.listener;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
 
 /*
  *  The WrappedAction class is a convenience class that allows you to replace
@@ -104,9 +103,6 @@ abstract class WrappedAction implements Action {
         component.getActionMap().put(actionKey, originalAction);
     }
 
-    //
-//  Delegate the Action interface methods to the original Action
-//
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         originalAction.addPropertyChangeListener(listener);
     }
@@ -131,9 +127,6 @@ abstract class WrappedAction implements Action {
         originalAction.setEnabled(newValue);
     }
 
-    //
-//  Implement some AbstractAction methods
-//
     public Object[] getKeys() {
         if (originalAction instanceof AbstractAction) {
             AbstractAction abstractAction = (AbstractAction) originalAction;

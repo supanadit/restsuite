@@ -1,7 +1,7 @@
 package com.supanadit.restsuite;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import com.supanadit.restsuite.component.RequestApiPanel;
+import com.supanadit.restsuite.component.ApiPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ public class Main {
             FlatLightLaf.install();
             JFrame frame = new JFrame("Rest Suite");
 
-            frame.add(new RequestApiPanel(), BorderLayout.CENTER);
+            frame.add(new ApiPanel(), BorderLayout.CENTER);
             frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
             frame.setSize(dimension);
             frame.setVisible(true);

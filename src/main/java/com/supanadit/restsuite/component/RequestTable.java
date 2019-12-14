@@ -1,11 +1,10 @@
 package com.supanadit.restsuite.component;
 
 import com.supanadit.restsuite.listener.EditableCellFocusAction;
-import com.supanadit.restsuite.listener.RequestKeyboardRowListener;
-import com.supanadit.restsuite.listener.RequestMouseMenuListener;
-import com.supanadit.restsuite.listener.RequestMouseRowMenuListener;
-import com.supanadit.restsuite.model.Request;
-import io.reactivex.subjects.BehaviorSubject;
+import com.supanadit.restsuite.listener.RequestKeyboardTableRowListener;
+import com.supanadit.restsuite.listener.RequestMouseScrollPaneMenuListener;
+import com.supanadit.restsuite.listener.RequestMouseTableRowMenuListener;
+import io.reactivex.subjects.PublishSubject;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,8 +12,7 @@ import javax.swing.table.DefaultTableModel;
 public class RequestTable extends JScrollPane {
     protected DefaultTableModel defaultTableModel;
     protected JTable requestTable;
-
-    protected BehaviorSubject<Request> subject = BehaviorSubject.create();
+    protected PublishSubject<JTable> subject;
 
     public RequestTable() {
         this.defaultTableModel = new DefaultTableModel();
@@ -23,15 +21,6 @@ public class RequestTable extends JScrollPane {
         this.defaultTableModel.addColumn("Value");
 
         this.requestTable = new JTable(this.defaultTableModel);
-
-        subject.subscribe((e) -> {
-            DefaultTableModel model = (DefaultTableModel) this.requestTable.getModel();
-            model.addRow(new Object[]{e.getKey(), e.getValue()});
-            if (model.getRowCount() != 0) {
-                this.requestTable.editCellAt(model.getRowCount() - 1, 0);
-                this.requestTable.requestFocus();
-            }
-        });
 
         this.setViewportView(this.requestTable);
 
@@ -42,9 +31,43 @@ public class RequestTable extends JScrollPane {
         new EditableCellFocusAction(this.requestTable, KeyStroke.getKeyStroke("UP"));
         new EditableCellFocusAction(this.requestTable, KeyStroke.getKeyStroke("DOWN"));
 
-        this.requestTable.addMouseListener(new RequestMouseRowMenuListener(this.requestTable));
-        this.requestTable.addKeyListener(new RequestKeyboardRowListener(this.requestTable, this.subject));
+        this.requestTable.addMouseListener(new RequestMouseTableRowMenuListener(this));
+        this.requestTable.addKeyListener(new RequestKeyboardTableRowListener(this));
 
-        this.addMouseListener(new RequestMouseMenuListener(subject));
+        this.addMouseListener(new RequestMouseScrollPaneMenuListener(this));
+    }
+
+    public void setSubject(PublishSubject<JTable> subject) {
+        this.subject = subject;
+    }
+
+    public void publishTable(JTable table) {
+        if (this.subject != null) {
+            this.subject.onNext(table);
+        }
+    }
+
+    public DefaultTableModel getModel() {
+        return (DefaultTableModel) this.requestTable.getModel();
+    }
+
+    public void deleteSelectedRow() {
+        if (!(this.requestTable.getSelectedRow() < 0)) {
+            this.getModel().removeRow(this.requestTable.getSelectedRow());
+            if (this.getModel().getRowCount() != 0) {
+                this.requestTable.requestFocus();
+                this.requestTable.changeSelection(this.getModel().getRowCount() - 1, 0, true, false);
+            }
+        }
+        this.publishTable(this.requestTable);
+    }
+
+    public void addNewEmptyRow() {
+        this.getModel().addRow(new Object[]{"", ""});
+        if (this.getModel().getRowCount() != 0) {
+            this.requestTable.editCellAt(this.getModel().getRowCount() - 1, 0);
+            this.requestTable.requestFocus();
+        }
+        this.publishTable(this.requestTable);
     }
 }

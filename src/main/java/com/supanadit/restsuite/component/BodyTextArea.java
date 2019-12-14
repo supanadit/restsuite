@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class BodyTextArea extends RSyntaxTextArea {
     public BodyTextArea() {
-        this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JSON);
+        this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HTML);
         this.setCodeFoldingEnabled(true);
         this.setCurrentLineHighlightColor(Color.white);
     }

@@ -1,13 +1,14 @@
 package com.supanadit.restsuite.listener;
 
-import javax.swing.*;
+import com.supanadit.restsuite.component.RequestTable;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class RequestMouseRowMenuListener extends MouseAdapter {
-    protected JTable table;
+public class RequestMouseTableRowMenuListener extends MouseAdapter {
+    protected RequestTable table;
 
-    public RequestMouseRowMenuListener(JTable table) {
+    public RequestMouseTableRowMenuListener(RequestTable table) {
         this.table = table;
     }
 
@@ -22,7 +23,7 @@ public class RequestMouseRowMenuListener extends MouseAdapter {
     }
 
     private void doPop(MouseEvent e) {
-        RequestMouseRowMenu menu = new RequestMouseRowMenu(this.table);
+        RequestMouseTableRowMenu menu = new RequestMouseTableRowMenu(this.table);
         menu.show(e.getComponent(), e.getX(), e.getY());
     }
 }
