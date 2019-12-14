@@ -1,6 +1,6 @@
 package com.supanadit.restsuite.component;
 
-import com.supanadit.restsuite.helper.RequestBodyTypeRenderer;
+import com.supanadit.restsuite.renderer.RequestBodyTypeRenderer;
 import com.supanadit.restsuite.model.RequestBodyType;
 
 import javax.swing.*;

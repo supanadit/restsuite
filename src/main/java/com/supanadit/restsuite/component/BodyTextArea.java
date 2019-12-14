@@ -2,10 +2,10 @@ package com.supanadit.restsuite.component;
 
 import javax.swing.*;
 
-public class BodyRequestTextArea extends JScrollPane {
+public class BodyTextArea extends JScrollPane {
     protected JTextArea bodyRequest;
 
-    public BodyRequestTextArea() {
+    public BodyTextArea() {
         this.bodyRequest = new JTextArea();
         this.setViewportView(this.bodyRequest);
     }

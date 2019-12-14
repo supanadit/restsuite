@@ -1,27 +1,48 @@
 package com.supanadit.restsuite.component;
 
+import com.supanadit.restsuite.model.RequestBodyType;
+import io.reactivex.subjects.BehaviorSubject;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 
 public class BodyPanel extends JPanel {
-    protected BodyRequestTextArea bodyRequestTextArea;
+    protected BodyTextArea bodyTextArea;
     protected boolean withOptions;
+
+    final protected BehaviorSubject<Boolean> subject = BehaviorSubject.create();
 
     public BodyPanel(boolean withOptions) {
         super(new MigLayout());
 
         this.withOptions = withOptions;
-        this.bodyRequestTextArea = new BodyRequestTextArea();
+        this.bodyTextArea = new BodyTextArea();
 
         if (this.withOptions) {
-            this.add(RequestBodyTypeComboBox.getComponent());
-            this.add(RequestBodyRawTypeComboBox.getComponent(), "wrap");
+            RequestBodyTypeComboBox requestBodyTypeComboBox = RequestBodyTypeComboBox.getComponent();
+            RequestBodyRawTypeComboBox requestBodyRawTypeComboBox = RequestBodyRawTypeComboBox.getComponent();
+
+            requestBodyTypeComboBox.addActionListener((e) -> {
+                RequestBodyType requestBodyType = (RequestBodyType) requestBodyTypeComboBox.getSelectedItem();
+                subject.onNext(requestBodyType.getName().equals(RequestBodyType.RAW().getName()));
+            });
+            subject.subscribe((e) -> {
+                if (e) {
+                    requestBodyRawTypeComboBox.setEnabled(true);
+                } else {
+                    requestBodyRawTypeComboBox.setEnabled(false);
+                    requestBodyRawTypeComboBox.setSelectedIndex(0);
+                }
+            });
+            this.add(requestBodyTypeComboBox);
+            this.add(requestBodyRawTypeComboBox, "wrap");
         }
-        this.add(this.bodyRequestTextArea, "grow, push, span 3");
+        this.add(this.bodyTextArea, "grow, push, span 3");
     }
 
     public void setText(String text) {
-        this.bodyRequestTextArea.bodyRequest.setText(text);
+        this.bodyTextArea.bodyRequest.setText(text);
     }
+
+
 }

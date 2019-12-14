@@ -1,4 +1,4 @@
-package com.supanadit.restsuite.helper;
+package com.supanadit.restsuite.renderer;
 
 import com.supanadit.restsuite.model.RequestType;
 

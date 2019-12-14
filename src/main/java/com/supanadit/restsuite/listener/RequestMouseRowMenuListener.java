@@ -1,9 +1,15 @@
-package com.supanadit.restsuite.component;
+package com.supanadit.restsuite.listener;
 
+import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ParamsMenuListener extends MouseAdapter {
+public class RequestMouseRowMenuListener extends MouseAdapter {
+    protected JTable table;
+
+    public RequestMouseRowMenuListener(JTable table) {
+        this.table = table;
+    }
 
     public void mousePressed(MouseEvent e) {
         if (e.isPopupTrigger())
@@ -16,7 +22,7 @@ public class ParamsMenuListener extends MouseAdapter {
     }
 
     private void doPop(MouseEvent e) {
-        ParamsMenu menu = new ParamsMenu();
+        RequestMouseRowMenu menu = new RequestMouseRowMenu(this.table);
         menu.show(e.getComponent(), e.getX(), e.getY());
     }
 }

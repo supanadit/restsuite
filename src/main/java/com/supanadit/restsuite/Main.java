@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Main {
+    public static Dimension dimension = new Dimension(1024, 600);
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             FlatLightLaf.install();
@@ -14,7 +16,7 @@ public class Main {
 
             frame.add(new RequestApiPanel(), BorderLayout.CENTER);
             frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-            frame.setSize(new Dimension(1024, 600));
+            frame.setSize(dimension);
             frame.setVisible(true);
         });
     }
