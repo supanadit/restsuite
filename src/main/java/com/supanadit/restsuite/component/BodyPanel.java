@@ -3,6 +3,9 @@ package com.supanadit.restsuite.component;
 import com.supanadit.restsuite.model.RequestBodyType;
 import io.reactivex.subjects.BehaviorSubject;
 import net.miginfocom.swing.MigLayout;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
 
@@ -37,11 +40,12 @@ public class BodyPanel extends JPanel {
             this.add(requestBodyTypeComboBox);
             this.add(requestBodyRawTypeComboBox, "wrap");
         }
-        this.add(this.bodyTextArea, "grow, push, span 3");
+        RTextScrollPane spBody = new RTextScrollPane(this.bodyTextArea);
+        this.add(spBody, "grow, push, span 3");
     }
 
     public void setText(String text) {
-        this.bodyTextArea.bodyRequest.setText(text);
+        this.bodyTextArea.setText(text);
     }
 
 

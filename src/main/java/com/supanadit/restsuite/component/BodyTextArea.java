@@ -1,12 +1,14 @@
 package com.supanadit.restsuite.component;
 
-import javax.swing.*;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
-public class BodyTextArea extends JScrollPane {
-    protected JTextArea bodyRequest;
+import java.awt.*;
 
+public class BodyTextArea extends RSyntaxTextArea {
     public BodyTextArea() {
-        this.bodyRequest = new JTextArea();
-        this.setViewportView(this.bodyRequest);
+        this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JSON);
+        this.setCodeFoldingEnabled(true);
+        this.setCurrentLineHighlightColor(Color.white);
     }
 }
