@@ -12,14 +12,6 @@ Open Source Rest API Testing, an alternative software such as Postman, Insomnia,
 mvn clean compile assembly:single
 ```
 
-### Light Mode
-
-![Light Mode](http://supanadit.com/wp-content/uploads/2019/12/1-1.png)
-
-### Dark Mode
-
-![Dark Mode](http://supanadit.com/wp-content/uploads/2019/12/2.png)
-
 ## License
 Copyright 2019 Supan Adit Pratama
 
