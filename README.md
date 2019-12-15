@@ -12,6 +12,9 @@ Open Source Rest API Testing, an alternative software such as Postman, Insomnia,
 mvn clean compile assembly:single
 ```
 
+## Progress
+- 40%
+
 ## License
 Copyright 2019 Supan Adit Pratama
 
