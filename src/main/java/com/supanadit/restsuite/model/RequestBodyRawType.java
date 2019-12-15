@@ -5,10 +5,12 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 public class RequestBodyRawType {
     protected String name;
     protected String syntax;
+    protected String header;
 
-    public RequestBodyRawType(String name, String syntax) {
+    public RequestBodyRawType(String name, String syntax, String header) {
         this.name = name;
         this.syntax = syntax;
+        this.header = header;
     }
 
     public String getName() {
@@ -28,22 +30,22 @@ public class RequestBodyRawType {
     }
 
     public static RequestBodyRawType TEXT() {
-        return new RequestBodyRawType("TEXT", SyntaxConstants.SYNTAX_STYLE_NONE);
+        return new RequestBodyRawType("TEXT", SyntaxConstants.SYNTAX_STYLE_NONE, "text/plain");
     }
 
     public static RequestBodyRawType JSON() {
-        return new RequestBodyRawType("JSON", SyntaxConstants.SYNTAX_STYLE_JSON);
+        return new RequestBodyRawType("JSON", SyntaxConstants.SYNTAX_STYLE_JSON, "application/json");
     }
 
     public static RequestBodyRawType HTML() {
-        return new RequestBodyRawType("HTML", SyntaxConstants.SYNTAX_STYLE_HTML);
+        return new RequestBodyRawType("HTML", SyntaxConstants.SYNTAX_STYLE_HTML, "text/html");
     }
 
     public static RequestBodyRawType XML() {
-        return new RequestBodyRawType("XML", SyntaxConstants.SYNTAX_STYLE_XML);
+        return new RequestBodyRawType("XML", SyntaxConstants.SYNTAX_STYLE_XML, "application/xml");
     }
 
     public static RequestBodyRawType JAVASCRIPT() {
-        return new RequestBodyRawType("JAVASCRIPT", SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT);
+        return new RequestBodyRawType("JAVASCRIPT", SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT, "application/javascript");
     }
 }

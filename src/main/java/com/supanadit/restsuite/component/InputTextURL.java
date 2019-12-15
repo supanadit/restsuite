@@ -1,14 +1,19 @@
 package com.supanadit.restsuite.component;
 
+import com.supanadit.restsuite.listener.InputTextUrlListener;
+import io.reactivex.subjects.PublishSubject;
+
 import javax.swing.*;
 import javax.swing.text.Document;
 import java.awt.*;
 
 public class InputTextURL extends JTextField {
+    public PublishSubject<String> urlSubject = PublishSubject.create();
 
     public static InputTextURL getComponent() {
         final InputTextURL tf = new InputTextURL();
         tf.setPlaceholder("Type URL");
+        tf.getDocument().addDocumentListener(new InputTextUrlListener(tf, tf.urlSubject));
         return tf;
     }
 

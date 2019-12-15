@@ -18,7 +18,7 @@ public class ApiPanel extends JPanel {
         this.apiName = new JLabel("API Name");
         this.apiUrl = InputTextURL.getComponent();
         this.requestTypeComboBox = RequestTypeComboBox.getComponent();
-        this.requestTabPanel = new RequestTabPanel();
+        this.requestTabPanel = new RequestTabPanel(this.apiUrl.urlSubject);
         this.responseTabPanel = new ResponseTabPanel();
 
         this.sendButton = new RequestApiButton(this.apiUrl, this.requestTypeComboBox);

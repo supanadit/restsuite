@@ -11,10 +11,10 @@ public class RequestTabPanel extends JTabbedPane {
 
     protected static PublishSubject<JTable> headerTable = PublishSubject.create();
 
-    public RequestTabPanel() {
-        this.bodyPanel = new BodyPanel(true);
+    public RequestTabPanel(PublishSubject<String> urlSubject) {
+        this.paramsPanel = new ParamsPanel(urlSubject);
         this.headersPanel = new HeadersPanel();
-        this.paramsPanel = new ParamsPanel();
+        this.bodyPanel = new BodyPanel(true);
 
         this.headersPanel.setSubject(headerTable);
 
