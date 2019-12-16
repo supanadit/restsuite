@@ -1,8 +1,10 @@
 package com.supanadit.restsuite.component;
 
+import com.supanadit.restsuite.listener.BodyTextListener;
 import com.supanadit.restsuite.model.RequestBodyRawType;
 import com.supanadit.restsuite.model.RequestBodyType;
 import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
 import net.miginfocom.swing.MigLayout;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -21,11 +23,15 @@ public class BodyPanel extends JPanel {
 
     final protected BehaviorSubject<Boolean> subject = BehaviorSubject.create();
 
-    public BodyPanel(boolean withOptions) {
+    public BodyPanel(boolean withOptions, PublishSubject<String> bodySubject) {
         super(new MigLayout());
 
         this.withOptions = withOptions;
         this.bodyTextArea = new BodyTextArea();
+
+        if (bodySubject != null) {
+            this.bodyTextArea.getDocument().addDocumentListener(new BodyTextListener(this.bodyTextArea, bodySubject));
+        }
 
         spBody = new RTextScrollPane(this.bodyTextArea);
         requestTable = new RequestTable();
