@@ -29,23 +29,27 @@ public class RequestBodyRawType {
         this.syntax = syntax;
     }
 
+    public String getHeader() {
+        return header;
+    }
+
     public static RequestBodyRawType TEXT() {
-        return new RequestBodyRawType("TEXT", SyntaxConstants.SYNTAX_STYLE_NONE, "text/plain");
+        return new RequestBodyRawType("TEXT", SyntaxConstants.SYNTAX_STYLE_NONE, "text/plain;charset=utf-8");
     }
 
     public static RequestBodyRawType JSON() {
-        return new RequestBodyRawType("JSON", SyntaxConstants.SYNTAX_STYLE_JSON, "application/json");
+        return new RequestBodyRawType("JSON", SyntaxConstants.SYNTAX_STYLE_JSON, "application/json;charset=utf-8");
     }
 
     public static RequestBodyRawType HTML() {
-        return new RequestBodyRawType("HTML", SyntaxConstants.SYNTAX_STYLE_HTML, "text/html");
+        return new RequestBodyRawType("HTML", SyntaxConstants.SYNTAX_STYLE_HTML, "text/html;charset=utf-8");
     }
 
     public static RequestBodyRawType XML() {
-        return new RequestBodyRawType("XML", SyntaxConstants.SYNTAX_STYLE_XML, "application/xml");
+        return new RequestBodyRawType("XML", SyntaxConstants.SYNTAX_STYLE_XML, "application/xml;charset=utf-8");
     }
 
     public static RequestBodyRawType JAVASCRIPT() {
-        return new RequestBodyRawType("JAVASCRIPT", SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT, "application/javascript");
+        return new RequestBodyRawType("JAVASCRIPT", SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT, "application/javascript;charset=utf-8");
     }
 }

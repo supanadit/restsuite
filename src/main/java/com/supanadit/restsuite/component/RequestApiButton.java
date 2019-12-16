@@ -1,5 +1,7 @@
 package com.supanadit.restsuite.component;
 
+import com.supanadit.restsuite.model.RequestBodyRawType;
+import com.supanadit.restsuite.model.RequestBodyType;
 import com.supanadit.restsuite.model.RequestType;
 import okhttp3.*;
 import okio.BufferedSink;
@@ -19,6 +21,8 @@ public class RequestApiButton extends JButton {
     protected RequestTypeComboBox requestTypeComboBox;
     protected JTable headerTable;
     protected String body = "";
+    protected RequestBodyType requestType = RequestBodyType.RAW();
+    protected RequestBodyRawType requestBodyRawType = RequestBodyRawType.JSON();
 
     public RequestApiButton(InputTextURL inputTextURL, RequestTypeComboBox requestTypeComboBox) {
         this.setText("Send");
@@ -34,6 +38,14 @@ public class RequestApiButton extends JButton {
 
         RequestTabPanel.bodyText.throttleWithTimeout(300, TimeUnit.MILLISECONDS).subscribe((e) -> {
             this.body = e;
+        });
+
+        RequestTabPanel.requestBodyTypeSubject.subscribe((e) -> {
+            this.requestType = e;
+        });
+
+        RequestTabPanel.requestBodyRawTypeSubject.subscribe((e) -> {
+            this.requestBodyRawType = e;
         });
 
         this.addActionListener((e) -> {
@@ -55,7 +67,7 @@ public class RequestApiButton extends JButton {
                 requestBuilder.get();
             } else if (requestType.getName().equals(RequestType.POST().getName())) {
                 // POST
-                MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                MediaType JSON = MediaType.parse(this.requestBodyRawType.getHeader());
                 RequestBody requestBody = RequestBody.create(this.body, JSON);
                 requestBuilder.post(requestBody);
             }

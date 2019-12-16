@@ -22,12 +22,16 @@ public class BodyPanel extends JPanel {
     protected RequestBodyRawTypeComboBox requestBodyRawTypeComboBox;
 
     final protected BehaviorSubject<Boolean> subject = BehaviorSubject.create();
+    protected PublishSubject<RequestBodyRawType> requestBodyRawTypeSubject;
+    protected PublishSubject<RequestBodyType> requestBodyTypeSubject;
 
-    public BodyPanel(boolean withOptions, PublishSubject<String> bodySubject) {
+    public BodyPanel(boolean withOptions, PublishSubject<String> bodySubject, PublishSubject<RequestBodyRawType> requestBodyRawTypeSubject, PublishSubject<RequestBodyType> requestBodyTypeSubject) {
         super(new MigLayout());
 
         this.withOptions = withOptions;
         this.bodyTextArea = new BodyTextArea();
+        this.requestBodyRawTypeSubject = requestBodyRawTypeSubject;
+        this.requestBodyTypeSubject = requestBodyTypeSubject;
 
         if (bodySubject != null) {
             this.bodyTextArea.getDocument().addDocumentListener(new BodyTextListener(this.bodyTextArea, bodySubject));
@@ -47,6 +51,9 @@ public class BodyPanel extends JPanel {
 
             requestBodyTypeComboBox.addActionListener((e) -> {
                 RequestBodyType requestBodyType = (RequestBodyType) requestBodyTypeComboBox.getSelectedItem();
+                if (requestBodyType != null) {
+                    this.requestBodyTypeSubject.onNext(requestBodyType);
+                }
                 subject.onNext(requestBodyType.getName().equals(RequestBodyType.RAW().getName()));
             });
 
@@ -71,6 +78,9 @@ public class BodyPanel extends JPanel {
 
             requestBodyRawTypeComboBox.addActionListener((e) -> {
                 RequestBodyRawType requestBodyRawType = (RequestBodyRawType) requestBodyRawTypeComboBox.getSelectedItem();
+                if (requestBodyRawTypeSubject != null) {
+                    this.requestBodyRawTypeSubject.onNext(requestBodyRawType);
+                }
                 this.bodyTextArea.setSyntaxEditingStyle(requestBodyRawType.getSyntax());
             });
 
