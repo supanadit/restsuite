@@ -70,6 +70,20 @@ public class RequestApiButton extends JButton {
                 MediaType JSON = MediaType.parse(this.requestBodyRawType.getHeader());
                 RequestBody requestBody = RequestBody.create(this.body, JSON);
                 requestBuilder.post(requestBody);
+            } else if (requestType.getName().equals(RequestType.PUT().getName())) {
+                // PUT
+                MediaType JSON = MediaType.parse(this.requestBodyRawType.getHeader());
+                RequestBody requestBody = RequestBody.create(this.body, JSON);
+                requestBuilder.put(requestBody);
+            } else if (requestType.getName().equals(RequestType.DELETE().getName())) {
+                // DELETE
+                if (!this.body.isBlank() && !this.body.isEmpty()) {
+                    MediaType JSON = MediaType.parse(this.requestBodyRawType.getHeader());
+                    RequestBody requestBody = RequestBody.create(this.body, JSON);
+                    requestBuilder.delete(requestBody);
+                } else {
+                    requestBuilder.delete();
+                }
             }
 
             Request request = requestBuilder.url(this.inputTextURL.getText()).build();
