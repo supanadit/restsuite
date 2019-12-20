@@ -13,7 +13,7 @@ mvn clean compile assembly:single
 ```
 
 ## Progress
-- 40%
+- 70%
 
 ## License
 Copyright 2019 Supan Adit Pratama
