@@ -36,6 +36,8 @@ public class Main {
             panel.add(new JLabel("Rest Suite - Rest API Testing for Professional"), "push");
             panel.add(minimize);
             panel.add(close);
+            Color lineColor = UIManager.getColor("Table.gridColor");
+            panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, lineColor));
 
             frame.add(panel, BorderLayout.NORTH);
             frame.add(new ApiPanel(), BorderLayout.CENTER);
