@@ -2,6 +2,8 @@
 
 Open Source Rest API Testing, an alternative software such as Postman, Insomnia, Soap UI, etc
 
+![Show Case](http://supanadit.com/wp-content/uploads/2019/12/restsuite.png)
+
 ## Requirements
 - Java 11
 - Maven
@@ -11,9 +13,6 @@ Open Source Rest API Testing, an alternative software such as Postman, Insomnia,
 ```shell script
 mvn clean compile assembly:single
 ```
-
-## Progress
-- 70%
 
 ## License
 Copyright 2019 Supan Adit Pratama
