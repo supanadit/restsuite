@@ -7,9 +7,11 @@ import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import net.miginfocom.swing.MigLayout;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rtextarea.Gutter;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class BodyPanel extends JPanel {
     protected BodyTextArea bodyTextArea;
@@ -38,6 +40,14 @@ public class BodyPanel extends JPanel {
         }
 
         spBody = new RTextScrollPane(this.bodyTextArea);
+        Gutter gutter = spBody.getGutter();
+
+        Color lineColor = UIManager.getColor("Table.gridColor");
+
+        gutter.setBorderColor(lineColor);
+        Color fontColor = UIManager.getColor("TableHeader.foreground");
+        gutter.setLineNumberColor(fontColor);
+
         requestTable = new RequestTable();
 
         if (this.withOptions) {

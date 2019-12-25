@@ -1,14 +1,9 @@
 package com.supanadit.restsuite.component;
 
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextAreaUI;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
-import org.fife.ui.rtextarea.Gutter;
-import org.fife.ui.rtextarea.IconRowHeader;
-import org.fife.ui.rtextarea.LineNumberList;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class BodyTextArea extends RSyntaxTextArea {
@@ -21,6 +16,9 @@ public class BodyTextArea extends RSyntaxTextArea {
         this.setTabLineColor(background);
         Color lineColor = UIManager.getColor("Table.gridColor");
         this.setBorder(BorderFactory.createLineBorder(lineColor));
-        LineNumberList numberList = new LineNumberList(this, Color.white);
+        Color fontColor = UIManager.getColor("FormattedTextField.foreground");
+        this.setForeground(fontColor);
+        Color selectionColor = UIManager.getColor("FormattedTextField.selectionBackground");
+        this.setSelectionColor(selectionColor);
     }
 }
