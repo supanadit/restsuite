@@ -1,6 +1,6 @@
 package com.supanadit.restsuite;
 
-import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.FlatDarculaLaf;
 import com.supanadit.restsuite.component.ApiPanel;
 
 import javax.swing.*;
@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            FlatLightLaf.install();
+            FlatDarculaLaf.install();
             JFrame frame = new JFrame("Rest Suite");
 
             frame.add(new ApiPanel(), BorderLayout.CENTER);
