@@ -1,6 +1,6 @@
 ![Logo](http://supanadit.com/wp-content/uploads/2019/12/Rest-Suite-Logo.png)
 
-Open Source Rest API Testing, an alternative software such as Postman, Insomnia, Soap UI, etc
+Open Source Rest API Testing, an alternative software for Postman, Insomnia, Soap UI, etc
 
 ![Show Case](http://supanadit.com/wp-content/uploads/2019/12/restsuite.png)
 
