@@ -3,6 +3,7 @@ package com.supanadit.restsuite;
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.supanadit.restsuite.component.ApiPanel;
 import com.supanadit.restsuite.listener.DragListener;
+import com.supanadit.restsuite.panel.WebsocketPanel;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -74,21 +75,12 @@ public class Main {
 
             JTabbedPane corePanel = new JTabbedPane();
             JPanel coreApiPanel = new JPanel();
-            JPanel coreWebsocketPanel = new JPanel(new MigLayout("insets 10 10 10 10"));
             JPanel coreSocketIOPanel = new JPanel(new MigLayout("fill,insets 10 10 10 10"));
             JPanel coreSSEPanel = new JPanel(new MigLayout("fill"));
 
             JLabel comingSoon = new JLabel("Coming Soon");
             comingSoon.setHorizontalAlignment(SwingConstants.CENTER);
             comingSoon.setFont(new Font(comingSoon.getName(), Font.PLAIN, 15));
-
-            coreWebsocketPanel.add(new JLabel("Websocket URL"), "growx,pushx,wrap");
-            coreWebsocketPanel.add(new JTextField(), "growx,pushx");
-            coreWebsocketPanel.add(new JButton("Connect"), "wrap");
-            coreWebsocketPanel.add(new JLabel("Message"), "pushx,growx,wrap");
-            coreWebsocketPanel.add(new JScrollPane(new JTextArea()), "push,grow,span,wrap");
-            coreWebsocketPanel.add(new JTextField(), "pushx,growx");
-            coreWebsocketPanel.add(new JButton("Send"));
 
             JPanel websocketHeadPanel = new JPanel(new MigLayout("fill"));
             websocketHeadPanel.add(new JLabel("SocketIO URL"), "growx,pushx,wrap");
@@ -125,7 +117,7 @@ public class Main {
             coreApiPanel.add(new ApiPanel(), BorderLayout.CENTER);
 
             corePanel.add("Rest API", coreApiPanel);
-            corePanel.add("Websocket", coreWebsocketPanel);
+            corePanel.add("Websocket", new WebsocketPanel());
             corePanel.add("Socket IO", coreSocketIOPanel);
             corePanel.add("SSE", coreSSEPanel);
 
