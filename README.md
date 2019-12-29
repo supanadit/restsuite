@@ -2,7 +2,7 @@
 
 Open Source Rest API Testing, an alternative software for Postman, Insomnia, Soap UI, etc
 
-![Show Case](http://supanadit.com/wp-content/uploads/2019/12/restsuite.png)
+![Show Case](http://supanadit.com/wp-content/uploads/2019/12/rest.png)
 
 ## Requirements
 - Java 11
@@ -17,6 +17,9 @@ mvn clean compile assembly:single
 ## Todo
 - Environment
 - Collection
+
+## Contribute
+We love to see you contribute this project in any way
 
 ## License
 Copyright 2019 Supan Adit Pratama
