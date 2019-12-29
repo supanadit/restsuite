@@ -1,7 +1,7 @@
 package com.supanadit.restsuite;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
-import com.supanadit.restsuite.component.ApiPanel;
+import com.supanadit.restsuite.panel.ApiPanel;
 import com.supanadit.restsuite.listener.DragListener;
 import com.supanadit.restsuite.panel.WebsocketPanel;
 import net.miginfocom.swing.MigLayout;

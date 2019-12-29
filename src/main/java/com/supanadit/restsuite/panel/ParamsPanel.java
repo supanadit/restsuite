@@ -1,5 +1,6 @@
-package com.supanadit.restsuite.component;
+package com.supanadit.restsuite.panel;
 
+import com.supanadit.restsuite.component.RequestTable;
 import com.supanadit.restsuite.helper.UrlParser;
 import io.reactivex.subjects.PublishSubject;
 import net.miginfocom.swing.MigLayout;

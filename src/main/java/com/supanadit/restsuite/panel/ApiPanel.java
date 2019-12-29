@@ -1,5 +1,6 @@
-package com.supanadit.restsuite.component;
+package com.supanadit.restsuite.panel;
 
+import com.supanadit.restsuite.component.*;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;

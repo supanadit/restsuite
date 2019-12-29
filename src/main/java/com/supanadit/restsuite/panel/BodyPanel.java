@@ -1,5 +1,9 @@
-package com.supanadit.restsuite.component;
+package com.supanadit.restsuite.panel;
 
+import com.supanadit.restsuite.component.BodyTextArea;
+import com.supanadit.restsuite.component.RequestBodyRawTypeComboBox;
+import com.supanadit.restsuite.component.RequestBodyTypeComboBox;
+import com.supanadit.restsuite.component.RequestTable;
 import com.supanadit.restsuite.listener.BodyTextListener;
 import com.supanadit.restsuite.model.RequestBodyRawType;
 import com.supanadit.restsuite.model.RequestBodyType;

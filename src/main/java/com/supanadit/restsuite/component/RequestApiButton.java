@@ -3,10 +3,9 @@ package com.supanadit.restsuite.component;
 import com.supanadit.restsuite.model.RequestBodyRawType;
 import com.supanadit.restsuite.model.RequestBodyType;
 import com.supanadit.restsuite.model.RequestType;
+import com.supanadit.restsuite.panel.BodyPanel;
+import com.supanadit.restsuite.panel.RequestTabPanel;
 import okhttp3.*;
-import okio.BufferedSink;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

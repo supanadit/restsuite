@@ -1,5 +1,6 @@
-package com.supanadit.restsuite.component;
+package com.supanadit.restsuite.panel;
 
+import com.supanadit.restsuite.component.HeadersPanel;
 import com.supanadit.restsuite.model.RequestBodyRawType;
 import com.supanadit.restsuite.model.RequestBodyType;
 import io.reactivex.subjects.PublishSubject;
@@ -7,14 +8,14 @@ import io.reactivex.subjects.PublishSubject;
 import javax.swing.*;
 
 public class RequestTabPanel extends JTabbedPane {
-    protected BodyPanel bodyPanel;
-    protected HeadersPanel headersPanel;
-    protected ParamsPanel paramsPanel;
+    public BodyPanel bodyPanel;
+    public HeadersPanel headersPanel;
+    public ParamsPanel paramsPanel;
 
-    protected static PublishSubject<JTable> headerTable = PublishSubject.create();
-    protected static PublishSubject<String> bodyText = PublishSubject.create();
-    protected static PublishSubject<RequestBodyRawType> requestBodyRawTypeSubject = PublishSubject.create();
-    protected static PublishSubject<RequestBodyType> requestBodyTypeSubject = PublishSubject.create();
+    public static PublishSubject<JTable> headerTable = PublishSubject.create();
+    public static PublishSubject<String> bodyText = PublishSubject.create();
+    public static PublishSubject<RequestBodyRawType> requestBodyRawTypeSubject = PublishSubject.create();
+    public static PublishSubject<RequestBodyType> requestBodyTypeSubject = PublishSubject.create();
 
     public RequestTabPanel(PublishSubject<String> urlSubject) {
         this.paramsPanel = new ParamsPanel(urlSubject);

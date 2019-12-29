@@ -1,4 +1,6 @@
-package com.supanadit.restsuite.component;
+package com.supanadit.restsuite.panel;
+
+import com.supanadit.restsuite.panel.BodyPanel;
 
 import javax.swing.*;
 
