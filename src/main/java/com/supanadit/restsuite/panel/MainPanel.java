@@ -8,7 +8,7 @@ public class MainPanel extends JTabbedPane {
         JPanel coreApiPanel = new JPanel();
 
         coreApiPanel.setLayout(new BorderLayout());
-        coreApiPanel.add(new SideApiPanel(), BorderLayout.LINE_END);
+        coreApiPanel.add(new ApiSidePanel(), BorderLayout.LINE_END);
         coreApiPanel.add(new ApiPanel(), BorderLayout.CENTER);
 
         this.add("Rest API", coreApiPanel);

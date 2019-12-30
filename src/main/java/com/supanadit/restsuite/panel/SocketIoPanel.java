@@ -1,6 +1,8 @@
 package com.supanadit.restsuite.panel;
 
 import net.miginfocom.swing.MigLayout;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
 
@@ -16,7 +18,8 @@ public class SocketIoPanel extends JPanel {
         socketIoLeftPanel.add(new JLabel("Send Message"), "growx,pushx,wrap");
         socketIoLeftPanel.add(new JTextField(), "growx,pushx,wrap");
         socketIoLeftPanel.add(new JComboBox<>(), "growx,pushx,wrap");
-        socketIoLeftPanel.add(new JTextArea(), "grow,push,wrap");
+        RTextScrollPane bodySocket = new RTextScrollPane(new RSyntaxTextArea());
+        socketIoLeftPanel.add(bodySocket, "grow,push,wrap");
         socketIoLeftPanel.add(new JButton("Emit"), "growx,pushx,wrap");
         JPanel socketIoRightPanel = new JPanel(new MigLayout("w 200"));
         socketIoRightPanel.add(new JLabel("Listener"), "pushx,growx,wrap");

@@ -2,11 +2,10 @@ package com.supanadit.restsuite;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.supanadit.restsuite.listener.DragListener;
-import com.supanadit.restsuite.panel.*;
+import com.supanadit.restsuite.panel.MainPanel;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 
 public class Main {

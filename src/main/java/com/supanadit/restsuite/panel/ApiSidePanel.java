@@ -6,12 +6,15 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 
-public class SideApiPanel extends JPanel {
-    public SideApiPanel() {
+public class ApiSidePanel extends JPanel {
+    public ApiSidePanel() {
         this.setLayout(new MigLayout("w 300,insets 11 10 10 10"));
+        JComboBox<String> environmentComboBox = new JComboBox<>();
+        JButton manageEnvironment = new JButton("Manage");
+
         this.add(new JLabel("Environment"), "wrap");
-        this.add(new JComboBox<>(), "pushx,growx");
-        this.add(new JButton("Manage"), "wrap");
+        this.add(environmentComboBox, "pushx,growx");
+        this.add(manageEnvironment, "wrap");
         this.add(new JLabel("Collection"), "wrap");
 
         JTextField searchCollection = new JTextField();

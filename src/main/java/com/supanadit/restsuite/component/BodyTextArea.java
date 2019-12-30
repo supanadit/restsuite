@@ -20,5 +20,8 @@ public class BodyTextArea extends RSyntaxTextArea {
         this.setForeground(fontColor);
         Color selectionColor = UIManager.getColor("FormattedTextField.selectionBackground");
         this.setSelectionColor(selectionColor);
+        // This Code let selected text be white
+        this.setUseSelectedTextColor(true);
+        this.setSelectedTextColor(Color.white);
     }
 }
