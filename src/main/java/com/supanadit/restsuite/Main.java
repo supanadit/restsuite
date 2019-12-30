@@ -1,6 +1,8 @@
 package com.supanadit.restsuite;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import com.supanadit.restsuite.listener.DragListener;
 import com.supanadit.restsuite.panel.MainPanel;
 import net.miginfocom.swing.MigLayout;
@@ -16,7 +18,7 @@ public class Main {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            FlatIntelliJLaf.install();
+            FlatLightLaf.install();
             JFrame frame = new JFrame("Rest Suite");
 
             frame.setUndecorated(customTitleBar);

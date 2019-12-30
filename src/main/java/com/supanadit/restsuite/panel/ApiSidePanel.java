@@ -20,13 +20,13 @@ public class ApiSidePanel extends JPanel {
         environment.setTitle("Environment");
         environment.setResizable(false);
         environment.setAlwaysOnTop(true);
-        environment.setLayout(new MigLayout("fill,insets 0 0 0 0", "0[]0[]0"));
+        environment.setLayout(new MigLayout("fill,insets 0 0 0 0", "[]0[]"));
 
         DefaultTableModel defaultTableModel = new DefaultTableModel();
         defaultTableModel.addColumn("Environment Name");
 
         environment.add(new JScrollPane(new JTable(defaultTableModel)), "grow");
-        JPanel rightPanel = new JPanel(new MigLayout("flowy,insets 0 0 0 0"));
+        JPanel rightPanel = new JPanel(new MigLayout("flowy,insets 2 2 1 1"));
         rightPanel.add(new JButton("+"));
         rightPanel.add(new JButton("-"));
         environment.add(rightPanel, "pushy,growy");
