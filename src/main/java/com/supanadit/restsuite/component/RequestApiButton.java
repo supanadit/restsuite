@@ -6,6 +6,7 @@ import com.supanadit.restsuite.model.RequestType;
 import com.supanadit.restsuite.panel.BodyPanel;
 import com.supanadit.restsuite.panel.RequestTabPanel;
 import okhttp3.*;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -87,6 +88,18 @@ public class RequestApiButton extends JButton {
 
             Request request = requestBuilder.url(this.inputTextURL.getText()).build();
             try (Response response = client.newCall(request).execute()) {
+                String[] headerSplit = response.headers().get("Content-Type").split(";", -1);
+                if (headerSplit.length != 0) {
+                    String header;
+                    if ("application/json".equals(headerSplit[0])) {
+                        header = SyntaxConstants.SYNTAX_STYLE_JSON;
+                    } else {
+                        header = headerSplit[0];
+                    }
+                    this.bodyPanel.setSyntax(header);
+                } else {
+                    this.bodyPanel.setSyntax(SyntaxConstants.SYNTAX_STYLE_NONE);
+                }
                 if (this.bodyPanel == null) {
                     System.out.println(Objects.requireNonNull(response.body()).string());
                 } else {

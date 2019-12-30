@@ -7,6 +7,7 @@ import com.supanadit.restsuite.component.RequestTable;
 import com.supanadit.restsuite.listener.BodyTextListener;
 import com.supanadit.restsuite.model.RequestBodyRawType;
 import com.supanadit.restsuite.model.RequestBodyType;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import net.miginfocom.swing.MigLayout;
@@ -68,6 +69,7 @@ public class BodyPanel extends JPanel {
                 if (requestBodyType != null) {
                     this.requestBodyTypeSubject.onNext(requestBodyType);
                 }
+                assert requestBodyType != null;
                 subject.onNext(requestBodyType.getName().equals(RequestBodyType.RAW().getName()));
             });
 
@@ -93,8 +95,10 @@ public class BodyPanel extends JPanel {
             requestBodyRawTypeComboBox.addActionListener((e) -> {
                 RequestBodyRawType requestBodyRawType = (RequestBodyRawType) requestBodyRawTypeComboBox.getSelectedItem();
                 if (requestBodyRawTypeSubject != null) {
+                    assert requestBodyRawType != null;
                     this.requestBodyRawTypeSubject.onNext(requestBodyRawType);
                 }
+                assert requestBodyRawType != null;
                 this.bodyTextArea.setSyntaxEditingStyle(requestBodyRawType.getSyntax());
             });
 
@@ -104,6 +108,10 @@ public class BodyPanel extends JPanel {
             this.bodyTextArea.setSyntaxEditingStyle(this.defaultFormat);
         }
         this.add(spBody, "grow, push, span 3");
+    }
+
+    public void setSyntax(String value) {
+        this.bodyTextArea.setSyntaxEditingStyle(value);
     }
 
     public void setText(String text) {
