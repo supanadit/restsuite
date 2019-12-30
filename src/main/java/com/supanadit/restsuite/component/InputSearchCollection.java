@@ -7,37 +7,37 @@ import javax.swing.*;
 import javax.swing.text.Document;
 import java.awt.*;
 
-public class InputTextURL extends JTextField {
+public class InputSearchCollection extends JTextField {
     public PublishSubject<String> urlSubject = PublishSubject.create();
 
-    public static InputTextURL getComponent() {
-        final InputTextURL tf = new InputTextURL();
-        tf.setPlaceholder("URL");
+    public static InputSearchCollection getComponent() {
+        final InputSearchCollection tf = new InputSearchCollection();
+        tf.setPlaceholder("Search Collection");
         tf.getDocument().addDocumentListener(new InputTextUrlListener(tf, tf.urlSubject));
         return tf;
     }
 
     private String placeholder;
 
-    public InputTextURL() {
+    public InputSearchCollection() {
     }
 
-    public InputTextURL(
+    public InputSearchCollection(
             final Document pDoc,
             final String pText,
             final int pColumns) {
         super(pDoc, pText, pColumns);
     }
 
-    public InputTextURL(final int pColumns) {
+    public InputSearchCollection(final int pColumns) {
         super(pColumns);
     }
 
-    public InputTextURL(final String pText) {
+    public InputSearchCollection(final String pText) {
         super(pText);
     }
 
-    public InputTextURL(final String pText, final int pColumns) {
+    public InputSearchCollection(final String pText, final int pColumns) {
         super(pText, pColumns);
     }
 

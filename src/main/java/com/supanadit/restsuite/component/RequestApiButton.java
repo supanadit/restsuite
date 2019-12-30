@@ -91,10 +91,16 @@ public class RequestApiButton extends JButton {
                 String[] headerSplit = response.headers().get("Content-Type").split(";", -1);
                 if (headerSplit.length != 0) {
                     String header;
-                    if ("application/json".equals(headerSplit[0])) {
-                        header = SyntaxConstants.SYNTAX_STYLE_JSON;
-                    } else {
-                        header = headerSplit[0];
+                    switch (headerSplit[0]) {
+                        case "application/json":
+                            header = SyntaxConstants.SYNTAX_STYLE_JSON;
+                            break;
+                        case "application/vnd.wap.xhtml+xml":
+                            header = SyntaxConstants.SYNTAX_STYLE_HTML;
+                            break;
+                        default:
+                            header = headerSplit[0];
+                            break;
                     }
                     this.bodyPanel.setSyntax(header);
                 } else {
