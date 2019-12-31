@@ -5,6 +5,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class SocketIoPanel extends JPanel {
     public SocketIoPanel() {
@@ -18,7 +19,24 @@ public class SocketIoPanel extends JPanel {
         socketIoLeftPanel.add(new JLabel("Send Message"), "growx,pushx,wrap");
         socketIoLeftPanel.add(new JTextField(), "growx,pushx,wrap");
         socketIoLeftPanel.add(new JComboBox<>(), "growx,pushx,wrap");
-        RTextScrollPane bodySocket = new RTextScrollPane(new RSyntaxTextArea());
+
+        RSyntaxTextArea editor = new RSyntaxTextArea();
+        editor.setCodeFoldingEnabled(true);
+        Color background = UIManager.getColor("Table.background");
+        editor.setCurrentLineHighlightColor(background);
+        editor.setBackground(background);
+        editor.setTabLineColor(background);
+        Color lineColor = UIManager.getColor("Table.gridColor");
+        editor.setBorder(BorderFactory.createLineBorder(lineColor));
+        Color fontColor = UIManager.getColor("FormattedTextField.foreground");
+        editor.setForeground(fontColor);
+        Color selectionColor = UIManager.getColor("FormattedTextField.selectionBackground");
+        editor.setSelectionColor(selectionColor);
+        // This Code let selected text be white
+        editor.setUseSelectedTextColor(true);
+        editor.setSelectedTextColor(Color.white);
+
+        RTextScrollPane bodySocket = new RTextScrollPane(editor);
         socketIoLeftPanel.add(bodySocket, "grow,push,wrap");
         socketIoLeftPanel.add(new JButton("Emit"), "growx,pushx,wrap");
         JPanel socketIoRightPanel = new JPanel(new MigLayout("w 200"));

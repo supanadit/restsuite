@@ -1,7 +1,5 @@
 package com.supanadit.restsuite;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.supanadit.restsuite.listener.DragListener;
 import com.supanadit.restsuite.panel.MainPanel;
@@ -17,8 +15,11 @@ public class Main {
     public static boolean customTitleBar = false;
 
     public static void main(String[] args) {
+        System.setProperty("awt.useSystemAAFontSettings","on");
+        System.setProperty("swing.aatext", "true");
         SwingUtilities.invokeLater(() -> {
             FlatLightLaf.install();
+
             JFrame frame = new JFrame("Rest Suite");
 
             frame.setUndecorated(customTitleBar);

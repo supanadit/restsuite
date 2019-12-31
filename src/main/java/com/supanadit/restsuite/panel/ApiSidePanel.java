@@ -1,6 +1,7 @@
 package com.supanadit.restsuite.panel;
 
 import com.supanadit.restsuite.component.InputSearchCollection;
+import com.supanadit.restsuite.helper.FontLoader;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -26,9 +27,9 @@ public class ApiSidePanel extends JPanel {
         defaultTableModel.addColumn("Environment Name");
 
         environment.add(new JScrollPane(new JTable(defaultTableModel)), "grow");
-        JPanel rightPanel = new JPanel(new MigLayout("flowy,insets 2 2 1 1"));
-        rightPanel.add(new JButton("+"));
-        rightPanel.add(new JButton("-"));
+        JPanel rightPanel = new JPanel(new MigLayout("flowy"));
+        rightPanel.add(new JButton("+"), "pushx,growx");
+        rightPanel.add(new JButton("-"), "pushx,growx");
         environment.add(rightPanel, "pushy,growy");
         environment.setSize(500, 500);
         environment.setLocation(dim.width / 2 - environment.getSize().width / 2, dim.height / 2 - environment.getSize().height / 2);
@@ -36,7 +37,8 @@ public class ApiSidePanel extends JPanel {
             environment.setVisible(true);
         });
 
-        this.add(new JLabel("Environment"), "wrap");
+        JLabel environmentLabel = new JLabel("Environment");
+        this.add(environmentLabel, "wrap");
         this.add(environmentComboBox, "pushx,growx");
         this.add(manageEnvironment, "wrap");
         this.add(new JLabel("Collection"), "wrap");
