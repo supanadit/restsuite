@@ -1,6 +1,7 @@
 package com.supanadit.restsuite;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import com.supanadit.restsuite.helper.DefaultIcon;
 import com.supanadit.restsuite.listener.DragListener;
 import com.supanadit.restsuite.panel.MainPanel;
 import net.miginfocom.swing.MigLayout;
@@ -9,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.net.URL;
 
 public class Main {
     public static Dimension dimension = new Dimension(1024, 600);
@@ -23,10 +23,7 @@ public class Main {
 
             JFrame frame = new JFrame("Rest Suite");
             frame.setName("Rest API Testing for Professional");
-            URL iconURL = Main.class.getClassLoader().getResource("icon/icon.png");
-            assert iconURL != null;
-            ImageIcon icon = new ImageIcon(iconURL);
-            frame.setIconImage(icon.getImage());
+            frame.setIconImage(new DefaultIcon().getImage());
             frame.setUndecorated(customTitleBar);
 
             if (customTitleBar) {

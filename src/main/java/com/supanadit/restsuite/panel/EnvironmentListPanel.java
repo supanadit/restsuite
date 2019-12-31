@@ -1,5 +1,6 @@
 package com.supanadit.restsuite.panel;
 
+import com.supanadit.restsuite.helper.DefaultIcon;
 import com.supanadit.restsuite.listener.EnvironmentListScrollPaneMenuListener;
 import net.miginfocom.swing.MigLayout;
 
@@ -16,6 +17,7 @@ public class EnvironmentListPanel extends JDialog {
     JTable table;
 
     public EnvironmentListPanel() {
+        this.setIconImage(new DefaultIcon().getImage());
         this.setTitle("Environment");
         this.setResizable(false);
         this.setLayout(new MigLayout("fill,insets 0 0 0 0"));
@@ -35,6 +37,7 @@ public class EnvironmentListPanel extends JDialog {
 
         // Dialog New
         dialogNew = new JFrame();
+        dialogNew.setIconImage(new DefaultIcon().getImage());
         dialogNew.setLayout(new MigLayout("fill,insets 0 0 0 0"));
         dialogNew.setTitle("Add New Environment");
         dialogNew.setResizable(false);
