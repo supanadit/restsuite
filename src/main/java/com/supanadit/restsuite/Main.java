@@ -9,19 +9,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.net.URL;
 
 public class Main {
     public static Dimension dimension = new Dimension(1024, 600);
     public static boolean customTitleBar = false;
 
     public static void main(String[] args) {
-        System.setProperty("awt.useSystemAAFontSettings","on");
+        System.setProperty("awt.useSystemAAFontSettings", "on");
         System.setProperty("swing.aatext", "true");
         SwingUtilities.invokeLater(() -> {
             FlatLightLaf.install();
 
             JFrame frame = new JFrame("Rest Suite");
-
+            frame.setName("Rest API Testing for Professional");
+            URL iconURL = Main.class.getClassLoader().getResource("icon/icon.png");
+            assert iconURL != null;
+            ImageIcon icon = new ImageIcon(iconURL);
+            frame.setIconImage(icon.getImage());
             frame.setUndecorated(customTitleBar);
 
             if (customTitleBar) {
