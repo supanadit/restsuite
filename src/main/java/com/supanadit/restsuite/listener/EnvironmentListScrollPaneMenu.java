@@ -1,16 +1,18 @@
 package com.supanadit.restsuite.listener;
 
+import com.supanadit.restsuite.panel.EnvironmentListPanel;
+
 import javax.swing.*;
 
 class EnvironmentListScrollPaneMenu extends JPopupMenu {
     JMenuItem addData;
-    protected JTable table;
+    protected EnvironmentListPanel panel;
 
-    public EnvironmentListScrollPaneMenu(JTable table) {
-        this.table = table;
+    public EnvironmentListScrollPaneMenu(EnvironmentListPanel panel) {
+        this.panel = panel;
         addData = new JMenuItem("Add");
         addData.addActionListener((e) -> {
-
+            this.panel.openAddNewDialog();
         });
         add(addData);
     }

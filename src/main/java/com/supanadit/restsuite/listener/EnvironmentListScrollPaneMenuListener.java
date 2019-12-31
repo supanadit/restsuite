@@ -1,14 +1,16 @@
 package com.supanadit.restsuite.listener;
 
+import com.supanadit.restsuite.panel.EnvironmentListPanel;
+
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class EnvironmentListScrollPaneMenuListener extends MouseAdapter {
-    protected JTable table;
+    protected EnvironmentListPanel panel;
 
-    public EnvironmentListScrollPaneMenuListener(JTable table) {
-        this.table = table;
+    public EnvironmentListScrollPaneMenuListener(EnvironmentListPanel panel) {
+        this.panel = panel;
     }
 
     public void mousePressed(MouseEvent e) {
@@ -22,7 +24,7 @@ public class EnvironmentListScrollPaneMenuListener extends MouseAdapter {
     }
 
     private void doPop(MouseEvent e) {
-        EnvironmentListScrollPaneMenu menu = new EnvironmentListScrollPaneMenu(this.table);
+        EnvironmentListScrollPaneMenu menu = new EnvironmentListScrollPaneMenu(this.panel);
         menu.show(e.getComponent(), e.getX(), e.getY());
     }
 }
