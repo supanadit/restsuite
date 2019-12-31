@@ -1,5 +1,8 @@
 package com.supanadit.restsuite.panel;
 
+import com.supanadit.restsuite.component.InputSocketIoListener;
+import com.supanadit.restsuite.component.InputSocketIoMessage;
+import com.supanadit.restsuite.component.InputSocketIoURL;
 import net.miginfocom.swing.MigLayout;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -13,11 +16,12 @@ public class SocketIoPanel extends JPanel {
 
         JPanel socketIoHeadPanel = new JPanel(new MigLayout("fill"));
         socketIoHeadPanel.add(new JLabel("SocketIO URL"), "growx,pushx,wrap");
-        socketIoHeadPanel.add(new JTextField(), "growx,pushx");
+        InputSocketIoURL socketIoURL = InputSocketIoURL.getComponent();
+        socketIoHeadPanel.add(socketIoURL, "growx,pushx");
         socketIoHeadPanel.add(new JButton("Connect"));
         JPanel socketIoLeftPanel = new JPanel(new MigLayout("w 200"));
         socketIoLeftPanel.add(new JLabel("Send Message"), "growx,pushx,wrap");
-        socketIoLeftPanel.add(new JTextField(), "growx,pushx,wrap");
+        socketIoLeftPanel.add(InputSocketIoMessage.getComponent(), "growx,pushx,wrap");
         socketIoLeftPanel.add(new JComboBox<>(), "growx,pushx,wrap");
 
         RSyntaxTextArea editor = new RSyntaxTextArea();
@@ -41,7 +45,7 @@ public class SocketIoPanel extends JPanel {
         socketIoLeftPanel.add(new JButton("Emit"), "growx,pushx,wrap");
         JPanel socketIoRightPanel = new JPanel(new MigLayout("w 200"));
         socketIoRightPanel.add(new JLabel("Listener"), "pushx,growx,wrap");
-        socketIoRightPanel.add(new JTextField(), "pushx,growx,wrap");
+        socketIoRightPanel.add(InputSocketIoListener.getComponent(), "pushx,growx,wrap");
         socketIoRightPanel.add(new JButton("Add Listener"), "pushx,growx,wrap");
         socketIoRightPanel.add(new JSeparator(), "pushx,growx,wrap");
         socketIoRightPanel.add(new JLabel("Listener List"), "pushx,growx,wrap");

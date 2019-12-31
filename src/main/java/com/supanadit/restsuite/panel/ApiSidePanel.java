@@ -1,38 +1,22 @@
 package com.supanadit.restsuite.panel;
 
 import com.supanadit.restsuite.component.InputSearchCollection;
-import com.supanadit.restsuite.helper.FontLoader;
+import com.supanadit.restsuite.model.EnvironmentItem;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 
 public class ApiSidePanel extends JPanel {
     public ApiSidePanel() {
         this.setLayout(new MigLayout("w 300,insets 11 10 10 10"));
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
-        JComboBox<String> environmentComboBox = new JComboBox<>();
+
+        JComboBox<EnvironmentItem> environmentComboBox = new JComboBox<>();
         JButton manageEnvironment = new JButton("Manage");
 
-        JDialog environment = new JDialog();
-        environment.setTitle("Environment");
-        environment.setResizable(false);
-        environment.setAlwaysOnTop(true);
-        environment.setLayout(new MigLayout("fill,insets 0 0 0 0", "[]0[]"));
-
-        DefaultTableModel defaultTableModel = new DefaultTableModel();
-        defaultTableModel.addColumn("Environment Name");
-
-        environment.add(new JScrollPane(new JTable(defaultTableModel)), "grow");
-        JPanel rightPanel = new JPanel(new MigLayout("flowy"));
-        rightPanel.add(new JButton("+"), "pushx,growx");
-        rightPanel.add(new JButton("-"), "pushx,growx");
-        environment.add(rightPanel, "pushy,growy");
-        environment.setSize(500, 500);
-        environment.setLocation(dim.width / 2 - environment.getSize().width / 2, dim.height / 2 - environment.getSize().height / 2);
+        EnvironmentListPanel environment = new EnvironmentListPanel();
         manageEnvironment.addActionListener((e) -> {
             environment.setVisible(true);
         });

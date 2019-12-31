@@ -1,5 +1,7 @@
 package com.supanadit.restsuite.panel;
 
+import com.supanadit.restsuite.component.InputWebsocketMessage;
+import com.supanadit.restsuite.component.InputWebsocketURL;
 import com.supanadit.restsuite.listener.WebsocketTestListener;
 import net.miginfocom.swing.MigLayout;
 import okhttp3.OkHttpClient;
@@ -19,7 +21,7 @@ public class WebsocketPanel extends JPanel {
 
         this.setLayout(new MigLayout("insets 10 10 10 10"));
         this.add(new JLabel("Websocket URL"), "growx,pushx,wrap");
-        JTextField socketURL = new JTextField("ws://example.com/ws");
+        InputWebsocketURL socketURL = InputWebsocketURL.getComponent();
         this.add(socketURL, "growx,pushx");
         JButton connectButton = new JButton("Connect");
         connectButton.addActionListener((e) -> {
@@ -32,7 +34,7 @@ public class WebsocketPanel extends JPanel {
 
         this.add(new JLabel("Message"), "pushx,growx,wrap");
         this.add(new JScrollPane(logMessage), "push,grow,span,wrap");
-        JTextField message = new JTextField();
+        InputWebsocketMessage message = InputWebsocketMessage.getComponent();
         this.add(message, "pushx,growx");
 
         JButton sendButton = new JButton("Send");
@@ -47,6 +49,6 @@ public class WebsocketPanel extends JPanel {
             }
         });
 
-        this.add(sendButton);
+        this.add(sendButton, "growx");
     }
 }
