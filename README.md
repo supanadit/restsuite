@@ -9,6 +9,8 @@ Open Source Rest API Testing, an alternative software for Postman, Insomnia, Soa
 - Websocket Testing
 - SocketIO Testing
 - Server Sent Event Testing (SSE)
+- Environment
+- Collection
 
 ## Requirements
 - Java 11
