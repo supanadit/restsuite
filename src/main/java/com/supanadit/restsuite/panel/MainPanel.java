@@ -13,7 +13,7 @@ public class MainPanel extends JTabbedPane {
 
         this.add("Rest API", coreApiPanel);
         this.add("Websocket", new WebsocketPanel());
-        this.add("Socket IO", new SocketIoPanel());
         this.add("SSE", new ServerSentEventPanel());
+        this.add("Socket IO", new SocketIoPanel());
     }
 }

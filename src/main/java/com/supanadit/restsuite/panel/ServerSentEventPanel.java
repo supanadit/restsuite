@@ -19,7 +19,7 @@ public class ServerSentEventPanel extends JPanel {
     JButton connectDisconnectButton;
 
     public ServerSentEventPanel() {
-        this.setLayout(new MigLayout("fill"));
+        this.setLayout(new MigLayout("insets 10 10 10 10"));
         InputSseURL inputURL = InputSseURL.getComponent();
         connectDisconnectButton = new JButton(connectDisconnect);
         this.add(new JLabel("SSE URL"), "growx,pushx,wrap");

@@ -28,7 +28,7 @@ public class SocketIoPanel extends JPanel {
     ArrayList<String> listenerList;
 
     public SocketIoPanel() {
-        this.setLayout(new MigLayout("fill,insets 10 10 10 10"));
+        this.setLayout(new MigLayout("insets 10 10 10 10"));
 
         listenerList = new ArrayList<>();
 
