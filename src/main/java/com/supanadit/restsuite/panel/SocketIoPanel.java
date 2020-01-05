@@ -17,6 +17,10 @@ import java.util.Arrays;
 
 public class SocketIoPanel extends JPanel {
     Socket socket;
+    boolean isConnected = false;
+    String connectionText = "Connect";
+    JButton connectDisconnectButton;
+    JButton emitButton;
 
     public SocketIoPanel() {
         this.setLayout(new MigLayout("fill,insets 10 10 10 10"));
@@ -26,7 +30,7 @@ public class SocketIoPanel extends JPanel {
         Color fontColor = UIManager.getColor("FormattedTextField.foreground");
         Color selectionColor = UIManager.getColor("FormattedTextField.selectionBackground");
 
-        JButton connectDisconnectButton = new JButton("Connect");
+        connectDisconnectButton = new JButton(connectionText);
 
         JComboBox<String> messageSendType = new JComboBox<>();
         messageSendType.addItem("String");
@@ -60,7 +64,8 @@ public class SocketIoPanel extends JPanel {
         emitBody.setUseSelectedTextColor(true);
         emitBody.setSelectedTextColor(Color.white);
 
-        JButton emitButton = new JButton("Emit");
+        emitButton = new JButton("Emit");
+        emitButton.setEnabled(isConnected);
         InputSocketIoListener inputListener = InputSocketIoListener.getComponent();
         RTextScrollPane emitBodyScrollPane = new RTextScrollPane(emitBody);
 
@@ -95,22 +100,33 @@ public class SocketIoPanel extends JPanel {
 
         connectDisconnectButton.addActionListener(e -> {
             String url = socketIoURL.getText();
-            if (!url.isEmpty()) {
-                try {
-                    socket = IO.socket(url);
-                    socket.on("reply", args -> {
-                        String body = Arrays.toString(args)
-                                .replace(",", "")
-                                .replace("[", "")
-                                .replace("]", "")
-                                .trim();
+            if (!isConnected) {
+                if (!url.isEmpty()) {
+                    try {
+                        socket = IO.socket(url);
+                        socket.on(Socket.EVENT_CONNECT, args -> {
+                            setStatus(true);
+                        }).on("reply", args -> {
+                            String body = Arrays.toString(args)
+                                    .replace(",", "")
+                                    .replace("[", "")
+                                    .replace("]", "")
+                                    .trim();
 
-                        responseBody.append("reply".concat(" : ").concat(body).concat("\n"));
-                    });
-                    socket.connect();
-                } catch (URISyntaxException ex) {
-                    ex.printStackTrace();
+                            responseBody.append("reply".concat(" : ").concat(body).concat("\n"));
+                        }).on(Socket.EVENT_DISCONNECT, args -> {
+                            setStatus(false);
+                            responseBody.append("Disconnected from ".concat(socketIoURL.getText()).concat("\n"));
+                        });
+                        socket.connect();
+                        connectDisconnectButton.setEnabled(false);
+                        connectDisconnectButton.setText("Connecting");
+                    } catch (URISyntaxException ex) {
+                        ex.printStackTrace();
+                    }
                 }
+            } else {
+                setStatus(false);
             }
         });
 
@@ -121,5 +137,25 @@ public class SocketIoPanel extends JPanel {
                 }
             }
         });
+    }
+
+    public void setStatus(boolean status) {
+        isConnected = status;
+
+        emitButton.setEnabled(isConnected);
+        // It always be true
+        connectDisconnectButton.setEnabled(true);
+        if (isConnected) {
+            connectDisconnectButton.setText(getButtonText());
+        } else {
+            if (socket != null) {
+                connectDisconnectButton.setText(getButtonText());
+                socket.close();
+            }
+        }
+    }
+
+    public String getButtonText() {
+        return (isConnected) ? "Disconnect" : "Connect";
     }
 }
