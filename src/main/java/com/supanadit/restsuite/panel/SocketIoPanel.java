@@ -3,17 +3,21 @@ package com.supanadit.restsuite.panel;
 import com.supanadit.restsuite.component.InputSocketIoListener;
 import com.supanadit.restsuite.component.InputSocketIoMessage;
 import com.supanadit.restsuite.component.InputSocketIoURL;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 import io.socket.client.IO;
 import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
 import net.miginfocom.swing.MigLayout;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class SocketIoPanel extends JPanel {
     Socket socket;
@@ -21,9 +25,12 @@ public class SocketIoPanel extends JPanel {
     String connectionText = "Connect";
     JButton connectDisconnectButton;
     JButton emitButton;
+    ArrayList<String> listenerList;
 
     public SocketIoPanel() {
         this.setLayout(new MigLayout("fill,insets 10 10 10 10"));
+
+        listenerList = new ArrayList<>();
 
         Color background = UIManager.getColor("Table.background");
         Color lineColor = UIManager.getColor("Table.gridColor");
@@ -69,6 +76,12 @@ public class SocketIoPanel extends JPanel {
         InputSocketIoListener inputListener = InputSocketIoListener.getComponent();
         RTextScrollPane emitBodyScrollPane = new RTextScrollPane(emitBody);
 
+        DefaultTableModel listenerDefaultModel = new DefaultTableModel();
+        listenerDefaultModel.addColumn("Listener");
+
+        JTable listenerTable = new JTable(listenerDefaultModel);
+        JScrollPane listenerScrollPane = new JScrollPane(listenerTable);
+
         socketIoLeftPanel.add(emitBodyScrollPane, "grow,push,wrap");
         socketIoLeftPanel.add(emitButton, "growx,pushx,wrap");
         JPanel socketIoRightPanel = new JPanel(new MigLayout("w 200"));
@@ -76,7 +89,7 @@ public class SocketIoPanel extends JPanel {
         socketIoRightPanel.add(inputListener, "pushx,growx,wrap");
         socketIoRightPanel.add(new JButton("Add Listener"), "pushx,growx,wrap");
         socketIoRightPanel.add(new JSeparator(), "pushx,growx,wrap");
-        socketIoRightPanel.add(new JLabel("Listener List"), "pushx,growx,wrap");
+        socketIoRightPanel.add(listenerScrollPane, "push,grow");
         this.add(new JLabel("Response Message"), "growx,pushx,wrap");
 
         RSyntaxTextArea responseBody = new RSyntaxTextArea();
@@ -104,7 +117,18 @@ public class SocketIoPanel extends JPanel {
                 if (!url.isEmpty()) {
                     try {
                         socket = IO.socket(url);
+                        Observable<Long> tryConnect = Observable.interval(1, TimeUnit.SECONDS)
+                                .take(4) // Waiting for 4 second
+                                .map(v -> v + 1)
+                                .doOnComplete(() -> {
+                                    if (!isConnected) {
+                                        responseBody.append("Could not connect to ".concat(socketIoURL.getText()).concat("\n"));
+                                        setStatus(false);
+                                    }
+                                });
+                        Disposable connectDisposable = tryConnect.subscribe();
                         socket.on(Socket.EVENT_CONNECT, args -> {
+                            connectDisposable.dispose();
                             setStatus(true);
                         }).on("reply", args -> {
                             String body = Arrays.toString(args)
