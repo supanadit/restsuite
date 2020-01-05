@@ -12,7 +12,7 @@ public class InputSocketIoMessage extends JTextField {
 
     public static InputSocketIoMessage getComponent() {
         final InputSocketIoMessage tf = new InputSocketIoMessage();
-        tf.setPlaceholder("Connection");
+        tf.setPlaceholder("Channel");
         tf.getDocument().addDocumentListener(new InputTextUrlListener(tf, tf.urlSubject));
         return tf;
     }
