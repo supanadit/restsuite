@@ -185,7 +185,7 @@ public class SocketIoPanel extends JPanel {
                                 .replace("[", "")
                                 .replace("]", "")
                                 .trim();
-                        responseBody.append("reply".concat(" : ").concat(body).concat("\n"));
+                        responseBody.append(listener.concat(" : ").concat(body).concat("\n"));
                     });
                 }
             });
