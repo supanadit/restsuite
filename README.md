@@ -25,6 +25,9 @@ mvn clean compile assembly:single
 ## Todo
 - Environment
 - Collection
+- Proxy Support
+- Setting
+- Project
 
 ## Contribute
 We love to see you contribute this project in any way
