@@ -28,6 +28,8 @@ public class SocketIoPanel extends JPanel {
     DefaultTableModel listenerDefaultModel;
     JTable listenerTable;
 
+    RSyntaxTextArea responseBody;
+
     public SocketIoPanel() {
         this.setLayout(new MigLayout("insets 10 10 10 10"));
 
@@ -93,7 +95,7 @@ public class SocketIoPanel extends JPanel {
         socketIoRightPanel.add(listenerScrollPane, "push,grow");
         this.add(new JLabel("Response Message"), "growx,pushx,wrap");
 
-        RSyntaxTextArea responseBody = new RSyntaxTextArea();
+        responseBody = new RSyntaxTextArea();
         responseBody.setCodeFoldingEnabled(true);
         responseBody.setCurrentLineHighlightColor(background);
         responseBody.setBackground(background);
@@ -130,15 +132,8 @@ public class SocketIoPanel extends JPanel {
                         Disposable connectDisposable = tryConnect.subscribe();
                         socket.on(Socket.EVENT_CONNECT, args -> {
                             connectDisposable.dispose();
+                            reloadSocketListener();
                             setStatus(true);
-                        }).on("reply", args -> {
-                            String body = Arrays.toString(args)
-                                    .replace(",", "")
-                                    .replace("[", "")
-                                    .replace("]", "")
-                                    .trim();
-
-                            responseBody.append("reply".concat(" : ").concat(body).concat("\n"));
                         }).on(Socket.EVENT_DISCONNECT, args -> {
                             setStatus(false);
                             responseBody.append("Disconnected from ".concat(socketIoURL.getText()).concat("\n"));
@@ -173,12 +168,24 @@ public class SocketIoPanel extends JPanel {
     }
 
     public void reloadSocketListener() {
-        listenerDefaultModel.getDataVector().forEach(vector ->{
-            System.out.println(vector.toString().replace(",", "")
-                    .replace("[", "")
-                    .replace("]", "")
-                    .trim());
-        });
+        if (socket != null) {
+            listenerDefaultModel.getDataVector().forEach(vector -> {
+                String listener = vector.toString().replace(",", "")
+                        .replace("[", "")
+                        .replace("]", "")
+                        .trim();
+                if (!socket.hasListeners(listener)) {
+                    socket.on("reply", args -> {
+                        String body = Arrays.toString(args)
+                                .replace(",", "")
+                                .replace("[", "")
+                                .replace("]", "")
+                                .trim();
+                        responseBody.append("reply".concat(" : ").concat(body).concat("\n"));
+                    });
+                }
+            });
+        }
     }
 
     public void setStatus(boolean status) {
