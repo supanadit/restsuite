@@ -3,6 +3,7 @@ package com.supanadit.restsuite.panel;
 import com.supanadit.restsuite.component.InputSocketIoListener;
 import com.supanadit.restsuite.component.InputSocketIoMessage;
 import com.supanadit.restsuite.component.InputSocketIoURL;
+import com.supanadit.restsuite.listener.SocketIOListenerTableRowMenuListener;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.socket.client.IO;
@@ -81,6 +82,7 @@ public class SocketIoPanel extends JPanel {
         listenerDefaultModel.addColumn("Listener");
 
         listenerTable = new JTable(listenerDefaultModel);
+        listenerTable.addMouseListener(new SocketIOListenerTableRowMenuListener(this));
         JScrollPane listenerScrollPane = new JScrollPane(listenerTable);
 
         JButton addListenerButton = new JButton("Add Listener");
@@ -185,6 +187,18 @@ public class SocketIoPanel extends JPanel {
                     });
                 }
             });
+        }
+    }
+
+    public void deleteSelectedRowListener() {
+        if (!(this.listenerTable.getSelectedRow() < 0)) {
+            String deletedListener = this.listenerDefaultModel.getValueAt(this.listenerTable.getSelectedRow(), 0).toString();
+            this.listenerDefaultModel.removeRow(this.listenerTable.getSelectedRow());
+            if (socket != null) {
+                if (socket.hasListeners(deletedListener)) {
+                    socket.off(deletedListener);
+                }
+            }
         }
     }
 
