@@ -10,6 +10,7 @@ import io.socket.client.IO;
 import io.socket.client.Socket;
 import net.miginfocom.swing.MigLayout;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rtextarea.Gutter;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
@@ -40,6 +41,7 @@ public class SocketIoPanel extends JPanel {
         Color lineColor = UIManager.getColor("Table.gridColor");
         Color fontColor = UIManager.getColor("FormattedTextField.foreground");
         Color selectionColor = UIManager.getColor("FormattedTextField.selectionBackground");
+        Color headerForeground = UIManager.getColor("TableHeader.foreground");
 
         connectDisconnectButton = new JButton(connectionText);
 
@@ -79,6 +81,9 @@ public class SocketIoPanel extends JPanel {
         emitButton.setEnabled(isConnected);
         InputSocketIoListener inputListener = InputSocketIoListener.getComponent();
         RTextScrollPane emitBodyScrollPane = new RTextScrollPane(emitBody);
+        Gutter gutterEmitBodyScrollPane = emitBodyScrollPane.getGutter();
+        gutterEmitBodyScrollPane.setBorderColor(lineColor);
+        gutterEmitBodyScrollPane.setLineNumberColor(headerForeground);
 
         listenerDefaultModel = new DefaultTableModel();
         listenerDefaultModel.addColumn("Listener");
@@ -112,6 +117,9 @@ public class SocketIoPanel extends JPanel {
         responseBody.setSelectedTextColor(Color.white);
 
         RTextScrollPane responseBodyScrollPane = new RTextScrollPane(responseBody);
+        Gutter gutterResponseBodyScrollPane = responseBodyScrollPane.getGutter();
+        gutterResponseBodyScrollPane.setBorderColor(lineColor);
+        gutterResponseBodyScrollPane.setLineNumberColor(headerForeground);
 
         this.add(responseBodyScrollPane, "grow,push");
         this.add(socketIoHeadPanel, "north");
