@@ -175,7 +175,7 @@ public class SocketIoPanel extends JPanel {
                         .replace("]", "")
                         .trim();
                 if (!socket.hasListeners(listener)) {
-                    socket.on("reply", args -> {
+                    socket.on(listener, args -> {
                         String body = Arrays.toString(args)
                                 .replace(",", "")
                                 .replace("[", "")
