@@ -45,14 +45,6 @@ public class SocketIoPanel extends JPanel {
 
         connectDisconnectButton = new JButton(connectionText);
 
-        JComboBox<String> messageSendType = new JComboBox<>();
-        messageSendType.addItem("String");
-        messageSendType.addItem("JSON");
-        messageSendType.addItem("Array");
-        messageSendType.addItem("Object");
-        messageSendType.addItem("Number");
-        messageSendType.addItem("Boolean");
-
         InputSocketIoMessage emitChannel = InputSocketIoMessage.getComponent();
 
         JPanel socketIoHeadPanel = new JPanel(new MigLayout("fill"));
@@ -63,7 +55,6 @@ public class SocketIoPanel extends JPanel {
         JPanel socketIoLeftPanel = new JPanel(new MigLayout("w 200"));
         socketIoLeftPanel.add(new JLabel("Send Message"), "growx,pushx,wrap");
         socketIoLeftPanel.add(emitChannel, "growx,pushx,wrap");
-        socketIoLeftPanel.add(messageSendType, "growx,pushx,wrap");
 
         RSyntaxTextArea emitBody = new RSyntaxTextArea();
         emitBody.setCodeFoldingEnabled(true);
