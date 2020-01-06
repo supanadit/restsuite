@@ -30,6 +30,8 @@ public class SocketIoPanel extends JPanel {
     JTable listenerTable;
 
     RSyntaxTextArea responseBody;
+    Disposable connectDisposable;
+    Observable<Long> tryConnect;
 
     public SocketIoPanel() {
         this.setLayout(new MigLayout("insets 10 10 10 10"));
@@ -122,23 +124,23 @@ public class SocketIoPanel extends JPanel {
                 if (!url.isEmpty()) {
                     try {
                         socket = IO.socket(url);
-                        Observable<Long> tryConnect = Observable.interval(1, TimeUnit.SECONDS)
+                        tryConnect = Observable.interval(1, TimeUnit.SECONDS)
                                 .take(4) // Waiting for 4 second
                                 .map(v -> v + 1)
                                 .doOnComplete(() -> {
                                     if (!isConnected) {
-                                        responseBody.append("Could not connect to ".concat(socketIoURL.getText()).concat("\n"));
+                                        responseBody.append("Disconnected from ".concat(socketIoURL.getText()).concat("\n"));
                                         setStatus(false);
                                     }
                                 });
-                        Disposable connectDisposable = tryConnect.subscribe();
+
+                        connectDisposable = tryConnect.subscribe();
                         socket.on(Socket.EVENT_CONNECT, args -> {
                             connectDisposable.dispose();
                             reloadSocketListener();
                             setStatus(true);
                         }).on(Socket.EVENT_DISCONNECT, args -> {
-                            setStatus(false);
-                            responseBody.append("Disconnected from ".concat(socketIoURL.getText()).concat("\n"));
+                            tryConnect.subscribe();
                         });
                         socket.connect();
                         connectDisconnectButton.setEnabled(false);
