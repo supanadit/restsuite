@@ -25,12 +25,11 @@ public class SocketIoPanel extends JPanel {
     String connectionText = "Connect";
     JButton connectDisconnectButton;
     JButton emitButton;
-    ArrayList<String> listenerList;
+    DefaultTableModel listenerDefaultModel;
+    JTable listenerTable;
 
     public SocketIoPanel() {
         this.setLayout(new MigLayout("insets 10 10 10 10"));
-
-        listenerList = new ArrayList<>();
 
         Color background = UIManager.getColor("Table.background");
         Color lineColor = UIManager.getColor("Table.gridColor");
@@ -76,18 +75,20 @@ public class SocketIoPanel extends JPanel {
         InputSocketIoListener inputListener = InputSocketIoListener.getComponent();
         RTextScrollPane emitBodyScrollPane = new RTextScrollPane(emitBody);
 
-        DefaultTableModel listenerDefaultModel = new DefaultTableModel();
+        listenerDefaultModel = new DefaultTableModel();
         listenerDefaultModel.addColumn("Listener");
 
-        JTable listenerTable = new JTable(listenerDefaultModel);
+        listenerTable = new JTable(listenerDefaultModel);
         JScrollPane listenerScrollPane = new JScrollPane(listenerTable);
+
+        JButton addListenerButton = new JButton("Add Listener");
 
         socketIoLeftPanel.add(emitBodyScrollPane, "grow,push,wrap");
         socketIoLeftPanel.add(emitButton, "growx,pushx,wrap");
         JPanel socketIoRightPanel = new JPanel(new MigLayout("w 200"));
         socketIoRightPanel.add(new JLabel("Listener"), "pushx,growx,wrap");
         socketIoRightPanel.add(inputListener, "pushx,growx,wrap");
-        socketIoRightPanel.add(new JButton("Add Listener"), "pushx,growx,wrap");
+        socketIoRightPanel.add(addListenerButton, "pushx,growx,wrap");
         socketIoRightPanel.add(new JSeparator(), "pushx,growx,wrap");
         socketIoRightPanel.add(listenerScrollPane, "push,grow");
         this.add(new JLabel("Response Message"), "growx,pushx,wrap");
@@ -160,6 +161,23 @@ public class SocketIoPanel extends JPanel {
                     socket.emit(emitChannel.getText(), emitBody.getText());
                 }
             }
+        });
+
+        addListenerButton.addActionListener(e -> {
+            String listener = inputListener.getText();
+            if (!listener.isEmpty()) {
+                listenerDefaultModel.addRow(new Object[]{listener});
+                reloadSocketListener();
+            }
+        });
+    }
+
+    public void reloadSocketListener() {
+        listenerDefaultModel.getDataVector().forEach(vector ->{
+            System.out.println(vector.toString().replace(",", "")
+                    .replace("[", "")
+                    .replace("]", "")
+                    .trim());
         });
     }
 
