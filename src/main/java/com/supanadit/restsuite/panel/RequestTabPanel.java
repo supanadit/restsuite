@@ -18,14 +18,14 @@ public class RequestTabPanel extends JTabbedPane {
     public static PublishSubject<RequestBodyType> requestBodyTypeSubject = PublishSubject.create();
 
     public RequestTabPanel(PublishSubject<String> urlSubject) {
-        this.paramsPanel = new ParamsPanel(urlSubject);
-        this.headersPanel = new HeadersPanel();
-        this.bodyPanel = new BodyPanel(true, bodyText, requestBodyRawTypeSubject, requestBodyTypeSubject);
+        paramsPanel = new ParamsPanel(urlSubject);
+        headersPanel = new HeadersPanel();
+        bodyPanel = new BodyPanel(true, bodyText, requestBodyRawTypeSubject, requestBodyTypeSubject);
 
-        this.headersPanel.setSubject(headerTable);
+        headersPanel.setSubject(headerTable);
 
-        this.add("Query Params", this.paramsPanel);
-        this.add("Header", this.headersPanel);
-        this.add("Body", this.bodyPanel);
+        add("Query Params", paramsPanel);
+        add("Header", headersPanel);
+        add("Body", bodyPanel);
     }
 }

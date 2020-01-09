@@ -1,7 +1,6 @@
 package com.supanadit.restsuite;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 import com.supanadit.restsuite.helper.DefaultIcon;
 import com.supanadit.restsuite.listener.DragListener;
 import com.supanadit.restsuite.panel.MainPanel;

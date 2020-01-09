@@ -16,23 +16,23 @@ public class ApiPanel extends JPanel {
     public ApiPanel() {
         super(new MigLayout("insets 10 10 0 0"));
 
-        this.apiName = new JLabel("API URL");
-        this.apiUrl = new InputTextURL();
-        this.requestTypeComboBox = RequestTypeComboBox.getComponent();
-        this.requestTabPanel = new RequestTabPanel(apiUrl.urlSubject);
-        this.responseTabPanel = new ResponseTabPanel();
+        apiName = new JLabel("API URL");
+        apiUrl = new InputTextURL();
+        requestTypeComboBox = RequestTypeComboBox.getComponent();
+        requestTabPanel = new RequestTabPanel(apiUrl.urlSubject);
+        responseTabPanel = new ResponseTabPanel();
 
-        this.sendButton = new RequestApiButton(this.apiUrl, this.requestTypeComboBox);
+        sendButton = new RequestApiButton(apiUrl, requestTypeComboBox);
 
-        this.add(this.apiName, "wrap");
-        this.add(this.apiUrl, "growx, pushx");
-        this.add(this.requestTypeComboBox);
-        this.add(this.sendButton, "wrap");
+        add(apiName, "wrap");
+        add(apiUrl, "growx, pushx");
+        add(requestTypeComboBox);
+        add(sendButton, "wrap");
 
-        this.add(this.requestTabPanel, "growx, pushx, span 3, wrap");
-        this.add(this.responseTabPanel, "growx, growy, pushy, pushx, span 3, h 500");
+        add(requestTabPanel, "growx, pushx, span 3, wrap");
+        add(responseTabPanel, "growx, growy, pushy, pushx, span 3, h 500");
 
-        this.sendButton.setBodyPanel(this.responseTabPanel.body());
+        sendButton.setBodyPanel(this.responseTabPanel.body());
     }
 
     public RequestApiButton getSendButton() {

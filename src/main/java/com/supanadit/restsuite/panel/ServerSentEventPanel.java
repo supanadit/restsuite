@@ -19,15 +19,15 @@ public class ServerSentEventPanel extends JPanel {
     JButton connectDisconnectButton;
 
     public ServerSentEventPanel() {
-        this.setLayout(new MigLayout("insets 10 10 10 10"));
+        setLayout(new MigLayout("insets 10 10 10 10"));
         InputSseURL inputURL = new InputSseURL();
         connectDisconnectButton = new JButton(connectDisconnect);
-        this.add(new JLabel("SSE URL"), "growx,pushx,wrap");
-        this.add(inputURL, "growx,pushx");
-        this.add(connectDisconnectButton, "wrap");
-        this.add(new JLabel("Message"), "pushx,growx,wrap");
+        add(new JLabel("SSE URL"), "growx,pushx,wrap");
+        add(inputURL, "growx,pushx");
+        add(connectDisconnectButton, "wrap");
+        add(new JLabel("Message"), "pushx,growx,wrap");
         JTextArea messageTextArea = new JTextArea();
-        this.add(new JScrollPane(messageTextArea), "push,grow,span");
+        add(new JScrollPane(messageTextArea), "push,grow,span");
 
         ServerSentEvent.Listener listener = new ServerSentEvent.Listener() {
             @Override

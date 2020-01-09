@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class ApiSidePanel extends JPanel {
     public ApiSidePanel() {
-        this.setLayout(new MigLayout("w 300,insets 11 10 10 10"));
+        setLayout(new MigLayout("w 300,insets 11 10 10 10"));
 
 
         JComboBox<EnvironmentItem> environmentComboBox = new JComboBox<>();
@@ -23,13 +23,13 @@ public class ApiSidePanel extends JPanel {
         });
 
         JLabel environmentLabel = new JLabel("Environment");
-        this.add(environmentLabel, "wrap");
-        this.add(environmentComboBox, "pushx,growx");
-        this.add(manageEnvironment, "wrap");
-        this.add(new JLabel("Collection"), "wrap");
+        add(environmentLabel, "wrap");
+        add(environmentComboBox, "pushx,growx");
+        add(manageEnvironment, "wrap");
+        add(new JLabel("Collection"), "wrap");
 
-        this.add(new InputSearchCollection(), "growx, pushx, wrap, span");
-        this.add(new JSeparator(), "wrap,span, growx, pushx");
+        add(new InputSearchCollection(), "growx, pushx, wrap, span");
+        add(new JSeparator(), "wrap,span, growx, pushx");
         DefaultMutableTreeNode style = new DefaultMutableTreeNode("Collection");
         DefaultMutableTreeNode color = new DefaultMutableTreeNode("Point");
         DefaultMutableTreeNode font = new DefaultMutableTreeNode("Get Unique ID");
@@ -46,6 +46,6 @@ public class ApiSidePanel extends JPanel {
         Color background = UIManager.getColor("Panel.background");
         collection.setBackground(background);
 
-        this.add(collection, "push, grow, span, wrap");
+        add(collection, "push, grow, span, wrap");
     }
 }

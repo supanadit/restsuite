@@ -35,7 +35,7 @@ public class SocketIoPanel extends JPanel {
     Observable<Long> tryConnect;
 
     public SocketIoPanel() {
-        this.setLayout(new MigLayout("insets 10 10 10 10"));
+        setLayout(new MigLayout("insets 10 10 10 10"));
 
         Color background = UIManager.getColor("Table.background");
         Color lineColor = UIManager.getColor("Table.gridColor");
@@ -93,7 +93,7 @@ public class SocketIoPanel extends JPanel {
         socketIoRightPanel.add(addListenerButton, "pushx,growx,wrap");
         socketIoRightPanel.add(new JSeparator(), "pushx,growx,wrap");
         socketIoRightPanel.add(listenerScrollPane, "push,grow");
-        this.add(new JLabel("Response Message"), "growx,pushx,wrap");
+        add(new JLabel("Response Message"), "growx,pushx,wrap");
 
         responseBody = new RSyntaxTextArea();
         responseBody.setCodeFoldingEnabled(true);
@@ -112,10 +112,10 @@ public class SocketIoPanel extends JPanel {
         gutterResponseBodyScrollPane.setBorderColor(lineColor);
         gutterResponseBodyScrollPane.setLineNumberColor(headerForeground);
 
-        this.add(responseBodyScrollPane, "grow,push");
-        this.add(socketIoHeadPanel, "north");
-        this.add(socketIoLeftPanel, "west");
-        this.add(socketIoRightPanel, "east");
+        add(responseBodyScrollPane, "grow,push");
+        add(socketIoHeadPanel, "north");
+        add(socketIoLeftPanel, "west");
+        add(socketIoRightPanel, "east");
 
         connectDisconnectButton.addActionListener(e -> {
             String url = socketIoURL.getText();
@@ -192,9 +192,9 @@ public class SocketIoPanel extends JPanel {
     }
 
     public void deleteSelectedRowListener() {
-        if (!(this.listenerTable.getSelectedRow() < 0)) {
-            String deletedListener = this.listenerDefaultModel.getValueAt(this.listenerTable.getSelectedRow(), 0).toString();
-            this.listenerDefaultModel.removeRow(this.listenerTable.getSelectedRow());
+        if (!(listenerTable.getSelectedRow() < 0)) {
+            String deletedListener = listenerDefaultModel.getValueAt(listenerTable.getSelectedRow(), 0).toString();
+            listenerDefaultModel.removeRow(listenerTable.getSelectedRow());
             if (socket != null) {
                 if (socket.hasListeners(deletedListener)) {
                     socket.off(deletedListener);

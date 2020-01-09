@@ -17,10 +17,10 @@ public class EnvironmentListPanel extends JDialog {
     JTable table;
 
     public EnvironmentListPanel() {
-        this.setIconImage(new DefaultIcon().getImage());
-        this.setTitle("Environment");
-        this.setResizable(false);
-        this.setLayout(new MigLayout("fill,insets 0 0 0 0"));
+        setIconImage(new DefaultIcon().getImage());
+        setTitle("Environment");
+        setResizable(false);
+        setLayout(new MigLayout("fill,insets 0 0 0 0"));
 
         defaultTableModel = new DefaultTableModel();
         defaultTableModel.addColumn("Environment Variable");
@@ -30,9 +30,9 @@ public class EnvironmentListPanel extends JDialog {
 
         scrollPane.addMouseListener(new EnvironmentListScrollPaneMenuListener(this));
 
-        this.add(scrollPane, "grow");
-        this.setSize(500, 500);
-        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+        add(scrollPane, "grow");
+        setSize(500, 500);
+        setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2 - getSize().height / 2);
 
 
         // Dialog New
@@ -49,7 +49,7 @@ public class EnvironmentListPanel extends JDialog {
         JButton cancel = new JButton("Cancel");
         add.setEnabled(false);
         add.addActionListener(e -> {
-            DefaultTableModel dtm = (DefaultTableModel) this.table.getModel();
+            DefaultTableModel dtm = (DefaultTableModel) table.getModel();
             dtm.addRow(new Object[]{environmentName.getText()});
             dialogNew.setVisible(false);
             environmentName.setText(null);

@@ -19,10 +19,10 @@ public class WebsocketPanel extends JPanel {
     public WebsocketPanel() {
         JTextArea logMessage = new JTextArea();
 
-        this.setLayout(new MigLayout("insets 10 10 10 10"));
-        this.add(new JLabel("Websocket URL"), "growx,pushx,wrap");
+        setLayout(new MigLayout("insets 10 10 10 10"));
+        add(new JLabel("Websocket URL"), "growx,pushx,wrap");
         InputWebsocketURL socketURL = new InputWebsocketURL();
-        this.add(socketURL, "growx,pushx");
+        add(socketURL, "growx,pushx");
         JButton connectButton = new JButton("Connect");
         connectButton.addActionListener((e) -> {
             request = new Request.Builder().url(socketURL.getText()).build();
@@ -30,12 +30,12 @@ public class WebsocketPanel extends JPanel {
             ws = client.newWebSocket(request, wsListener);
             logMessage.append("Connected to ".concat(socketURL.getText()).concat("\n"));
         });
-        this.add(connectButton, "wrap");
+        add(connectButton, "wrap");
 
-        this.add(new JLabel("Message"), "pushx,growx,wrap");
-        this.add(new JScrollPane(logMessage), "push,grow,span,wrap");
+        add(new JLabel("Message"), "pushx,growx,wrap");
+        add(new JScrollPane(logMessage), "push,grow,span,wrap");
         InputWebsocketMessage message = new InputWebsocketMessage();
-        this.add(message, "pushx,growx");
+        add(message, "pushx,growx");
 
         JButton sendButton = new JButton("Send");
 
@@ -49,6 +49,6 @@ public class WebsocketPanel extends JPanel {
             }
         });
 
-        this.add(sendButton, "growx");
+        add(sendButton, "growx");
     }
 }

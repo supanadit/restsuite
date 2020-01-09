@@ -36,15 +36,16 @@ public class BodyPanel extends JPanel {
         super(new MigLayout());
 
         this.withOptions = withOptions;
-        this.bodyTextArea = new BodyTextArea();
         this.requestBodyRawTypeSubject = requestBodyRawTypeSubject;
         this.requestBodyTypeSubject = requestBodyTypeSubject;
 
+        bodyTextArea = new BodyTextArea();
+
         if (bodySubject != null) {
-            this.bodyTextArea.getDocument().addDocumentListener(new BodyTextListener(this.bodyTextArea, bodySubject));
+            bodyTextArea.getDocument().addDocumentListener(new BodyTextListener(bodyTextArea, bodySubject));
         }
 
-        spBody = new RTextScrollPane(this.bodyTextArea);
+        spBody = new RTextScrollPane(bodyTextArea);
         Gutter gutter = spBody.getGutter();
 
         Color lineColor = UIManager.getColor("Table.gridColor");
@@ -55,19 +56,19 @@ public class BodyPanel extends JPanel {
 
         requestTable = new RequestTable();
 
-        if (this.withOptions) {
+        if (withOptions) {
             requestBodyTypeComboBox = RequestBodyTypeComboBox.getComponent();
             requestBodyRawTypeComboBox = RequestBodyRawTypeComboBox.getComponent();
 
             if (requestBodyRawTypeComboBox.getItemCount() != 0) {
                 RequestBodyRawType requestBodyRawType = requestBodyRawTypeComboBox.getItemAt(0);
-                this.bodyTextArea.setSyntaxEditingStyle(requestBodyRawType.getSyntax());
+                bodyTextArea.setSyntaxEditingStyle(requestBodyRawType.getSyntax());
             }
 
             requestBodyTypeComboBox.addActionListener((e) -> {
                 RequestBodyType requestBodyType = (RequestBodyType) requestBodyTypeComboBox.getSelectedItem();
                 if (requestBodyType != null) {
-                    this.requestBodyTypeSubject.onNext(requestBodyType);
+                    requestBodyTypeSubject.onNext(requestBodyType);
                 }
                 assert requestBodyType != null;
                 subject.onNext(requestBodyType.getName().equals(RequestBodyType.RAW().getName()));
@@ -76,45 +77,45 @@ public class BodyPanel extends JPanel {
             Disposable disposable = subject.subscribe((e) -> {
                 if (e) {
                     requestBodyRawTypeComboBox.setEnabled(true);
-                    this.raw = true;
+                    raw = true;
                 } else {
                     requestBodyRawTypeComboBox.setEnabled(false);
                     requestBodyRawTypeComboBox.setSelectedIndex(0);
-                    this.raw = false;
+                    raw = false;
                 }
-                if (this.raw) {
-                    this.add(spBody, "grow, push, span 3");
-                    this.remove(requestTable);
+                if (raw) {
+                    add(spBody, "grow, push, span 3");
+                    remove(requestTable);
                 } else {
-                    this.remove(spBody);
-                    this.add(requestTable, "grow, push, span 3");
+                    remove(spBody);
+                    add(requestTable, "grow, push, span 3");
                 }
-                this.updateUI();
+                updateUI();
             });
 
             requestBodyRawTypeComboBox.addActionListener((e) -> {
                 RequestBodyRawType requestBodyRawType = (RequestBodyRawType) requestBodyRawTypeComboBox.getSelectedItem();
                 if (requestBodyRawTypeSubject != null) {
                     assert requestBodyRawType != null;
-                    this.requestBodyRawTypeSubject.onNext(requestBodyRawType);
+                    requestBodyRawTypeSubject.onNext(requestBodyRawType);
                 }
                 assert requestBodyRawType != null;
-                this.bodyTextArea.setSyntaxEditingStyle(requestBodyRawType.getSyntax());
+                bodyTextArea.setSyntaxEditingStyle(requestBodyRawType.getSyntax());
             });
 
-            this.add(requestBodyTypeComboBox);
-            this.add(requestBodyRawTypeComboBox, "wrap");
+            add(requestBodyTypeComboBox);
+            add(requestBodyRawTypeComboBox, "wrap");
         } else {
-            this.bodyTextArea.setSyntaxEditingStyle(this.defaultFormat);
+            bodyTextArea.setSyntaxEditingStyle(defaultFormat);
         }
-        this.add(spBody, "grow, push, span 3");
+        add(spBody, "grow, push, span 3");
     }
 
     public void setSyntax(String value) {
-        this.bodyTextArea.setSyntaxEditingStyle(value);
+        bodyTextArea.setSyntaxEditingStyle(value);
     }
 
     public void setText(String text) {
-        this.bodyTextArea.setText(text);
+        bodyTextArea.setText(text);
     }
 }

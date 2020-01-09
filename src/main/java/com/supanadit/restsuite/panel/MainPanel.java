@@ -11,9 +11,9 @@ public class MainPanel extends JTabbedPane {
         coreApiPanel.add(new ApiSidePanel(), BorderLayout.LINE_END);
         coreApiPanel.add(new ApiPanel(), BorderLayout.CENTER);
 
-        this.add("Rest API", coreApiPanel);
-        this.add("Websocket", new WebsocketPanel());
-        this.add("SSE", new ServerSentEventPanel());
-        this.add("Socket IO", new SocketIoPanel());
+        add("Rest API", coreApiPanel);
+        add("Websocket", new WebsocketPanel());
+        add("SSE", new ServerSentEventPanel());
+        add("Socket IO", new SocketIoPanel());
     }
 }

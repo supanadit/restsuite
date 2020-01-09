@@ -17,13 +17,13 @@ public class ParamsPanel extends JPanel {
 
         this.urlSubject = urlSubject;
 
-        this.paramsTable = new RequestTable(false, false, false);
+        paramsTable = new RequestTable(false, false, false);
 
-        this.urlSubject.throttleWithTimeout(300, TimeUnit.MILLISECONDS).subscribe((s) -> {
+        urlSubject.throttleWithTimeout(300, TimeUnit.MILLISECONDS).subscribe((s) -> {
             UrlParser urlParser = new UrlParser(s);
-            this.paramsTable.setFromRequestArrayList(urlParser.getQueryParams());
+            paramsTable.setFromRequestArrayList(urlParser.getQueryParams());
         });
 
-        this.add(paramsTable, "growx,pushx");
+        add(paramsTable, "growx,pushx");
     }
 }

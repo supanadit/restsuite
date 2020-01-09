@@ -6,12 +6,12 @@ public class ResponseTabPanel extends JTabbedPane {
     protected BodyPanel bodyPanel;
 
     public ResponseTabPanel() {
-        this.bodyPanel = new BodyPanel(false, null, null, null);
+        bodyPanel = new BodyPanel(false, null, null, null);
 
-        this.add("Response", this.bodyPanel);
+        add("Response", bodyPanel);
     }
 
     public BodyPanel body() {
-        return this.bodyPanel;
+        return bodyPanel;
     }
 }
