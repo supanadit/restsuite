@@ -1,19 +1,17 @@
 package com.supanadit.restsuite.component;
 
 import com.supanadit.restsuite.listener.EditableCellFocusAction;
-import com.supanadit.restsuite.listener.RequestKeyboardTableRowListener;
-import com.supanadit.restsuite.listener.RequestMouseScrollPaneMenuListener;
-import com.supanadit.restsuite.listener.RequestMouseTableRowMenuListener;
 import com.supanadit.restsuite.model.Request;
 import io.reactivex.subjects.PublishSubject;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.util.ArrayList;
 
 public class RequestBodyTable extends JScrollPane {
     protected DefaultTableModel defaultTableModel;
-    protected JTable requestTable;
+    protected JTable requestBodyTable;
     protected PublishSubject<JTable> subject;
 
 
@@ -25,19 +23,25 @@ public class RequestBodyTable extends JScrollPane {
             }
         };
 
+        defaultTableModel.addColumn("Type");
         defaultTableModel.addColumn("Key");
         defaultTableModel.addColumn("Value");
 
-        requestTable = new JTable(defaultTableModel);
+        requestBodyTable = new JTable(defaultTableModel);
 
-        setViewportView(requestTable);
+        setViewportView(requestBodyTable);
 
-        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("TAB"));
-        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("shift TAB"));
-        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("RIGHT"));
-        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("LEFT"));
-        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("UP"));
-        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("DOWN"));
+        TableColumn comboCol1 = requestBodyTable.getColumnModel().getColumn(0);
+        comboCol1.setCellEditor(new RequestBodyComboBoxTypeColumn());
+
+        addNewEmptyRow();
+
+        new EditableCellFocusAction(requestBodyTable, KeyStroke.getKeyStroke("TAB"));
+        new EditableCellFocusAction(requestBodyTable, KeyStroke.getKeyStroke("shift TAB"));
+        new EditableCellFocusAction(requestBodyTable, KeyStroke.getKeyStroke("RIGHT"));
+        new EditableCellFocusAction(requestBodyTable, KeyStroke.getKeyStroke("LEFT"));
+        new EditableCellFocusAction(requestBodyTable, KeyStroke.getKeyStroke("UP"));
+        new EditableCellFocusAction(requestBodyTable, KeyStroke.getKeyStroke("DOWN"));
     }
 
     public RequestBodyTable() {
@@ -55,18 +59,18 @@ public class RequestBodyTable extends JScrollPane {
     }
 
     public DefaultTableModel getModel() {
-        return (DefaultTableModel) requestTable.getModel();
+        return (DefaultTableModel) requestBodyTable.getModel();
     }
 
     public void deleteSelectedRow() {
-        if (!(requestTable.getSelectedRow() < 0)) {
-            getModel().removeRow(requestTable.getSelectedRow());
+        if (!(requestBodyTable.getSelectedRow() < 0)) {
+            getModel().removeRow(requestBodyTable.getSelectedRow());
             if (getModel().getRowCount() != 0) {
-                requestTable.requestFocus();
-                requestTable.changeSelection(getModel().getRowCount() - 1, 0, true, false);
+                requestBodyTable.requestFocus();
+                requestBodyTable.changeSelection(getModel().getRowCount() - 1, 0, true, false);
             }
         }
-        publishTable(requestTable);
+        publishTable(requestBodyTable);
     }
 
     public void addNewEmptyRow() {
@@ -81,11 +85,11 @@ public class RequestBodyTable extends JScrollPane {
         getModel().addRow(new Object[]{request.getKey(), request.getValue()});
         if (withFocus) {
             if (getModel().getRowCount() != 0) {
-                requestTable.editCellAt(getModel().getRowCount() - 1, 0);
-                requestTable.requestFocus();
+                requestBodyTable.editCellAt(getModel().getRowCount() - 1, 0);
+                requestBodyTable.requestFocus();
             }
         }
-        publishTable(requestTable);
+        publishTable(requestBodyTable);
     }
 
     public void setFromRequestArrayList(ArrayList<Request> requestArrayList) {

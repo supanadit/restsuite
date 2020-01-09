@@ -135,7 +135,11 @@ public class Main {
             file.add(new JMenuItem("Export"));
             file.add(new JMenuItem("Import"));
             file.addSeparator();
-            file.add(new JMenuItem("Exit"));
+            JMenuItem exitItem = new JMenuItem("Exit");
+            exitItem.addActionListener(e -> {
+                frame.dispose();
+            });
+            file.add(exitItem);
             menuBar.add(file);
 
             frame.setJMenuBar(menuBar);
