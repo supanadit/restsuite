@@ -13,16 +13,16 @@ public class BodyTextArea extends RSyntaxTextArea {
         Color fontColor = UIManager.getColor("FormattedTextField.foreground");
         Color selectionColor = UIManager.getColor("FormattedTextField.selectionBackground");
 
-        this.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HTML);
-        this.setCodeFoldingEnabled(true);
-        this.setCurrentLineHighlightColor(background);
-        this.setBackground(background);
-        this.setTabLineColor(background);
-        this.setBorder(BorderFactory.createLineBorder(lineColor));
-        this.setForeground(fontColor);
-        this.setSelectionColor(selectionColor);
+        setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HTML);
+        setCodeFoldingEnabled(true);
+        setCurrentLineHighlightColor(background);
+        setBackground(background);
+        setTabLineColor(background);
+        setBorder(BorderFactory.createLineBorder(lineColor));
+        setForeground(fontColor);
+        setSelectionColor(selectionColor);
         // This Code let selected text be white
-        this.setUseSelectedTextColor(true);
-        this.setSelectedTextColor(Color.white);
+        setUseSelectedTextColor(true);
+        setSelectedTextColor(Color.white);
     }
 }

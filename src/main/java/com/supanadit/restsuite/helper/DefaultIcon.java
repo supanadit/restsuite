@@ -10,6 +10,6 @@ public class DefaultIcon extends ImageIcon {
     public DefaultIcon() {
         URL iconURL = Main.class.getClassLoader().getResource("icon/icon.png");
         assert iconURL != null;
-        this.setImage(Toolkit.getDefaultToolkit().getImage(iconURL));
+        setImage(Toolkit.getDefaultToolkit().getImage(iconURL));
     }
 }

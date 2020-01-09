@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class RequestBodyRawTypeComboBox extends JComboBox<RequestBodyRawType> {
     public RequestBodyRawTypeComboBox() {
-        this.setRenderer(new RequestBodyRawTypeRenderer());
+        setRenderer(new RequestBodyRawTypeRenderer());
     }
 
     public static RequestBodyRawTypeComboBox getComponent() {

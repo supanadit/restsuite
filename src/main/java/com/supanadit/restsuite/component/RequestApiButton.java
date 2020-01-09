@@ -25,33 +25,33 @@ public class RequestApiButton extends JButton {
     protected RequestBodyRawType requestBodyRawType = RequestBodyRawType.JSON();
 
     public RequestApiButton(InputTextURL inputTextURL, RequestTypeComboBox requestTypeComboBox) {
-        this.setText("Send");
+        setText("Send");
         this.requestTypeComboBox = requestTypeComboBox;
 
         this.inputTextURL = inputTextURL;
 
-        this.client = new OkHttpClient();
+        client = new OkHttpClient();
 
         RequestTabPanel.headerTable.subscribe((e) -> {
-            this.headerTable = e;
+            headerTable = e;
         });
 
         RequestTabPanel.bodyText.throttleWithTimeout(300, TimeUnit.MILLISECONDS).subscribe((e) -> {
-            this.body = e;
+            body = e;
         });
 
         RequestTabPanel.requestBodyTypeSubject.subscribe((e) -> {
-            this.requestType = e;
+            requestType = e;
         });
 
         RequestTabPanel.requestBodyRawTypeSubject.subscribe((e) -> {
-            this.requestBodyRawType = e;
+            requestBodyRawType = e;
         });
 
-        this.addActionListener((e) -> {
+        addActionListener((e) -> {
             DefaultTableModel modelHeader = null;
-            if (this.headerTable != null) {
-                modelHeader = (DefaultTableModel) this.headerTable.getModel();
+            if (headerTable != null) {
+                modelHeader = (DefaultTableModel) headerTable.getModel();
             }
             Request.Builder requestBuilder = new Request.Builder();
             if (modelHeader != null) {
@@ -60,33 +60,33 @@ public class RequestApiButton extends JButton {
                 }
             }
 
-            RequestType requestType = (RequestType) this.requestTypeComboBox.getSelectedItem();
+            RequestType requestType = (RequestType) requestTypeComboBox.getSelectedItem();
             assert requestType != null;
             if (requestType.getName().equals(RequestType.GET().getName())) {
                 // GET
                 requestBuilder.get();
             } else if (requestType.getName().equals(RequestType.POST().getName())) {
                 // POST
-                MediaType JSON = MediaType.parse(this.requestBodyRawType.getHeader());
-                RequestBody requestBody = RequestBody.create(this.body, JSON);
+                MediaType JSON = MediaType.parse(requestBodyRawType.getHeader());
+                RequestBody requestBody = RequestBody.create(body, JSON);
                 requestBuilder.post(requestBody);
             } else if (requestType.getName().equals(RequestType.PUT().getName())) {
                 // PUT
-                MediaType JSON = MediaType.parse(this.requestBodyRawType.getHeader());
-                RequestBody requestBody = RequestBody.create(this.body, JSON);
+                MediaType JSON = MediaType.parse(requestBodyRawType.getHeader());
+                RequestBody requestBody = RequestBody.create(body, JSON);
                 requestBuilder.put(requestBody);
             } else if (requestType.getName().equals(RequestType.DELETE().getName())) {
                 // DELETE
-                if (!this.body.isBlank() && !this.body.isEmpty()) {
-                    MediaType JSON = MediaType.parse(this.requestBodyRawType.getHeader());
-                    RequestBody requestBody = RequestBody.create(this.body, JSON);
+                if (!body.isBlank() && !body.isEmpty()) {
+                    MediaType JSON = MediaType.parse(requestBodyRawType.getHeader());
+                    RequestBody requestBody = RequestBody.create(body, JSON);
                     requestBuilder.delete(requestBody);
                 } else {
                     requestBuilder.delete();
                 }
             }
 
-            Request request = requestBuilder.url(this.inputTextURL.getText()).build();
+            Request request = requestBuilder.url(inputTextURL.getText()).build();
             try (Response response = client.newCall(request).execute()) {
                 String[] headerSplit = response.headers().get("Content-Type").split(";", -1);
                 if (headerSplit.length != 0) {
@@ -102,14 +102,14 @@ public class RequestApiButton extends JButton {
                             header = headerSplit[0];
                             break;
                     }
-                    this.bodyPanel.setSyntax(header);
+                    bodyPanel.setSyntax(header);
                 } else {
-                    this.bodyPanel.setSyntax(SyntaxConstants.SYNTAX_STYLE_NONE);
+                    bodyPanel.setSyntax(SyntaxConstants.SYNTAX_STYLE_NONE);
                 }
-                if (this.bodyPanel == null) {
+                if (bodyPanel == null) {
                     System.out.println(Objects.requireNonNull(response.body()).string());
                 } else {
-                    this.bodyPanel.setText(Objects.requireNonNull(response.body()).string());
+                    bodyPanel.setText(Objects.requireNonNull(response.body()).string());
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();

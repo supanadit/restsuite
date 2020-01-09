@@ -18,36 +18,36 @@ public class RequestTable extends JScrollPane {
 
 
     public RequestTable(boolean mouseAction, boolean keyboardAction, boolean editable) {
-        this.defaultTableModel = new DefaultTableModel() {
+        defaultTableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return editable;
             }
         };
 
-        this.defaultTableModel.addColumn("Key");
-        this.defaultTableModel.addColumn("Value");
+        defaultTableModel.addColumn("Key");
+        defaultTableModel.addColumn("Value");
 
-        this.requestTable = new JTable(this.defaultTableModel);
+        requestTable = new JTable(defaultTableModel);
 
-        this.setViewportView(this.requestTable);
+        setViewportView(requestTable);
 
-        new EditableCellFocusAction(this.requestTable, KeyStroke.getKeyStroke("TAB"));
-        new EditableCellFocusAction(this.requestTable, KeyStroke.getKeyStroke("shift TAB"));
-        new EditableCellFocusAction(this.requestTable, KeyStroke.getKeyStroke("RIGHT"));
-        new EditableCellFocusAction(this.requestTable, KeyStroke.getKeyStroke("LEFT"));
-        new EditableCellFocusAction(this.requestTable, KeyStroke.getKeyStroke("UP"));
-        new EditableCellFocusAction(this.requestTable, KeyStroke.getKeyStroke("DOWN"));
+        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("TAB"));
+        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("shift TAB"));
+        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("RIGHT"));
+        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("LEFT"));
+        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("UP"));
+        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("DOWN"));
 
         if (mouseAction) {
-            this.requestTable.addMouseListener(new RequestMouseTableRowMenuListener(this));
+            requestTable.addMouseListener(new RequestMouseTableRowMenuListener(this));
         }
         if (keyboardAction) {
-            this.requestTable.addKeyListener(new RequestKeyboardTableRowListener(this));
+            requestTable.addKeyListener(new RequestKeyboardTableRowListener(this));
         }
 
         if (mouseAction) {
-            this.addMouseListener(new RequestMouseScrollPaneMenuListener(this));
+            addMouseListener(new RequestMouseScrollPaneMenuListener(this));
         }
     }
 
@@ -60,53 +60,53 @@ public class RequestTable extends JScrollPane {
     }
 
     public void publishTable(JTable table) {
-        if (this.subject != null) {
-            this.subject.onNext(table);
+        if (subject != null) {
+            subject.onNext(table);
         }
     }
 
     public DefaultTableModel getModel() {
-        return (DefaultTableModel) this.requestTable.getModel();
+        return (DefaultTableModel) requestTable.getModel();
     }
 
     public void deleteSelectedRow() {
-        if (!(this.requestTable.getSelectedRow() < 0)) {
-            this.getModel().removeRow(this.requestTable.getSelectedRow());
-            if (this.getModel().getRowCount() != 0) {
-                this.requestTable.requestFocus();
-                this.requestTable.changeSelection(this.getModel().getRowCount() - 1, 0, true, false);
+        if (!(requestTable.getSelectedRow() < 0)) {
+            getModel().removeRow(requestTable.getSelectedRow());
+            if (getModel().getRowCount() != 0) {
+                requestTable.requestFocus();
+                requestTable.changeSelection(getModel().getRowCount() - 1, 0, true, false);
             }
         }
-        this.publishTable(this.requestTable);
+        publishTable(requestTable);
     }
 
     public void addNewEmptyRow() {
-        this.addRow(new Request("", ""));
+        addRow(new Request("", ""));
     }
 
     public void addRow(Request request) {
-        this.addRow(request, true);
+        addRow(request, true);
     }
 
     public void addRow(Request request, boolean withFocus) {
-        this.getModel().addRow(new Object[]{request.getKey(), request.getValue()});
+        getModel().addRow(new Object[]{request.getKey(), request.getValue()});
         if (withFocus) {
-            if (this.getModel().getRowCount() != 0) {
-                this.requestTable.editCellAt(this.getModel().getRowCount() - 1, 0);
-                this.requestTable.requestFocus();
+            if (getModel().getRowCount() != 0) {
+                requestTable.editCellAt(getModel().getRowCount() - 1, 0);
+                requestTable.requestFocus();
             }
         }
-        this.publishTable(this.requestTable);
+        publishTable(requestTable);
     }
 
     public void setFromRequestArrayList(ArrayList<Request> requestArrayList) {
-        int rowCount = this.getModel().getRowCount();
+        int rowCount = getModel().getRowCount();
         for (int i = rowCount - 1; i >= 0; i--) {
-            this.getModel().removeRow(i);
+            getModel().removeRow(i);
         }
 
         for (Request request : requestArrayList) {
-            this.addRow(request, false);
+            addRow(request, false);
         }
     }
 }

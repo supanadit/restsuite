@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class RequestTypeComboBox extends JComboBox<RequestType> {
     public RequestTypeComboBox() {
-        this.setRenderer(new RequestTypeRenderer());
+        setRenderer(new RequestTypeRenderer());
     }
 
     public static RequestTypeComboBox getComponent() {

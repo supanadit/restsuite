@@ -10,12 +10,12 @@ public class HeadersPanel extends JPanel {
 
     public HeadersPanel() {
         super(new MigLayout());
-        this.requestTable = new RequestTable();
+        requestTable = new RequestTable();
 
-        this.add(this.requestTable, "growx,pushx");
+        add(requestTable, "growx,pushx");
     }
 
     public void setSubject(PublishSubject<JTable> table) {
-        this.requestTable.setSubject(table);
+        requestTable.setSubject(table);
     }
 }
