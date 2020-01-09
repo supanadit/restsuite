@@ -73,7 +73,7 @@ public class BodyPanel extends JPanel {
                 subject.onNext(requestBodyType.getName().equals(RequestBodyType.RAW().getName()));
             });
 
-            subject.subscribe((e) -> {
+            Disposable disposable = subject.subscribe((e) -> {
                 if (e) {
                     requestBodyRawTypeComboBox.setEnabled(true);
                     this.raw = true;

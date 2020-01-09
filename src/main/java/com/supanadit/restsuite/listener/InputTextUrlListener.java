@@ -7,7 +7,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class InputTextUrlListener implements DocumentListener {
-    JTextField textField;
+    public JTextField textField;
     public PublishSubject<String> subject;
 
     public InputTextUrlListener(JTextField textField, PublishSubject<String> subject) {
@@ -31,6 +31,6 @@ public class InputTextUrlListener implements DocumentListener {
     }
 
     protected void valueChanged() {
-        this.subject.onNext(this.textField.getText());
+        subject.onNext(this.textField.getText());
     }
 }

@@ -45,11 +45,11 @@ public class SocketIoPanel extends JPanel {
 
         connectDisconnectButton = new JButton(connectionText);
 
-        InputSocketIoMessage emitChannel = InputSocketIoMessage.getComponent();
+        InputSocketIoMessage emitChannel = new InputSocketIoMessage();
 
         JPanel socketIoHeadPanel = new JPanel(new MigLayout("fill"));
         socketIoHeadPanel.add(new JLabel("SocketIO URL"), "growx,pushx,wrap");
-        InputSocketIoURL socketIoURL = InputSocketIoURL.getComponent();
+        InputSocketIoURL socketIoURL = new InputSocketIoURL();
         socketIoHeadPanel.add(socketIoURL, "growx,pushx");
         socketIoHeadPanel.add(connectDisconnectButton);
         JPanel socketIoLeftPanel = new JPanel(new MigLayout("w 200"));
@@ -70,7 +70,7 @@ public class SocketIoPanel extends JPanel {
 
         emitButton = new JButton("Emit");
         emitButton.setEnabled(isConnected);
-        InputSocketIoListener inputListener = InputSocketIoListener.getComponent();
+        InputSocketIoListener inputListener = new InputSocketIoListener();
         RTextScrollPane emitBodyScrollPane = new RTextScrollPane(emitBody);
         Gutter gutterEmitBodyScrollPane = emitBodyScrollPane.getGutter();
         gutterEmitBodyScrollPane.setBorderColor(lineColor);

@@ -1,7 +1,5 @@
 package com.supanadit.restsuite.listener;
 
-import com.supanadit.restsuite.component.RequestTable;
-
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

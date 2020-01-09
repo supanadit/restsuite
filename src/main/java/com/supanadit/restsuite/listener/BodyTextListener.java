@@ -17,20 +17,20 @@ public class BodyTextListener implements DocumentListener {
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-        this.valueChanged();
+        valueChanged();
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
-        this.valueChanged();
+        valueChanged();
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        this.valueChanged();
+        valueChanged();
     }
 
     protected void valueChanged() {
-        this.subject.onNext(this.bodyTextArea.getText());
+        subject.onNext(bodyTextArea.getText());
     }
 }

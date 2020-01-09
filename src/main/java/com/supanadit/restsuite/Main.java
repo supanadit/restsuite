@@ -1,5 +1,6 @@
 package com.supanadit.restsuite;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.supanadit.restsuite.helper.DefaultIcon;
 import com.supanadit.restsuite.listener.DragListener;
@@ -19,7 +20,7 @@ public class Main {
         System.setProperty("awt.useSystemAAFontSettings", "on");
         System.setProperty("swing.aatext", "true");
         SwingUtilities.invokeLater(() -> {
-            FlatLightLaf.install();
+            FlatDarculaLaf.install();
 
             JFrame frame = new JFrame("Rest Suite");
             frame.setName("Rest API Testing for Professional");
@@ -126,6 +127,19 @@ public class Main {
 
             Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
+            JMenuBar menuBar = new JMenuBar();
+            JMenu file = new JMenu("File");
+
+            file.add(new JMenuItem("New Project"));
+            file.add(new JMenuItem("Open Project"));
+            file.addSeparator();
+            file.add(new JMenuItem("Export"));
+            file.add(new JMenuItem("Import"));
+            file.addSeparator();
+            file.add(new JMenuItem("Exit"));
+            menuBar.add(file);
+
+            frame.setJMenuBar(menuBar);
             frame.add(new MainPanel(), BorderLayout.CENTER);
             frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
             frame.setSize(dimension);

@@ -33,8 +33,7 @@ public class EditableCellFocusAction extends WrappedAction implements ActionList
 
             //  We didn't move anywhere, reset cell selection and get out.
 
-            if (row == table.getSelectedRow()
-                    && column == table.getSelectedColumn()) {
+            if (row == table.getSelectedRow() && column == table.getSelectedColumn()) {
                 table.changeSelection(originalRow, originalColumn, false, false);
                 break;
             }

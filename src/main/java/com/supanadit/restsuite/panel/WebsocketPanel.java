@@ -21,7 +21,7 @@ public class WebsocketPanel extends JPanel {
 
         this.setLayout(new MigLayout("insets 10 10 10 10"));
         this.add(new JLabel("Websocket URL"), "growx,pushx,wrap");
-        InputWebsocketURL socketURL = InputWebsocketURL.getComponent();
+        InputWebsocketURL socketURL = new InputWebsocketURL();
         this.add(socketURL, "growx,pushx");
         JButton connectButton = new JButton("Connect");
         connectButton.addActionListener((e) -> {
@@ -34,7 +34,7 @@ public class WebsocketPanel extends JPanel {
 
         this.add(new JLabel("Message"), "pushx,growx,wrap");
         this.add(new JScrollPane(logMessage), "push,grow,span,wrap");
-        InputWebsocketMessage message = InputWebsocketMessage.getComponent();
+        InputWebsocketMessage message = new InputWebsocketMessage();
         this.add(message, "pushx,growx");
 
         JButton sendButton = new JButton("Send");

@@ -23,7 +23,7 @@ public class RequestMouseScrollPaneMenuListener extends MouseAdapter {
     }
 
     private void doPop(MouseEvent e) {
-        RequestMouseScrollPaneMenu menu = new RequestMouseScrollPaneMenu(this.table);
+        RequestMouseScrollPaneMenu menu = new RequestMouseScrollPaneMenu(table);
         menu.show(e.getComponent(), e.getX(), e.getY());
     }
 }

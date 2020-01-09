@@ -1,7 +1,5 @@
 package com.supanadit.restsuite.panel;
 
-import com.supanadit.restsuite.panel.BodyPanel;
-
 import javax.swing.*;
 
 public class ResponseTabPanel extends JTabbedPane {

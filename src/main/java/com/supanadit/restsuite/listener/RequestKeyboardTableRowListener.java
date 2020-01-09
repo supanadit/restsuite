@@ -20,10 +20,10 @@ public class RequestKeyboardTableRowListener implements KeyListener {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_DELETE:
-                this.table.deleteSelectedRow();
+                table.deleteSelectedRow();
                 break;
             case KeyEvent.VK_ENTER:
-                this.table.addNewEmptyRow();
+                table.addNewEmptyRow();
                 break;
         }
     }

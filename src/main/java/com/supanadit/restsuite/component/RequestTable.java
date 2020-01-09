@@ -21,7 +21,6 @@ public class RequestTable extends JScrollPane {
         this.defaultTableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                //all cells false
                 return editable;
             }
         };

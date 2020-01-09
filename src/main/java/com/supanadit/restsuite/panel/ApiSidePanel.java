@@ -28,7 +28,7 @@ public class ApiSidePanel extends JPanel {
         this.add(manageEnvironment, "wrap");
         this.add(new JLabel("Collection"), "wrap");
 
-        this.add(InputSearchCollection.getComponent(), "growx, pushx, wrap, span");
+        this.add(new InputSearchCollection(), "growx, pushx, wrap, span");
         this.add(new JSeparator(), "wrap,span, growx, pushx");
         DefaultMutableTreeNode style = new DefaultMutableTreeNode("Collection");
         DefaultMutableTreeNode color = new DefaultMutableTreeNode("Point");

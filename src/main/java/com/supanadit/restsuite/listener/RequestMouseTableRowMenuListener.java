@@ -23,7 +23,7 @@ public class RequestMouseTableRowMenuListener extends MouseAdapter {
     }
 
     private void doPop(MouseEvent e) {
-        RequestMouseTableRowMenu menu = new RequestMouseTableRowMenu(this.table);
+        RequestMouseTableRowMenu menu = new RequestMouseTableRowMenu(table);
         menu.show(e.getComponent(), e.getX(), e.getY());
     }
 }
