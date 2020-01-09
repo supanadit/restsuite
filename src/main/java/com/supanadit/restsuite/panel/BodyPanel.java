@@ -1,9 +1,6 @@
 package com.supanadit.restsuite.panel;
 
-import com.supanadit.restsuite.component.BodyTextArea;
-import com.supanadit.restsuite.component.RequestBodyRawTypeComboBox;
-import com.supanadit.restsuite.component.RequestBodyTypeComboBox;
-import com.supanadit.restsuite.component.RequestTable;
+import com.supanadit.restsuite.component.*;
 import com.supanadit.restsuite.listener.BodyTextListener;
 import com.supanadit.restsuite.model.RequestBodyRawType;
 import com.supanadit.restsuite.model.RequestBodyType;
@@ -24,7 +21,7 @@ public class BodyPanel extends JPanel {
     protected String defaultFormat = SyntaxConstants.SYNTAX_STYLE_NONE;
     protected boolean raw = true;
     protected RTextScrollPane spBody;
-    protected RequestTable requestTable;
+    protected RequestBodyTable requestTable;
     protected RequestBodyTypeComboBox requestBodyTypeComboBox;
     protected RequestBodyRawTypeComboBox requestBodyRawTypeComboBox;
 
@@ -34,6 +31,8 @@ public class BodyPanel extends JPanel {
 
     public BodyPanel(boolean withOptions, PublishSubject<String> bodySubject, PublishSubject<RequestBodyRawType> requestBodyRawTypeSubject, PublishSubject<RequestBodyType> requestBodyTypeSubject) {
         super(new MigLayout());
+        Color lineColor = UIManager.getColor("Table.gridColor");
+        Color fontColor = UIManager.getColor("TableHeader.foreground");
 
         this.withOptions = withOptions;
         this.requestBodyRawTypeSubject = requestBodyRawTypeSubject;
@@ -47,15 +46,10 @@ public class BodyPanel extends JPanel {
 
         spBody = new RTextScrollPane(bodyTextArea);
         Gutter gutter = spBody.getGutter();
-
-        Color lineColor = UIManager.getColor("Table.gridColor");
-
         gutter.setBorderColor(lineColor);
-        Color fontColor = UIManager.getColor("TableHeader.foreground");
         gutter.setLineNumberColor(fontColor);
 
-        requestTable = new RequestTable();
-
+        requestTable = new RequestBodyTable();
         if (withOptions) {
             requestBodyTypeComboBox = RequestBodyTypeComboBox.getComponent();
             requestBodyRawTypeComboBox = RequestBodyRawTypeComboBox.getComponent();
