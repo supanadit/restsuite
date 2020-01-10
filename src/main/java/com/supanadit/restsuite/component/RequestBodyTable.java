@@ -2,11 +2,12 @@ package com.supanadit.restsuite.component;
 
 import com.supanadit.restsuite.listener.EditableCellFocusAction;
 import com.supanadit.restsuite.model.Request;
+import com.supanadit.restsuite.renderer.ButtonRenderer;
 import io.reactivex.subjects.PublishSubject;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
+import javax.swing.table.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class RequestBodyTable extends JScrollPane {
@@ -31,9 +32,15 @@ public class RequestBodyTable extends JScrollPane {
 
         setViewportView(requestBodyTable);
 
-        TableColumn comboCol1 = requestBodyTable.getColumnModel().getColumn(0);
-        comboCol1.setCellEditor(new RequestBodyComboBoxTypeColumn());
+        TableColumn comboBoxColumn = requestBodyTable.getColumnModel().getColumn(0);
+        comboBoxColumn.setCellEditor(new RequestBodyComboBoxTypeColumn());
 
+        requestBodyTable.getColumn("Value").setCellRenderer(new ButtonRenderer());
+//        requestBodyTable.getColumn("Value").setCellEditor(new ButtonEditor());
+
+        addNewEmptyRow();
+        addNewEmptyRow();
+        addNewEmptyRow();
         addNewEmptyRow();
 
         new EditableCellFocusAction(requestBodyTable, KeyStroke.getKeyStroke("TAB"));
