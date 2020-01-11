@@ -8,4 +8,8 @@ public class RequestBodyFormModel {
     public RequestBodyFormModel(ArrayList<RequestBodyFormInputModel> requestBodyFormInputModels) {
         this.requestBodyFormInputModels = requestBodyFormInputModels;
     }
+
+    public ArrayList<RequestBodyFormInputModel> getForm() {
+        return requestBodyFormInputModels;
+    }
 }

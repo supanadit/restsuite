@@ -9,14 +9,13 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.io.File;
-import java.util.ArrayList;
 
 public class BodyFormInputPanel extends JPanel {
     RequestBodyFormTypeComboBox comboBox;
     InputBodyKey keyField;
     InputBodyValue valueField;
 
-    public BodyFormInputPanel(JPanel parentPanel, ArrayList<BodyFormInputPanel> listInputPanel) {
+    public BodyFormInputPanel(BodyFormPanel bodyFormPanel) {
         setLayout(new MigLayout("", "[]5[100]5[100]5[]5[]"));
         comboBox = new RequestBodyFormTypeComboBox();
         add(comboBox, "growx");
@@ -28,10 +27,12 @@ public class BodyFormInputPanel extends JPanel {
 
         JButton browseButton = new JButton("Browse");
         JButton removeButton = new JButton("X");
+
         removeButton.addActionListener(e -> {
-            parentPanel.remove(this);
-            listInputPanel.remove(this);
-            parentPanel.updateUI();
+            bodyFormPanel.getPanel().remove(this);
+            bodyFormPanel.getListInputPanel().remove(this);
+            bodyFormPanel.getPanel().updateUI();
+            bodyFormPanel.updateChange();
         });
 
         add(browseButton, "growx");

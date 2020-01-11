@@ -1,11 +1,11 @@
 package com.supanadit.restsuite.component;
 
-import com.supanadit.restsuite.model.RequestBodyRawType;
-import com.supanadit.restsuite.model.RequestBodyType;
-import com.supanadit.restsuite.model.RequestType;
+import com.supanadit.restsuite.model.*;
 import com.supanadit.restsuite.panel.BodyPanel;
 import com.supanadit.restsuite.panel.RequestTabPanel;
+import io.reactivex.disposables.Disposable;
 import okhttp3.*;
+import okhttp3.Request;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
 import javax.swing.*;
@@ -20,9 +20,10 @@ public class RequestApiButton extends JButton {
     protected BodyPanel bodyPanel;
     protected RequestTypeComboBox requestTypeComboBox;
     protected JTable headerTable;
-    protected String body = "";
+    protected String bodyRaw = "";
     protected RequestBodyType requestType = RequestBodyType.RAW();
     protected RequestBodyRawType requestBodyRawType = RequestBodyRawType.JSON();
+    protected RequestBodyFormModel requestBodyFormModel;
 
     public RequestApiButton(InputTextURL inputTextURL, RequestTypeComboBox requestTypeComboBox) {
         setText("Send");
@@ -32,19 +33,23 @@ public class RequestApiButton extends JButton {
 
         client = new OkHttpClient();
 
-        RequestTabPanel.headerTable.subscribe((e) -> {
+        Disposable disposableHeaderTable = RequestTabPanel.headerTable.subscribe((e) -> {
             headerTable = e;
         });
 
-        RequestTabPanel.bodyText.throttleWithTimeout(300, TimeUnit.MILLISECONDS).subscribe((e) -> {
-            body = e;
+        Disposable disposableBodyRaw = RequestTabPanel.bodyRaw.throttleWithTimeout(300, TimeUnit.MILLISECONDS).subscribe((e) -> {
+            bodyRaw = e;
         });
 
-        RequestTabPanel.requestBodyTypeSubject.subscribe((e) -> {
+        Disposable disposableBodyForm = RequestTabPanel.requestBodyFormModelSubject.subscribe((e) -> {
+            requestBodyFormModel = e;
+        });
+
+        Disposable disposableBodyTypeSubject = RequestTabPanel.requestBodyTypeSubject.subscribe((e) -> {
             requestType = e;
         });
 
-        RequestTabPanel.requestBodyRawTypeSubject.subscribe((e) -> {
+        Disposable disposableBodyRawTypeSubject = RequestTabPanel.requestBodyRawTypeSubject.subscribe((e) -> {
             requestBodyRawType = e;
         });
 
@@ -68,18 +73,18 @@ public class RequestApiButton extends JButton {
             } else if (requestType.getName().equals(RequestType.POST().getName())) {
                 // POST
                 MediaType JSON = MediaType.parse(requestBodyRawType.getHeader());
-                RequestBody requestBody = RequestBody.create(body, JSON);
+                RequestBody requestBody = RequestBody.create(bodyRaw, JSON);
                 requestBuilder.post(requestBody);
             } else if (requestType.getName().equals(RequestType.PUT().getName())) {
                 // PUT
                 MediaType JSON = MediaType.parse(requestBodyRawType.getHeader());
-                RequestBody requestBody = RequestBody.create(body, JSON);
+                RequestBody requestBody = RequestBody.create(bodyRaw, JSON);
                 requestBuilder.put(requestBody);
             } else if (requestType.getName().equals(RequestType.DELETE().getName())) {
                 // DELETE
-                if (!body.isBlank() && !body.isEmpty()) {
+                if (!bodyRaw.isBlank() && !bodyRaw.isEmpty()) {
                     MediaType JSON = MediaType.parse(requestBodyRawType.getHeader());
-                    RequestBody requestBody = RequestBody.create(body, JSON);
+                    RequestBody requestBody = RequestBody.create(bodyRaw, JSON);
                     requestBuilder.delete(requestBody);
                 } else {
                     requestBuilder.delete();
@@ -88,7 +93,7 @@ public class RequestApiButton extends JButton {
 
             Request request = requestBuilder.url(inputTextURL.getText()).build();
             try (Response response = client.newCall(request).execute()) {
-                String[] headerSplit = response.headers().get("Content-Type").split(";", -1);
+                String[] headerSplit = Objects.requireNonNull(response.headers().get("Content-Type")).split(";", -1);
                 if (headerSplit.length != 0) {
                     String header;
                     switch (headerSplit[0]) {

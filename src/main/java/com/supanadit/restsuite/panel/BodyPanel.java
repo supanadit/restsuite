@@ -4,11 +4,11 @@ import com.supanadit.restsuite.component.BodyTextArea;
 import com.supanadit.restsuite.component.RequestBodyRawTypeComboBox;
 import com.supanadit.restsuite.component.RequestBodyTypeComboBox;
 import com.supanadit.restsuite.listener.BodyTextListener;
+import com.supanadit.restsuite.model.BodySubjectModel;
 import com.supanadit.restsuite.model.RequestBodyRawType;
 import com.supanadit.restsuite.model.RequestBodyType;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.PublishSubject;
 import net.miginfocom.swing.MigLayout;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.Gutter;
@@ -28,22 +28,20 @@ public class BodyPanel extends JPanel {
     protected RequestBodyRawTypeComboBox requestBodyRawTypeComboBox;
 
     final protected BehaviorSubject<Boolean> subject = BehaviorSubject.create();
-    protected PublishSubject<RequestBodyRawType> requestBodyRawTypeSubject;
-    protected PublishSubject<RequestBodyType> requestBodyTypeSubject;
+    protected BodySubjectModel bodySubjectModel;
 
-    public BodyPanel(boolean withOptions, PublishSubject<String> bodySubject, PublishSubject<RequestBodyRawType> requestBodyRawTypeSubject, PublishSubject<RequestBodyType> requestBodyTypeSubject) {
+    public BodyPanel(boolean withOptions, BodySubjectModel bodySubjectModel) {
         super(new MigLayout());
         Color lineColor = UIManager.getColor("Table.gridColor");
         Color fontColor = UIManager.getColor("TableHeader.foreground");
 
+        this.bodySubjectModel = bodySubjectModel;
         this.withOptions = withOptions;
-        this.requestBodyRawTypeSubject = requestBodyRawTypeSubject;
-        this.requestBodyTypeSubject = requestBodyTypeSubject;
 
         bodyTextArea = new BodyTextArea();
 
-        if (bodySubject != null) {
-            bodyTextArea.getDocument().addDocumentListener(new BodyTextListener(bodyTextArea, bodySubject));
+        if (bodySubjectModel != null) {
+            bodyTextArea.getDocument().addDocumentListener(new BodyTextListener(bodyTextArea, bodySubjectModel.getBodyRaw()));
         }
 
         spBody = new RTextScrollPane(bodyTextArea);
@@ -51,7 +49,7 @@ public class BodyPanel extends JPanel {
         gutter.setBorderColor(lineColor);
         gutter.setLineNumberColor(fontColor);
 
-        bodyFormPanel = new BodyFormPanel();
+        bodyFormPanel = new BodyFormPanel(bodySubjectModel);
 
         if (withOptions) {
             requestBodyTypeComboBox = RequestBodyTypeComboBox.getComponent();
@@ -64,8 +62,8 @@ public class BodyPanel extends JPanel {
 
             requestBodyTypeComboBox.addActionListener((e) -> {
                 RequestBodyType requestBodyType = (RequestBodyType) requestBodyTypeComboBox.getSelectedItem();
-                if (requestBodyType != null) {
-                    requestBodyTypeSubject.onNext(requestBodyType);
+                if (requestBodyType != null && bodySubjectModel != null) {
+                    bodySubjectModel.getRequestBodyTypeSubject().onNext(requestBodyType);
                 }
                 assert requestBodyType != null;
                 subject.onNext(requestBodyType.getName().equals(RequestBodyType.RAW().getName()));
@@ -92,9 +90,8 @@ public class BodyPanel extends JPanel {
 
             requestBodyRawTypeComboBox.addActionListener((e) -> {
                 RequestBodyRawType requestBodyRawType = (RequestBodyRawType) requestBodyRawTypeComboBox.getSelectedItem();
-                if (requestBodyRawTypeSubject != null) {
-                    assert requestBodyRawType != null;
-                    requestBodyRawTypeSubject.onNext(requestBodyRawType);
+                if (bodySubjectModel != null && requestBodyRawType != null) {
+                    bodySubjectModel.getRequestBodyRawTypeSubject().onNext(requestBodyRawType);
                 }
                 assert requestBodyRawType != null;
                 bodyTextArea.setSyntaxEditingStyle(requestBodyRawType.getSyntax());
