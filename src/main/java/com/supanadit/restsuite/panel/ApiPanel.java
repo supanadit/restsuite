@@ -21,7 +21,7 @@ public class ApiPanel extends JPanel {
         apiURL = new InputTextURL();
 
         requestTypeComboBox = new RequestTypeComboBox();
-        requestTabPanel = new RequestTabPanel(getInputURL().getSubject());
+        requestTabPanel = new RequestTabPanel(apiURL.getSubject());
         responseTabPanel = new ResponseTabPanel();
 
         sendButton = new RequestApiButton(this);
@@ -38,14 +38,6 @@ public class ApiPanel extends JPanel {
     }
 
     public ApiModel getModel() {
-        return new ApiModel(requestTabPanel, responseTabPanel);
-    }
-
-    public RequestTypeComboBox getRequestTypeComboBox() {
-        return requestTypeComboBox;
-    }
-
-    public InputTextURL getInputURL() {
-        return apiURL;
+        return new ApiModel(apiURL, requestTypeComboBox, requestTabPanel, responseTabPanel);
     }
 }

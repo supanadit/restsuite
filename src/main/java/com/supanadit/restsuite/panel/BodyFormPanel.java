@@ -12,7 +12,7 @@ public class BodyFormPanel extends JScrollPane {
     private JPanel formGroupPanel;
 
     public BodyFormPanel() {
-        formGroupPanel = new JPanel(new MigLayout());
+        formGroupPanel = new JPanel(new MigLayout("", "", "[]0[]"));
 
         JButton addField = new JButton("Add Field");
         addField.addActionListener(k -> {

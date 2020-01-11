@@ -28,8 +28,11 @@ public class RequestApiButton extends JButton {
         setText("Send");
         client = new OkHttpClient();
         addActionListener((e) -> {
-            this.requestTypeComboBox = apiPanel.getRequestTypeComboBox();
-            this.inputTextURL = apiPanel.getInputURL();
+            setEnabled(false);
+            setText("Requesting");
+
+            this.requestTypeComboBox = apiPanel.getModel().getRequestMethod();
+            this.inputTextURL = apiPanel.getModel().getUrl();
 
             RequestTabPanel requestTabPanel = apiPanel.getModel().getRequestTabPanel();
 
@@ -115,6 +118,9 @@ public class RequestApiButton extends JButton {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+
+            setText("Send");
+            setEnabled(true);
         });
     }
 

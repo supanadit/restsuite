@@ -20,7 +20,7 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
 
     public BodyFormInputPanel(BodyFormPanel bodyFormPanel) {
         this.bodyFormPanel = bodyFormPanel;
-        setLayout(new MigLayout("", "[]5[100]5[100]5[]5[]"));
+        setLayout(new MigLayout("insets 0 0 0 0", "[]5[100]5[100]5[]5[]"));
         comboBox = new RequestBodyFormTypeComboBox();
         add(comboBox, "growx");
         keyField = new InputBodyKey();
