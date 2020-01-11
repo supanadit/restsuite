@@ -50,13 +50,10 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
         comboBox.addActionListener(e -> {
             RequestBodyFormType type = (RequestBodyFormType) comboBox.getSelectedItem();
             assert type != null;
-            if (type.getName().equals(RequestBodyFormType.FILE().getName())) {
-                browseButton.setEnabled(true);
-                valueField.setEditable(false);
-            } else {
-                browseButton.setEnabled(false);
-                valueField.setEditable(true);
-            }
+            valueField.setText(null);
+            boolean isFile = type.getName().equals(RequestBodyFormType.FILE().getName());
+            browseButton.setEnabled(isFile);
+            valueField.setEditable(!isFile);
         });
 
         browseButton.addActionListener(e -> {
