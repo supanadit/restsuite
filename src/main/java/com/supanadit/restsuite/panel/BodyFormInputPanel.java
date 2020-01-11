@@ -8,14 +8,18 @@ import com.supanadit.restsuite.model.RequestBodyFormType;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.io.File;
 
-public class BodyFormInputPanel extends JPanel {
+public class BodyFormInputPanel extends JPanel implements DocumentListener {
     RequestBodyFormTypeComboBox comboBox;
     InputBodyKey keyField;
     InputBodyValue valueField;
+    BodyFormPanel bodyFormPanel;
 
     public BodyFormInputPanel(BodyFormPanel bodyFormPanel) {
+        this.bodyFormPanel = bodyFormPanel;
         setLayout(new MigLayout("", "[]5[100]5[100]5[]5[]"));
         comboBox = new RequestBodyFormTypeComboBox();
         add(comboBox, "growx");
@@ -24,6 +28,9 @@ public class BodyFormInputPanel extends JPanel {
 
         add(keyField, "pushx,growx");
         add(valueField, "pushx,growx");
+
+        keyField.getDocument().addDocumentListener(this);
+        valueField.getDocument().addDocumentListener(this);
 
         JButton browseButton = new JButton("Browse");
         JButton removeButton = new JButton("X");
@@ -70,5 +77,20 @@ public class BodyFormInputPanel extends JPanel {
         String key = keyField.getText();
         String value = valueField.getText();
         return new RequestBodyFormInputModel(type, key, value);
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        bodyFormPanel.updateChange();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        bodyFormPanel.updateChange();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        bodyFormPanel.updateChange();
     }
 }

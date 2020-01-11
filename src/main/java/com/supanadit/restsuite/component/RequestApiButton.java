@@ -73,7 +73,10 @@ public class RequestApiButton extends JButton {
                     MediaType JSON = MediaType.parse(requestBodyRawType.getHeader());
                     requestBody = RequestBody.create(bodyRaw, JSON);
                 } else {
-                    MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                    MultipartBody.Builder builder = new MultipartBody.Builder();
+
+                    builder.setType(MultipartBody.FORM);
+
                     requestBody = RequestBody.create("", MediaType.parse(RequestBodyRawType.TEXT().getHeader()));
                     if (requestBodyFormModel != null) {
                         if (requestBodyFormModel.getForm().size() != 0) {
