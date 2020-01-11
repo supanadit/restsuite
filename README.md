@@ -7,8 +7,6 @@ Open Source Rest API Testing, an alternative software for Postman, Insomnia, Soa
 - Websocket Testing
 - SocketIO Testing
 - Server Sent Event Testing (SSE)
-- Environment
-- Collection
 
 ## Requirements
 - Java 11
@@ -20,12 +18,12 @@ Open Source Rest API Testing, an alternative software for Postman, Insomnia, Soa
 mvn clean compile assembly:single
 ```
 
-## Todo
-- Environment
-- Collection
+## Next Release Features
 - Proxy Support
 - Setting
 - Project
+- Environment
+- Collection
 
 ## Contribute
 We love to see you contribute this project in any way
