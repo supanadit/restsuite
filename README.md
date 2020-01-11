@@ -2,8 +2,6 @@
 
 Open Source Rest API Testing, an alternative software for Postman, Insomnia, Soap UI, etc
 
-![Show Case](http://supanadit.com/wp-content/uploads/2019/12/Screenshot_20191231_143523.png)
-
 ## Features
 - Rest API Testing
 - Websocket Testing
