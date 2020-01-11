@@ -1,6 +1,8 @@
 package com.supanadit.restsuite.panel;
 
-import com.supanadit.restsuite.component.*;
+import com.supanadit.restsuite.component.BodyTextArea;
+import com.supanadit.restsuite.component.RequestBodyRawTypeComboBox;
+import com.supanadit.restsuite.component.RequestBodyTypeComboBox;
 import com.supanadit.restsuite.listener.BodyTextListener;
 import com.supanadit.restsuite.model.RequestBodyRawType;
 import com.supanadit.restsuite.model.RequestBodyType;
@@ -21,7 +23,7 @@ public class BodyPanel extends JPanel {
     protected String defaultFormat = SyntaxConstants.SYNTAX_STYLE_NONE;
     protected boolean raw = true;
     protected RTextScrollPane spBody;
-    protected JScrollPane scrollPane;
+    protected BodyFormPanel bodyFormPanel;
     protected RequestBodyTypeComboBox requestBodyTypeComboBox;
     protected RequestBodyRawTypeComboBox requestBodyRawTypeComboBox;
 
@@ -49,20 +51,8 @@ public class BodyPanel extends JPanel {
         gutter.setBorderColor(lineColor);
         gutter.setLineNumberColor(fontColor);
 
-        scrollPane = new JScrollPane();
+        bodyFormPanel = new BodyFormPanel();
 
-        JPanel formGroupPanel = new JPanel(new MigLayout());
-
-        JButton addField = new JButton("Add Field");
-        addField.addActionListener(k -> {
-            formGroupPanel.remove(addField);
-            formGroupPanel.add(new BodyInputFormPanel(formGroupPanel), "pushx,growx,wrap");
-            formGroupPanel.add(addField, "pushx,growx,wrap");
-            formGroupPanel.updateUI();
-        });
-        formGroupPanel.add(addField, "pushx,growx,wrap");
-
-        scrollPane.setViewportView(formGroupPanel);
         if (withOptions) {
             requestBodyTypeComboBox = RequestBodyTypeComboBox.getComponent();
             requestBodyRawTypeComboBox = RequestBodyRawTypeComboBox.getComponent();
@@ -92,10 +82,10 @@ public class BodyPanel extends JPanel {
                 }
                 if (raw) {
                     add(spBody, "grow, push, span 3");
-                    remove(scrollPane);
+                    remove(bodyFormPanel);
                 } else {
                     remove(spBody);
-                    add(scrollPane, "grow, push, span 3");
+                    add(bodyFormPanel, "grow, push, span 3");
                 }
                 updateUI();
             });
