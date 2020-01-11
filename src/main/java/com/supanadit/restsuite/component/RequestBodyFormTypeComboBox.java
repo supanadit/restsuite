@@ -11,5 +11,7 @@ import javax.swing.*;
 public class RequestBodyFormTypeComboBox extends JComboBox<RequestBodyFormType> {
     public RequestBodyFormTypeComboBox() {
         setRenderer(new RequestBodyFormTypeRenderer());
+        addItem(RequestBodyFormType.FIELD());
+        addItem(RequestBodyFormType.FILE());
     }
 }

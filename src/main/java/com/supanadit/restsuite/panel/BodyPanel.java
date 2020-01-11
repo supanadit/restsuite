@@ -21,7 +21,7 @@ public class BodyPanel extends JPanel {
     protected String defaultFormat = SyntaxConstants.SYNTAX_STYLE_NONE;
     protected boolean raw = true;
     protected RTextScrollPane spBody;
-    protected RequestBodyTable requestTable;
+    protected JScrollPane scrollPane;
     protected RequestBodyTypeComboBox requestBodyTypeComboBox;
     protected RequestBodyRawTypeComboBox requestBodyRawTypeComboBox;
 
@@ -49,7 +49,20 @@ public class BodyPanel extends JPanel {
         gutter.setBorderColor(lineColor);
         gutter.setLineNumberColor(fontColor);
 
-        requestTable = new RequestBodyTable();
+        scrollPane = new JScrollPane();
+
+        JPanel formGroupPanel = new JPanel(new MigLayout());
+
+        JButton addField = new JButton("Add Field");
+        addField.addActionListener(k -> {
+            formGroupPanel.remove(addField);
+            formGroupPanel.add(new BodyInputFormPanel(formGroupPanel), "pushx,growx,wrap");
+            formGroupPanel.add(addField, "pushx,growx,wrap");
+            formGroupPanel.updateUI();
+        });
+        formGroupPanel.add(addField, "pushx,growx,wrap");
+
+        scrollPane.setViewportView(formGroupPanel);
         if (withOptions) {
             requestBodyTypeComboBox = RequestBodyTypeComboBox.getComponent();
             requestBodyRawTypeComboBox = RequestBodyRawTypeComboBox.getComponent();
@@ -79,10 +92,10 @@ public class BodyPanel extends JPanel {
                 }
                 if (raw) {
                     add(spBody, "grow, push, span 3");
-                    remove(requestTable);
+                    remove(scrollPane);
                 } else {
                     remove(spBody);
-                    add(requestTable, "grow, push, span 3");
+                    add(scrollPane, "grow, push, span 3");
                 }
                 updateUI();
             });
