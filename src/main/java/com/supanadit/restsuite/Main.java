@@ -1,6 +1,6 @@
 package com.supanadit.restsuite;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.supanadit.restsuite.helper.DefaultIcon;
 import com.supanadit.restsuite.listener.DragListener;
 import com.supanadit.restsuite.panel.MainPanel;
@@ -19,7 +19,7 @@ public class Main {
         System.setProperty("awt.useSystemAAFontSettings", "on");
         System.setProperty("swing.aatext", "true");
         SwingUtilities.invokeLater(() -> {
-            FlatDarculaLaf.install();
+            FlatIntelliJLaf.install();
 
             JFrame frame = new JFrame("Rest Suite");
             frame.setName("Rest API Testing for Professional");

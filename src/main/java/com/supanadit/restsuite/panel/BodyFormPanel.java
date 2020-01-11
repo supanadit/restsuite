@@ -15,13 +15,12 @@ public class BodyFormPanel extends JScrollPane {
 
         JButton addField = new JButton("Add Field");
         addField.addActionListener(k -> {
-            BodyFormInputPanel bodyFormInputPanel = new BodyFormInputPanel(formGroupPanel);
+            BodyFormInputPanel bodyFormInputPanel = new BodyFormInputPanel(formGroupPanel, listInputPanel);
             formGroupPanel.remove(addField);
             formGroupPanel.add(bodyFormInputPanel, "pushx,growx,wrap");
             formGroupPanel.add(addField, "pushx,growx,wrap");
-            formGroupPanel.updateUI();
-
             listInputPanel.add(bodyFormInputPanel);
+            formGroupPanel.updateUI();
         });
         formGroupPanel.add(addField, "pushx,growx,wrap");
 
