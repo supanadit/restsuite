@@ -1,15 +1,13 @@
 package com.supanadit.restsuite;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.supanadit.restsuite.component.CustomTitleBar;
+import com.supanadit.restsuite.component.MenuBar;
 import com.supanadit.restsuite.helper.DefaultIcon;
-import com.supanadit.restsuite.listener.DragListener;
 import com.supanadit.restsuite.panel.MainPanel;
-import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class Main {
     public static Dimension dimension = new Dimension(1024, 600);
@@ -27,120 +25,16 @@ public class Main {
             frame.setUndecorated(customTitleBar);
 
             if (customTitleBar) {
-                DragListener drag = new DragListener();
-                frame.addMouseListener(drag);
-                frame.addMouseMotionListener(drag);
-
-                JButton minimize = new JButton("Minimize");
-                JButton close = new JButton("Close");
-
-                minimize.addActionListener((e) -> {
-                    frame.setState(Frame.ICONIFIED);
-                });
-
-                close.addActionListener((e) -> {
-                    frame.dispose();
-                });
-                JPanel panel = new JPanel(new MigLayout("insets 0 10 0 0"));
-
-                panel.add(new JLabel("Rest Suite - Rest API Testing for Professional"), "push");
-                // Button Minimize
-                JPanel buttonMinimize = new JPanel(new MigLayout("fill"));
-                JLabel minimizeLabel = new JLabel("Minimize");
-                minimizeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                buttonMinimize.add(minimizeLabel, "push,grow");
-                Color minimizeColor = buttonMinimize.getBackground();
-                buttonMinimize.addMouseListener(new MouseListener() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        frame.setState(Frame.ICONIFIED);
-                    }
-
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                        frame.setState(Frame.ICONIFIED);
-                    }
-
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-
-                    }
-
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        minimizeLabel.setForeground(Color.white);
-                        Color background = UIManager.getColor("Panel.background");
-                        buttonMinimize.setBackground(background.darker());
-                    }
-
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        minimizeLabel.setForeground(Color.black);
-                        buttonMinimize.setBackground(minimizeColor);
-                    }
-                });
-                panel.add(buttonMinimize, "pushy,growy,w 55,h 28");
-                // End Button Minimize
-
-                // Button Close
-                JPanel buttonClose = new JPanel(new MigLayout("fill"));
-                JLabel buttonLabel = new JLabel("Close");
-                buttonLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                buttonClose.add(buttonLabel, "push,grow");
-                Color buttonColor = buttonClose.getBackground();
-                buttonClose.addMouseListener(new MouseListener() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        frame.dispose();
-                    }
-
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                        frame.dispose();
-                    }
-
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-
-                    }
-
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        buttonLabel.setForeground(Color.white);
-                        buttonClose.setBackground(Color.decode("#E81123"));
-                    }
-
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        buttonLabel.setForeground(Color.black);
-                        buttonClose.setBackground(buttonColor);
-                    }
-                });
-                panel.add(buttonClose, "pushy,growy,w 55,h 28");
-                // End Button Close
-                Color lineColor = UIManager.getColor("Table.gridColor");
-                panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, lineColor));
-
-                frame.add(panel, BorderLayout.NORTH);
+                new CustomTitleBar(frame);
             }
 
             Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
-            JMenuBar menuBar = new JMenuBar();
-            JMenu file = new JMenu("File");
+            MenuBar menuBar = new MenuBar();
 
-            file.add(new JMenuItem("New Project"));
-            file.add(new JMenuItem("Open Project"));
-            file.addSeparator();
-            file.add(new JMenuItem("Export"));
-            file.add(new JMenuItem("Import"));
-            file.addSeparator();
-            JMenuItem exitItem = new JMenuItem("Exit");
-            exitItem.addActionListener(e -> {
+            menuBar.getExitMenu().addActionListener(e -> {
                 frame.dispose();
             });
-            file.add(exitItem);
-            menuBar.add(file);
 
             frame.setJMenuBar(menuBar);
             frame.add(new MainPanel(), BorderLayout.CENTER);

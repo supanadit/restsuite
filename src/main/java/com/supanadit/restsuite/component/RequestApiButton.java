@@ -4,7 +4,6 @@ import com.supanadit.restsuite.model.*;
 import com.supanadit.restsuite.panel.ApiPanel;
 import com.supanadit.restsuite.panel.BodyPanel;
 import com.supanadit.restsuite.panel.RequestTabPanel;
-import io.reactivex.disposables.Disposable;
 import okhttp3.Request;
 import okhttp3.*;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
@@ -27,6 +26,7 @@ public class RequestApiButton extends JButton {
     public RequestApiButton(ApiPanel apiPanel) {
         setText("Send");
         client = new OkHttpClient();
+
         addActionListener((e) -> {
             setEnabled(false);
             setText("Requesting");
