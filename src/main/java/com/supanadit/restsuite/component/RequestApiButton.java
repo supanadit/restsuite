@@ -90,33 +90,37 @@ public class RequestApiButton extends JButton {
                 }
             }
 
-            Request request = requestBuilder.url(inputTextURL.getText()).build();
-            try (Response response = client.newCall(request).execute()) {
-                String[] headerSplit = Objects.requireNonNull(response.headers().get("Content-Type")).split(";", -1);
-                if (headerSplit.length != 0) {
-                    String header;
-                    switch (headerSplit[0]) {
-                        case "application/json":
-                            header = SyntaxConstants.SYNTAX_STYLE_JSON;
-                            break;
-                        case "application/vnd.wap.xhtml+xml":
-                            header = SyntaxConstants.SYNTAX_STYLE_HTML;
-                            break;
-                        default:
-                            header = headerSplit[0];
-                            break;
+            try {
+                Request request = requestBuilder.url(inputTextURL.getText()).build();
+                try (Response response = client.newCall(request).execute()) {
+                    String[] headerSplit = Objects.requireNonNull(response.headers().get("Content-Type")).split(";", -1);
+                    if (headerSplit.length != 0) {
+                        String header;
+                        switch (headerSplit[0]) {
+                            case "application/json":
+                                header = SyntaxConstants.SYNTAX_STYLE_JSON;
+                                break;
+                            case "application/vnd.wap.xhtml+xml":
+                                header = SyntaxConstants.SYNTAX_STYLE_HTML;
+                                break;
+                            default:
+                                header = headerSplit[0];
+                                break;
+                        }
+                        bodyPanel.setSyntax(header);
+                    } else {
+                        bodyPanel.setSyntax(SyntaxConstants.SYNTAX_STYLE_NONE);
                     }
-                    bodyPanel.setSyntax(header);
-                } else {
-                    bodyPanel.setSyntax(SyntaxConstants.SYNTAX_STYLE_NONE);
+                    if (bodyPanel == null) {
+                        System.out.println(Objects.requireNonNull(response.body()).string());
+                    } else {
+                        bodyPanel.setText(Objects.requireNonNull(response.body()).string());
+                    }
+                } catch (IOException ex) {
+                    bodyPanel.setText(ex.getMessage());
                 }
-                if (bodyPanel == null) {
-                    System.out.println(Objects.requireNonNull(response.body()).string());
-                } else {
-                    bodyPanel.setText(Objects.requireNonNull(response.body()).string());
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            } catch (Exception ex) {
+                bodyPanel.setText(ex.getMessage());
             }
 
             setText("Send");
