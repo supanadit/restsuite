@@ -21,8 +21,8 @@ public class RequestApiButton extends JButton {
     protected RequestTypeComboBox requestTypeComboBox;
     protected JTable headerTable;
     protected String bodyRaw = "";
-    protected RequestBodyType requestType = RequestBodyType.RAW();
-    protected RequestBodyRawType requestBodyRawType = RequestBodyRawType.JSON();
+    protected RequestBodyType requestType = RequestBodyType.RAW(); // Default to Raw, it must be manually set
+    protected RequestBodyRawType requestBodyRawType = RequestBodyRawType.JSON(); // Default would be JSON, it must be manually set
     protected RequestBodyFormModel requestBodyFormModel;
 
     public RequestApiButton(InputTextURL inputTextURL, RequestTypeComboBox requestTypeComboBox) {
@@ -65,29 +65,37 @@ public class RequestApiButton extends JButton {
                 }
             }
 
-            RequestType requestType = (RequestType) requestTypeComboBox.getSelectedItem();
-            assert requestType != null;
-            if (requestType.getName().equals(RequestType.GET().getName())) {
-                // GET
-                requestBuilder.get();
-            } else if (requestType.getName().equals(RequestType.POST().getName())) {
-                // POST
-                MediaType JSON = MediaType.parse(requestBodyRawType.getHeader());
-                RequestBody requestBody = RequestBody.create(bodyRaw, JSON);
-                requestBuilder.post(requestBody);
-            } else if (requestType.getName().equals(RequestType.PUT().getName())) {
-                // PUT
-                MediaType JSON = MediaType.parse(requestBodyRawType.getHeader());
-                RequestBody requestBody = RequestBody.create(bodyRaw, JSON);
-                requestBuilder.put(requestBody);
-            } else if (requestType.getName().equals(RequestType.DELETE().getName())) {
-                // DELETE
-                if (!bodyRaw.isBlank() && !bodyRaw.isEmpty()) {
+            RequestType requestTypeRequest = (RequestType) requestTypeComboBox.getSelectedItem();
+            if (requestTypeRequest != null) {
+                RequestBody requestBody;
+
+                if (requestType.getName().equals(RequestBodyType.RAW().getName())) {
                     MediaType JSON = MediaType.parse(requestBodyRawType.getHeader());
-                    RequestBody requestBody = RequestBody.create(bodyRaw, JSON);
-                    requestBuilder.delete(requestBody);
+                    requestBody = RequestBody.create(bodyRaw, JSON);
                 } else {
-                    requestBuilder.delete();
+                    MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                    for (RequestBodyFormInputModel input : requestBodyFormModel.getForm()) {
+                        builder.addFormDataPart(input.getKey(), input.getValue());
+                    }
+                    requestBody = builder.build();
+                }
+
+                if (requestTypeRequest.getName().equals(RequestType.GET().getName())) {
+                    // GET
+                    requestBuilder.get();
+                } else if (requestTypeRequest.getName().equals(RequestType.POST().getName())) {
+                    // POST
+                    requestBuilder.post(requestBody);
+                } else if (requestTypeRequest.getName().equals(RequestType.PUT().getName())) {
+                    // PUT
+                    requestBuilder.put(requestBody);
+                } else if (requestTypeRequest.getName().equals(RequestType.DELETE().getName())) {
+                    // DELETE
+                    if (!bodyRaw.isBlank() && !bodyRaw.isEmpty()) {
+                        requestBuilder.delete(requestBody);
+                    } else {
+                        requestBuilder.delete();
+                    }
                 }
             }
 
