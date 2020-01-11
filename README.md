@@ -8,9 +8,17 @@ Open Source Rest API Testing, an alternative software for Postman, Insomnia, Soa
 - SocketIO Testing
 - Server Sent Event Testing (SSE)
 
+## Download
+
+Rest Suite is available for Mac, Windows and Linux and can be downloaded in
+[Release Page](https://github.com/supanadit/restsuite/releases) and simply run
+
+```shell script
+java -jar restsuite-<version>.jar
+```
+
 ## Requirements
 - Java 11
-- Maven
 
 ## How to Build Jar
 
