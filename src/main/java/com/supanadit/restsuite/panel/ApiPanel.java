@@ -1,13 +1,14 @@
 package com.supanadit.restsuite.panel;
 
 import com.supanadit.restsuite.component.*;
+import com.supanadit.restsuite.model.ApiModel;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 
 public class ApiPanel extends JPanel {
     protected JLabel apiName;
-    protected InputTextURL apiUrl;
+    protected InputTextURL apiURL;
     protected RequestApiButton sendButton;
     protected RequestTabPanel requestTabPanel;
     protected ResponseTabPanel responseTabPanel;
@@ -17,15 +18,16 @@ public class ApiPanel extends JPanel {
         super(new MigLayout("insets 10 10 0 0"));
 
         apiName = new JLabel("API URL");
-        apiUrl = new InputTextURL();
-        requestTypeComboBox = RequestTypeComboBox.getComponent();
-        requestTabPanel = new RequestTabPanel(apiUrl.urlSubject);
+        apiURL = new InputTextURL();
+
+        requestTypeComboBox = new RequestTypeComboBox();
+        requestTabPanel = new RequestTabPanel(getInputURL().getSubject());
         responseTabPanel = new ResponseTabPanel();
 
-        sendButton = new RequestApiButton(apiUrl, requestTypeComboBox);
+        sendButton = new RequestApiButton(this);
 
         add(apiName, "wrap");
-        add(apiUrl, "growx, pushx");
+        add(apiURL, "growx, pushx");
         add(requestTypeComboBox);
         add(sendButton, "wrap");
 
@@ -35,7 +37,15 @@ public class ApiPanel extends JPanel {
         sendButton.setBodyPanel(this.responseTabPanel.body());
     }
 
-    public RequestApiButton getSendButton() {
-        return this.sendButton;
+    public ApiModel getModel() {
+        return new ApiModel(requestTabPanel, responseTabPanel);
+    }
+
+    public RequestTypeComboBox getRequestTypeComboBox() {
+        return requestTypeComboBox;
+    }
+
+    public InputTextURL getInputURL() {
+        return apiURL;
     }
 }

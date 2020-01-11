@@ -9,7 +9,7 @@ public class RequestBodyFormModel {
         this.requestBodyFormInputModels = requestBodyFormInputModels;
     }
 
-    public ArrayList<RequestBodyFormInputModel> getForm() {
+    public ArrayList<RequestBodyFormInputModel> getAllFormInput() {
         return requestBodyFormInputModels;
     }
 }

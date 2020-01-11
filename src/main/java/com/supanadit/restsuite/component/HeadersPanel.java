@@ -1,12 +1,11 @@
 package com.supanadit.restsuite.component;
 
-import io.reactivex.subjects.PublishSubject;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 
 public class HeadersPanel extends JPanel {
-    protected RequestTable requestTable;
+    private RequestTable requestTable;
 
     public HeadersPanel() {
         super(new MigLayout());
@@ -15,7 +14,7 @@ public class HeadersPanel extends JPanel {
         add(requestTable, "growx,pushx");
     }
 
-    public void setSubject(PublishSubject<JTable> table) {
-        requestTable.setSubject(table);
+    public RequestTable getRequestTable() {
+        return requestTable;
     }
 }

@@ -5,16 +5,14 @@ import com.supanadit.restsuite.listener.RequestKeyboardTableRowListener;
 import com.supanadit.restsuite.listener.RequestMouseScrollPaneMenuListener;
 import com.supanadit.restsuite.listener.RequestMouseTableRowMenuListener;
 import com.supanadit.restsuite.model.Request;
-import io.reactivex.subjects.PublishSubject;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
 public class RequestTable extends JScrollPane {
-    protected DefaultTableModel defaultTableModel;
-    protected JTable requestTable;
-    protected PublishSubject<JTable> subject;
+    private DefaultTableModel defaultTableModel;
+    private JTable requestTable;
 
 
     public RequestTable(boolean mouseAction, boolean keyboardAction, boolean editable) {
@@ -55,18 +53,8 @@ public class RequestTable extends JScrollPane {
         this(true, true, true);
     }
 
-    public void setSubject(PublishSubject<JTable> subject) {
-        this.subject = subject;
-    }
-
-    public void publishTable(JTable table) {
-        if (subject != null) {
-            subject.onNext(table);
-        }
-    }
-
     public DefaultTableModel getModel() {
-        return (DefaultTableModel) requestTable.getModel();
+        return defaultTableModel;
     }
 
     public void deleteSelectedRow() {
@@ -77,7 +65,6 @@ public class RequestTable extends JScrollPane {
                 requestTable.changeSelection(getModel().getRowCount() - 1, 0, true, false);
             }
         }
-        publishTable(requestTable);
     }
 
     public void addNewEmptyRow() {
@@ -96,7 +83,6 @@ public class RequestTable extends JScrollPane {
                 requestTable.requestFocus();
             }
         }
-        publishTable(requestTable);
     }
 
     public void setFromRequestArrayList(ArrayList<Request> requestArrayList) {
@@ -108,5 +94,15 @@ public class RequestTable extends JScrollPane {
         for (Request request : requestArrayList) {
             addRow(request, false);
         }
+    }
+
+    public ArrayList<Request> getRequest() {
+        ArrayList<Request> requests = new ArrayList<>();
+        for (int i = 0; i < defaultTableModel.getRowCount(); i++) {
+            String key = defaultTableModel.getValueAt(i, 0).toString();
+            String value = defaultTableModel.getValueAt(i, 1).toString();
+            requests.add(new Request(key, value));
+        }
+        return requests;
     }
 }

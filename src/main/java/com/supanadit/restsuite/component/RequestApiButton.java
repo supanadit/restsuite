@@ -1,69 +1,45 @@
 package com.supanadit.restsuite.component;
 
 import com.supanadit.restsuite.model.*;
+import com.supanadit.restsuite.panel.ApiPanel;
 import com.supanadit.restsuite.panel.BodyPanel;
 import com.supanadit.restsuite.panel.RequestTabPanel;
 import io.reactivex.disposables.Disposable;
-import okhttp3.*;
 import okhttp3.Request;
+import okhttp3.*;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public class RequestApiButton extends JButton {
     protected InputTextURL inputTextURL;
     protected OkHttpClient client;
     protected BodyPanel bodyPanel;
     protected RequestTypeComboBox requestTypeComboBox;
-    protected JTable headerTable;
-    protected String bodyRaw = "";
-    protected RequestBodyType requestType = RequestBodyType.RAW(); // Default to Raw, it must be manually set
-    protected RequestBodyRawType requestBodyRawType = RequestBodyRawType.JSON(); // Default would be JSON, it must be manually set
-    protected RequestBodyFormModel requestBodyFormModel;
+    protected String bodyRawValue;
+    protected RequestBodyType requestType;
+    protected RequestBodyRawType requestBodyRawType;
 
-    public RequestApiButton(InputTextURL inputTextURL, RequestTypeComboBox requestTypeComboBox) {
+    public RequestApiButton(ApiPanel apiPanel) {
         setText("Send");
-        this.requestTypeComboBox = requestTypeComboBox;
-
-        this.inputTextURL = inputTextURL;
-
         client = new OkHttpClient();
-
-        Disposable disposableHeaderTable = RequestTabPanel.headerTable.subscribe((e) -> {
-            headerTable = e;
-        });
-
-        Disposable disposableBodyRaw = RequestTabPanel.bodyRaw.throttleWithTimeout(300, TimeUnit.MILLISECONDS).subscribe((e) -> {
-            bodyRaw = e;
-        });
-
-        Disposable disposableBodyForm = RequestTabPanel.requestBodyFormModelSubject.subscribe((e) -> {
-            requestBodyFormModel = e;
-        });
-
-        Disposable disposableBodyTypeSubject = RequestTabPanel.requestBodyTypeSubject.subscribe((e) -> {
-            requestType = e;
-        });
-
-        Disposable disposableBodyRawTypeSubject = RequestTabPanel.requestBodyRawTypeSubject.subscribe((e) -> {
-            requestBodyRawType = e;
-        });
-
         addActionListener((e) -> {
-            DefaultTableModel modelHeader = null;
-            if (headerTable != null) {
-                modelHeader = (DefaultTableModel) headerTable.getModel();
-            }
+            this.requestTypeComboBox = apiPanel.getRequestTypeComboBox();
+            this.inputTextURL = apiPanel.getInputURL();
+
+            RequestTabPanel requestTabPanel = apiPanel.getModel().getRequestTabPanel();
+
+            bodyRawValue = requestTabPanel.getRequestModel().getBodyPanel().getRequestBodyRawValue();
+            requestType = requestTabPanel.getRequestModel().getBodyPanel().getRequestBodyType();
+            requestBodyRawType = requestTabPanel.getRequestModel().getBodyPanel().getRequestBodyRawType();
+
             Request.Builder requestBuilder = new Request.Builder();
-            if (modelHeader != null) {
-                for (int i = 0; i < modelHeader.getRowCount(); i++) {
-                    requestBuilder.addHeader(modelHeader.getValueAt(i, 0).toString(), modelHeader.getValueAt(i, 1).toString());
-                }
+            for (com.supanadit.restsuite.model.Request request : requestTabPanel.getRequestModel().getHeadersPanel().getRequestTable().getRequest()) {
+                requestBuilder.addHeader(request.getKey(), request.getValue());
             }
 
             RequestType requestTypeRequest = (RequestType) requestTypeComboBox.getSelectedItem();
@@ -71,25 +47,24 @@ public class RequestApiButton extends JButton {
                 RequestBody requestBody;
 
                 if (requestType.getName().equals(RequestBodyType.RAW().getName())) {
-                    MediaType JSON = MediaType.parse(requestBodyRawType.getHeader());
-                    requestBody = RequestBody.create(bodyRaw, JSON);
+                    MediaType mediaType = MediaType.parse(requestBodyRawType.getHeader());
+                    requestBody = RequestBody.create(bodyRawValue, mediaType);
                 } else {
                     MultipartBody.Builder builder = new MultipartBody.Builder();
 
                     builder.setType(MultipartBody.FORM);
-
-                    requestBody = RequestBody.create("", MediaType.parse(RequestBodyRawType.TEXT().getHeader()));
-                    if (requestBodyFormModel != null) {
-                        if (requestBodyFormModel.getForm().size() != 0) {
-                            for (RequestBodyFormInputModel input : requestBodyFormModel.getForm()) {
-                                if (input.getType().equals(RequestBodyFormType.FIELD().getName())) {
-                                    builder.addFormDataPart(input.getKey(), input.getValue());
-                                } else {
-                                    builder.addFormDataPart(input.getKey(), input.getValue(), RequestBody.create(new File(input.getValue()), MediaType.parse("application/octet-stream")));
-                                }
+                    ArrayList<RequestBodyFormInputModel> listFormInput = requestTabPanel.getRequestModel().getBodyPanel().getBodyFormPanel().getModel().getAllFormInput();
+                    if (listFormInput.size() != 0) {
+                        for (RequestBodyFormInputModel input : listFormInput) {
+                            if (input.getType().equals(RequestBodyFormType.FIELD().getName())) {
+                                builder.addFormDataPart(input.getKey(), input.getValue());
+                            } else {
+                                builder.addFormDataPart(input.getKey(), input.getValue(), RequestBody.create(new File(input.getValue()), MediaType.parse("application/octet-stream")));
                             }
-                            requestBody = builder.build();
                         }
+                        requestBody = builder.build();
+                    } else {
+                        requestBody = RequestBody.create("", MediaType.parse(RequestBodyRawType.TEXT().getHeader()));
                     }
                 }
 
@@ -104,7 +79,7 @@ public class RequestApiButton extends JButton {
                     requestBuilder.put(requestBody);
                 } else if (requestTypeRequest.getName().equals(RequestType.DELETE().getName())) {
                     // DELETE
-                    if (!bodyRaw.isBlank() && !bodyRaw.isEmpty()) {
+                    if (!bodyRawValue.isBlank() && !bodyRawValue.isEmpty()) {
                         requestBuilder.delete(requestBody);
                     } else {
                         requestBuilder.delete();
