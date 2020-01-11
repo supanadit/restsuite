@@ -30,13 +30,14 @@ public class Main {
 
             Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
-            MenuBar menuBar = new MenuBar();
+            // MenuBar menuBar = new MenuBar();
 
-            menuBar.getExitMenu().addActionListener(e -> {
-                frame.dispose();
-            });
+            // menuBar.getExitMenu().addActionListener(e -> {
+            //     frame.dispose();
+            // });
 
-            frame.setJMenuBar(menuBar);
+            // frame.setJMenuBar(menuBar);
+
             frame.add(new MainPanel(), BorderLayout.CENTER);
             frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
             frame.setSize(dimension);

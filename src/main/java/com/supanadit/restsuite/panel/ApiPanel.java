@@ -15,7 +15,7 @@ public class ApiPanel extends JPanel {
     protected RequestTypeComboBox requestTypeComboBox;
 
     public ApiPanel() {
-        super(new MigLayout("insets 10 10 0 0"));
+        super(new MigLayout("insets 10 10 10 10"));
 
         apiName = new JLabel("API URL");
         apiURL = new InputTextURL();
