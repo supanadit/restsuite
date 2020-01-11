@@ -10,6 +10,7 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -81,7 +82,11 @@ public class RequestApiButton extends JButton {
                     if (requestBodyFormModel != null) {
                         if (requestBodyFormModel.getForm().size() != 0) {
                             for (RequestBodyFormInputModel input : requestBodyFormModel.getForm()) {
-                                builder.addFormDataPart(input.getKey(), input.getValue());
+                                if (input.getType().equals(RequestBodyFormType.FIELD().getName())) {
+                                    builder.addFormDataPart(input.getKey(), input.getValue());
+                                } else {
+                                    builder.addFormDataPart(input.getKey(), input.getValue(), RequestBody.create(new File(input.getValue()), MediaType.parse("application/octet-stream")));
+                                }
                             }
                             requestBody = builder.build();
                         }
