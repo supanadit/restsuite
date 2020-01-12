@@ -31,7 +31,7 @@ public class RequestApiButton extends JButton {
             setEnabled(false);
             setText("Requesting");
 
-            this.requestTypeComboBox = apiPanel.getModel().getRequestMethod();
+            this.requestTypeComboBox = apiPanel.getModel().getRequestMethodComboBox();
             this.inputTextURL = apiPanel.getModel().getUrl();
 
             RequestTabPanel requestTabPanel = apiPanel.getModel().getRequestTabPanel();

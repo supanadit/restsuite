@@ -1,8 +1,8 @@
 package com.supanadit.restsuite.model;
 
 public class Request {
-    protected String key;
-    protected String value;
+    private String key;
+    private String value;
 
     public Request(String key, String value) {
         this.key = key;

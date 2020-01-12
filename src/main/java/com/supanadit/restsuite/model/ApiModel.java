@@ -22,8 +22,12 @@ public class ApiModel {
         return url;
     }
 
-    public RequestTypeComboBox getRequestMethod() {
+    public RequestTypeComboBox getRequestMethodComboBox() {
         return requestMethod;
+    }
+
+    public RequestType getRequestMethod() {
+        return (RequestType) getRequestMethodComboBox().getSelectedItem();
     }
 
     public RequestTabPanel getRequestTabPanel() {

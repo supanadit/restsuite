@@ -1,30 +1,30 @@
 package com.supanadit.restsuite.panel;
 
-import com.supanadit.restsuite.component.*;
+import com.supanadit.restsuite.component.InputTextURL;
+import com.supanadit.restsuite.component.RequestApiButton;
+import com.supanadit.restsuite.component.RequestTypeComboBox;
 import com.supanadit.restsuite.model.ApiModel;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 
 public class ApiPanel extends JPanel {
-    protected JLabel apiName;
-    protected InputTextURL apiURL;
-    protected RequestApiButton sendButton;
-    protected RequestTabPanel requestTabPanel;
-    protected ResponseTabPanel responseTabPanel;
-    protected RequestTypeComboBox requestTypeComboBox;
+    private InputTextURL apiURL;
+    private RequestTabPanel requestTabPanel;
+    private ResponseTabPanel responseTabPanel;
+    private RequestTypeComboBox requestTypeComboBox;
 
     public ApiPanel() {
-        super(new MigLayout("insets 10 10 10 10"));
+        super(new MigLayout("insets 10 10 0 0"));
 
-        apiName = new JLabel("API URL");
+        JLabel apiName = new JLabel("API URL");
         apiURL = new InputTextURL();
 
         requestTypeComboBox = new RequestTypeComboBox();
         requestTabPanel = new RequestTabPanel(apiURL.getSubject());
         responseTabPanel = new ResponseTabPanel();
 
-        sendButton = new RequestApiButton(this);
+        RequestApiButton sendButton = new RequestApiButton(this);
 
         add(apiName, "wrap");
         add(apiURL, "growx, pushx");
