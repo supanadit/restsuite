@@ -51,7 +51,7 @@ public class SocketIoPanel extends JPanel {
         InputSocketIoURL socketIoURL = new InputSocketIoURL();
         socketIoHeadPanel.add(socketIoURL, "growx,pushx");
         socketIoHeadPanel.add(connectDisconnectButton);
-        JPanel socketIoLeftPanel = new JPanel(new MigLayout("w 200, insets n 10 n n"));
+        JPanel socketIoLeftPanel = new JPanel(new MigLayout("w 200,insets n 10 n n"));
         socketIoLeftPanel.add(new JLabel("Send Message"), "growx,pushx,wrap");
         socketIoLeftPanel.add(emitChannel, "growx,pushx,wrap");
 
@@ -86,7 +86,7 @@ public class SocketIoPanel extends JPanel {
 
         socketIoLeftPanel.add(emitBodyScrollPane, "grow,push,wrap");
         socketIoLeftPanel.add(emitButton, "growx,pushx,wrap");
-        JPanel socketIoRightPanel = new JPanel(new MigLayout("w 200, insets n n n 10"));
+        JPanel socketIoRightPanel = new JPanel(new MigLayout("w 200,insets n n n 10"));
         socketIoRightPanel.add(new JLabel("Listener"), "pushx,growx,wrap");
         socketIoRightPanel.add(inputListener, "pushx,growx,wrap");
         socketIoRightPanel.add(addListenerButton, "pushx,growx,wrap");
@@ -111,10 +111,10 @@ public class SocketIoPanel extends JPanel {
         gutterResponseBodyScrollPane.setBorderColor(lineColor);
         gutterResponseBodyScrollPane.setLineNumberColor(headerForeground);
 
-        add(responseBodyScrollPane, "grow,push");
+        add(responseBodyScrollPane, "center,grow,push");
         add(socketIoHeadPanel, "north");
-        add(socketIoLeftPanel, "west");
-        add(socketIoRightPanel, "east");
+        add(socketIoLeftPanel, "west,pushy");
+        add(socketIoRightPanel, "east,pushy");
 
         connectDisconnectButton.addActionListener(e -> {
             String url = socketIoURL.getText();
