@@ -32,6 +32,9 @@ mvn clean compile assembly:single
 - Project
 - Environment
 - Collection
+- Beautify response and body raw
+- Open response body in different window
+- Open and edit body raw in different window
 
 ## Contribute
 We love to see you contribute this project in any way
