@@ -17,10 +17,13 @@ public class ServerSentEventPanel extends JPanel {
     String connectDisconnect = "Connect";
     boolean isConnected = false;
     JButton connectDisconnectButton;
+    InputSseURL inputURL;
+
+    int connection = 0;
 
     public ServerSentEventPanel() {
         setLayout(new MigLayout("insets 10 10 10 10"));
-        InputSseURL inputURL = new InputSseURL();
+        inputURL = new InputSseURL();
         connectDisconnectButton = new JButton(connectDisconnect);
         add(new JLabel("SSE URL"), "growx,pushx,wrap");
         add(inputURL, "growx,pushx");
@@ -32,7 +35,13 @@ public class ServerSentEventPanel extends JPanel {
         ServerSentEvent.Listener listener = new ServerSentEvent.Listener() {
             @Override
             public void onOpen(ServerSentEvent sse, Response response) {
+                connectDisconnectButton.setEnabled(true);
+                connectDisconnectButton.setText("Disconnect");
                 System.out.println("A connection just opened");
+                if (connection == 0) {
+                    messageTextArea.append("Connected to ".concat(inputURL.getText()).concat("\n"));
+                    connection += 1;
+                }
             }
 
             @Override
@@ -65,6 +74,11 @@ public class ServerSentEventPanel extends JPanel {
 
             @Override
             public void onClosed(ServerSentEvent sse) {
+                inputURL.setEnabled(true);
+                connectDisconnectButton.setEnabled(true);
+                connectDisconnectButton.setText("Connect");
+                connection = 0;
+                messageTextArea.append("Disconnected from ".concat(inputURL.getText()).concat("\n"));
                 System.out.println("Connection is Closed");
             }
 
@@ -83,8 +97,14 @@ public class ServerSentEventPanel extends JPanel {
                     okSse = new OkSse();
                     sse = okSse.newServerSentEvent(request, listener);
                     setStatus(true);
+                    inputURL.setEnabled(false);
+                    // Connection Button Logic
+                    connectDisconnectButton.setEnabled(false);
+                    connectDisconnectButton.setText("Connecting");
                 }
             } else {
+                connectDisconnectButton.setEnabled(false);
+                connectDisconnectButton.setText("Disconnecting");
                 setStatus(false);
             }
         });
@@ -92,17 +112,10 @@ public class ServerSentEventPanel extends JPanel {
 
     public void setStatus(boolean status) {
         isConnected = status;
-        if (isConnected) {
-            connectDisconnectButton.setText(getButtonText());
-        } else {
+        if (!isConnected) {
             if (sse != null) {
-                connectDisconnectButton.setText(getButtonText());
                 sse.close();
             }
         }
-    }
-
-    public String getButtonText() {
-        return (isConnected) ? "Disconnect" : "Connect";
     }
 }

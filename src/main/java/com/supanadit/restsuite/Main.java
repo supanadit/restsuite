@@ -1,6 +1,7 @@
 package com.supanadit.restsuite;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.supanadit.restsuite.component.CoreFrame;
 import com.supanadit.restsuite.component.CustomTitleBar;
 import com.supanadit.restsuite.component.MenuBar;
 import com.supanadit.restsuite.helper.DefaultIcon;
@@ -11,7 +12,6 @@ import java.awt.*;
 
 public class Main {
     public static Dimension dimension = new Dimension(1024, 600);
-    public static boolean customTitleBar = false;
 
     public static void main(String[] args) {
         System.setProperty("awt.useSystemAAFontSettings", "on");
@@ -19,14 +19,8 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             FlatIntelliJLaf.install();
 
-            JFrame frame = new JFrame("Rest Suite");
+            CoreFrame frame = new CoreFrame("Rest Suite");
             frame.setName("Rest API Testing for Professional");
-            frame.setIconImage(new DefaultIcon().getImage());
-            frame.setUndecorated(customTitleBar);
-
-            if (customTitleBar) {
-                new CustomTitleBar(frame);
-            }
 
             Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 

@@ -16,6 +16,8 @@ public class WebsocketPanel extends JPanel {
     WebsocketTestListener wsListener;
     WebSocket ws;
 
+    Boolean isConnected = false;
+
     public WebsocketPanel() {
         JTextArea logMessage = new JTextArea();
 
@@ -23,21 +25,35 @@ public class WebsocketPanel extends JPanel {
         add(new JLabel("Websocket URL"), "growx,pushx,wrap");
         InputWebsocketURL socketURL = new InputWebsocketURL();
         add(socketURL, "growx,pushx");
+
+        JButton sendButton = new JButton("Send");
         JButton connectButton = new JButton("Connect");
+
+        sendButton.setEnabled(false);
+
         connectButton.addActionListener((e) -> {
-            request = new Request.Builder().url(socketURL.getText()).build();
-            wsListener = new WebsocketTestListener(logMessage);
-            ws = client.newWebSocket(request, wsListener);
-            logMessage.append("Connected to ".concat(socketURL.getText()).concat("\n"));
+            if (!isConnected) {
+                request = new Request.Builder().url(socketURL.getText()).build();
+                wsListener = new WebsocketTestListener(logMessage);
+                ws = client.newWebSocket(request, wsListener);
+                logMessage.append("Connected to ".concat(socketURL.getText()).concat("\n"));
+                connectButton.setText("Disconnect");
+            } else {
+                logMessage.append("Disconnected from ".concat(socketURL.getText()).concat("\n"));
+                connectButton.setText("Connect");
+            }
+            isConnected = !isConnected;
+            // Some Logic
+            socketURL.setEnabled(!isConnected);
+            sendButton.setEnabled(isConnected);
         });
+
         add(connectButton, "wrap");
 
         add(new JLabel("Message"), "pushx,growx,wrap");
         add(new JScrollPane(logMessage), "push,grow,span,wrap");
         InputWebsocketMessage message = new InputWebsocketMessage();
         add(message, "pushx,growx");
-
-        JButton sendButton = new JButton("Send");
 
         sendButton.addActionListener((e) -> {
             if (request != null && wsListener != null && ws != null) {

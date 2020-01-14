@@ -28,6 +28,7 @@ public class SocketIoPanel extends JPanel {
     JButton emitButton;
     DefaultTableModel listenerDefaultModel;
     JTable listenerTable;
+    InputSocketIoURL socketIoURL;
 
     RSyntaxTextArea responseBody;
     Disposable connectDisposable;
@@ -48,7 +49,7 @@ public class SocketIoPanel extends JPanel {
 
         JPanel socketIoHeadPanel = new JPanel(new MigLayout("insets 10 10 n 10"));
         socketIoHeadPanel.add(new JLabel("SocketIO URL"), "growx,pushx,wrap");
-        InputSocketIoURL socketIoURL = new InputSocketIoURL();
+        socketIoURL = new InputSocketIoURL();
         socketIoHeadPanel.add(socketIoURL, "growx,pushx");
         socketIoHeadPanel.add(connectDisconnectButton);
         JPanel socketIoLeftPanel = new JPanel(new MigLayout("w 200,insets n 10 n n"));
@@ -128,6 +129,7 @@ public class SocketIoPanel extends JPanel {
                                 .doOnComplete(() -> {
                                     if (!isConnected) {
                                         responseBody.append("Disconnected from ".concat(socketIoURL.getText()).concat("\n"));
+                                        socketIoURL.setEnabled(true);
                                         setStatus(false);
                                     }
                                 });
@@ -143,6 +145,7 @@ public class SocketIoPanel extends JPanel {
                         socket.connect();
                         connectDisconnectButton.setEnabled(false);
                         connectDisconnectButton.setText("Connecting");
+                        socketIoURL.setEnabled(false);
                     } catch (URISyntaxException ex) {
                         ex.printStackTrace();
                     }
