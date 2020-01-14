@@ -1,5 +1,7 @@
 ![Logo](http://supanadit.com/wp-content/uploads/2019/12/Rest-Suite-Logo.png)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/961465595d4a4e5785d8a0c586f64af7)](https://www.codacy.com/manual/supanadit/restsuite?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=supanadit/restsuite&amp;utm_campaign=Badge_Grade)
+
 Open Source Rest API Testing, an alternative software for Postman, Insomnia, Soap UI, etc
 
 ## Features
