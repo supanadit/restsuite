@@ -1,9 +1,5 @@
 package com.supanadit.restsuite.component;
 
-import com.supanadit.restsuite.listener.EditableCellFocusAction;
-import com.supanadit.restsuite.listener.RequestKeyboardTableRowListener;
-import com.supanadit.restsuite.listener.RequestMouseScrollPaneMenuListener;
-import com.supanadit.restsuite.listener.RequestMouseTableRowMenuListener;
 import com.supanadit.restsuite.model.Request;
 
 import javax.swing.*;
@@ -14,8 +10,7 @@ public class RequestTable extends JScrollPane {
     private DefaultTableModel defaultTableModel;
     private JTable requestTable;
 
-
-    public RequestTable(boolean mouseAction, boolean keyboardAction, boolean editable) {
+    public RequestTable(boolean editable, HeadersPanel headersPanel) {
         defaultTableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -30,27 +25,19 @@ public class RequestTable extends JScrollPane {
 
         setViewportView(requestTable);
 
-        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("TAB"));
-        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("shift TAB"));
-        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("RIGHT"));
-        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("LEFT"));
-        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("UP"));
-        new EditableCellFocusAction(requestTable, KeyStroke.getKeyStroke("DOWN"));
+        requestTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        if (mouseAction) {
-            requestTable.addMouseListener(new RequestMouseTableRowMenuListener(this));
-        }
-        if (keyboardAction) {
-            requestTable.addKeyListener(new RequestKeyboardTableRowListener(this));
-        }
+        ListSelectionModel selectionModel = requestTable.getSelectionModel();
 
-        if (mouseAction) {
-            addMouseListener(new RequestMouseScrollPaneMenuListener(this));
-        }
+        selectionModel.addListSelectionListener(e -> {
+            if (headersPanel != null) {
+                headersPanel.getRemoveButton().setEnabled(true);
+            }
+        });
     }
 
-    public RequestTable() {
-        this(true, true, true);
+    public RequestTable(HeadersPanel headersPanel) {
+        this(true, headersPanel);
     }
 
     public DefaultTableModel getModel() {

@@ -18,27 +18,13 @@ public class MainPanel extends JTabbedPane {
     public MainPanel(MenuBar menuBar) {
         this.menuBar = menuBar;
 
-        JPanel coreApiPanel = new JPanel();
-        ApiSidePanel apiSidePanel = new ApiSidePanel();
-        ApiPanel apiPanel = new ApiPanel();
-
-        coreApiPanel.setLayout(new BorderLayout());
-        coreApiPanel.add(apiSidePanel, BorderLayout.LINE_END);
-        coreApiPanel.add(apiPanel, BorderLayout.CENTER);
-
-        add(restAPI, coreApiPanel);
+        add(restAPI, new ApiPanel());
         add(webSocket, new WebsocketPanel());
         add(sse, new ServerSentEventPanel());
         add(socketIO, new SocketIoPanel());
 
         addChangeListener(e -> {
             menuBar.getCollectionMenu().setEnabled(getSelectedIndex() == 0);
-        });
-
-        menuBar.getCollectionSaveMenu().addActionListener(e -> {
-            Collection collection = Collection.fromApiModel(apiPanel.getModel());
-            apiSidePanel.getCollectionRoot().add(new DefaultMutableTreeNode("New Collection"));
-            apiSidePanel.getCollectionTree().updateUI();
         });
     }
 

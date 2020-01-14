@@ -31,7 +31,7 @@ public class Main {
             Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
             MenuBar menuBar = new MenuBar();
-            menuBar.getExitMenu().addActionListener(e -> {
+            menuBar.getExitMenuItem().addActionListener(e -> {
                 frame.dispose();
             });
 

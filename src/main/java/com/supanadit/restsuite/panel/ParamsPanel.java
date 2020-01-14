@@ -17,7 +17,7 @@ public class ParamsPanel extends JPanel {
 
         this.urlSubject = urlSubject;
 
-        paramsTable = new RequestTable(false, false, false);
+        paramsTable = new RequestTable(false, null);
 
         urlSubject.throttleWithTimeout(300, TimeUnit.MILLISECONDS).subscribe((s) -> {
             UrlParser urlParser = new UrlParser(s);

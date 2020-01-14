@@ -4,22 +4,36 @@ import javax.swing.*;
 
 public class MenuBar extends JMenuBar {
     private JMenu file;
+    private JMenu environment;
     private JMenu collection;
 
+    // File Menu Item
     private JMenuItem exitMenuItem;
-    private JMenuItem collectionSaveMenuItem;
+    // Environment Menu Item
+    private JMenuItem environmentManageMenuItem;
+    // Collection Menu Item
+    private JMenuItem collectionManageMenuItem;
 
     public MenuBar() {
+        // File
         file = new JMenu("File");
-        collection = new JMenu("Collection");
-        collectionSaveMenuItem = new JMenuItem("Save");
-
         exitMenuItem = new JMenuItem("Exit");
-        file.add(exitMenuItem);
+        // Environment
+        environment = new JMenu("Environment");
+        environmentManageMenuItem = new JMenuItem("Manage");
+        // Collection
+        collection = new JMenu("Collection");
+        collectionManageMenuItem = new JMenuItem("Manage");
 
-        collection.add(collectionSaveMenuItem);
+        // File
+        file.add(exitMenuItem);
+        // Environment
+        environment.add(environmentManageMenuItem);
+        // Collection
+        collection.add(collectionManageMenuItem);
 
         add(file);
+        add(environment);
         add(collection);
     }
 
@@ -27,15 +41,23 @@ public class MenuBar extends JMenuBar {
         return file;
     }
 
-    public JMenuItem getExitMenu() {
+    public JMenuItem getExitMenuItem() {
         return exitMenuItem;
+    }
+
+    public JMenu getEnvironmentMenu() {
+        return environment;
+    }
+
+    public JMenuItem getEnvironmentManageMenuItem() {
+        return environmentManageMenuItem;
     }
 
     public JMenu getCollectionMenu() {
         return collection;
     }
 
-    public JMenuItem getCollectionSaveMenu() {
-        return collectionSaveMenuItem;
+    public JMenuItem getCollectionManageMenuItem() {
+        return collectionManageMenuItem;
     }
 }
