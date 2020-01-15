@@ -41,6 +41,9 @@ mvn clean compile assembly:single
 ## Contribute
 We love to see you contribute this project in any way
 
+## Support
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N01CIMZ)
+
 ## License
 Copyright 2019 Supan Adit Pratama
 
