@@ -1,13 +1,15 @@
 package com.supanadit.restsuite.listener;
 
-import javax.swing.*;
+import com.supanadit.restsuite.panel.ApiSidePanel;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class CollectionTreeMouseMenuListener extends MouseAdapter {
-    public JTree collection;
-    public CollectionTreeMouseMenuListener(JTree collection) {
-        this.collection = collection;
+    public ApiSidePanel apiSidePanel;
+
+    public CollectionTreeMouseMenuListener(ApiSidePanel apiSidePanel) {
+        this.apiSidePanel = apiSidePanel;
     }
 
     public void mousePressed(MouseEvent e) {
@@ -21,7 +23,7 @@ public class CollectionTreeMouseMenuListener extends MouseAdapter {
     }
 
     private void doPop(MouseEvent e) {
-        CollectionMouseMenu menu = new CollectionMouseMenu(collection);
+        CollectionMouseMenu menu = new CollectionMouseMenu(apiSidePanel);
         menu.show(e.getComponent(), e.getX(), e.getY());
     }
 }

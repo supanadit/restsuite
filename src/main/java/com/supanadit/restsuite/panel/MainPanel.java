@@ -1,10 +1,9 @@
 package com.supanadit.restsuite.panel;
 
 import com.supanadit.restsuite.component.MenuBar;
-import com.supanadit.restsuite.model.Collection;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 
 public class MainPanel extends JTabbedPane {
@@ -18,14 +17,16 @@ public class MainPanel extends JTabbedPane {
     public MainPanel(MenuBar menuBar) {
         this.menuBar = menuBar;
 
-        add(restAPI, new ApiPanel());
+        JPanel coreApiPanel = new JPanel();
+
+        coreApiPanel.setLayout(new MigLayout("insets 0 0 0 0", "[][]"));
+        coreApiPanel.add(new ApiSidePanel(), "w 200,growy,pushy");
+        coreApiPanel.add(new ApiPanel(), "grow,push");
+
+        add(restAPI, coreApiPanel);
         add(webSocket, new WebsocketPanel());
         add(sse, new ServerSentEventPanel());
         add(socketIO, new SocketIoPanel());
-
-        addChangeListener(e -> {
-            menuBar.getCollectionMenu().setEnabled(getSelectedIndex() == 0);
-        });
     }
 
     public MenuBar getMenuBar() {

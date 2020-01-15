@@ -2,17 +2,13 @@ package com.supanadit.restsuite;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.supanadit.restsuite.component.CoreFrame;
-import com.supanadit.restsuite.component.CustomTitleBar;
 import com.supanadit.restsuite.component.MenuBar;
-import com.supanadit.restsuite.helper.DefaultIcon;
 import com.supanadit.restsuite.panel.MainPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Main {
-    public static Dimension dimension = new Dimension(1024, 600);
-
     public static void main(String[] args) {
         System.setProperty("awt.useSystemAAFontSettings", "on");
         System.setProperty("swing.aatext", "true");
@@ -22,8 +18,6 @@ public class Main {
             CoreFrame frame = new CoreFrame("Rest Suite");
             frame.setName("Rest API Testing for Professional");
 
-            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-
             MenuBar menuBar = new MenuBar();
             menuBar.getExitMenuItem().addActionListener(e -> {
                 frame.dispose();
@@ -32,9 +26,6 @@ public class Main {
             frame.setJMenuBar(menuBar);
 
             frame.add(new MainPanel(menuBar), BorderLayout.CENTER);
-            frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-            frame.setSize(dimension);
-            frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
             frame.setVisible(true);
         });
     }
