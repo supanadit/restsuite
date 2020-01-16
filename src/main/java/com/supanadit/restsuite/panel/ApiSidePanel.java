@@ -9,12 +9,14 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import java.awt.*;
+import java.util.Arrays;
 
 public class ApiSidePanel extends JPanel {
     private JTree collection;
     private DefaultMutableTreeNode rootCollection;
     CoreDialog createNewCollection;
     JTextField collectionNameField;
+    private DefaultMutableTreeNode selectedNode;
 
     public ApiSidePanel() {
         setLayout(new MigLayout("fill,insets 3 5 0 0"));
@@ -72,6 +74,18 @@ public class ApiSidePanel extends JPanel {
         collection.addMouseListener(new CollectionTreeMouseMenuListener(this));
         collection.setBackground(background);
 
+        collection.addTreeSelectionListener(e -> {
+            selectedNode = (DefaultMutableTreeNode) collection.getLastSelectedPathComponent();
+
+            if (selectedNode != null) {
+                Object nodeInfo = selectedNode.getUserObject();
+
+                if (selectedNode.isLeaf()) {
+                    System.out.println((String) nodeInfo);
+                }
+            }
+        });
+
         collectionListPanel.add(collection, "push, grow, span, wrap");
         add(scrollPane, "push,grow");
     }
@@ -83,12 +97,29 @@ public class ApiSidePanel extends JPanel {
     }
 
     public void addNewCollection(String name) {
+        DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(name);
+        newNode.setAllowsChildren(true);
+        rootCollection.add(newNode);
+        reloadJTree();
+    }
+
+    public void reloadJTree() {
         DefaultTreeModel model = (DefaultTreeModel) collection.getModel();
-        rootCollection.add(new DefaultMutableTreeNode(name));
         model.reload((TreeNode) model.getRoot());
+    }
+
+    public void addNewChildSubCollection() {
+        DefaultMutableTreeNode newNode = new DefaultMutableTreeNode("Test");
+        selectedNode.add(newNode);
+        System.out.println(rootCollection.getIndex(selectedNode));
+        reloadJTree();
     }
 
     public JTree getCollection() {
         return collection;
+    }
+
+    public DefaultMutableTreeNode getSelectedNode() {
+        return selectedNode;
     }
 }

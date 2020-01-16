@@ -28,6 +28,16 @@ class CollectionMouseMenu extends JPopupMenu {
                 }
             });
             add(deleteData);
+            if (apiSidePanel.getSelectedNode() != null) {
+                DefaultMutableTreeNode node = apiSidePanel.getSelectedNode();
+                if (node.getAllowsChildren()) {
+                    JMenuItem addCollection = new JMenuItem("Add");
+                    addCollection.addActionListener(e -> {
+                        apiSidePanel.addNewChildSubCollection();
+                    });
+                    add(addCollection);
+                }
+            }
         }
     }
 }
