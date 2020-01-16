@@ -4,7 +4,6 @@ import com.supanadit.restsuite.component.MenuBar;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class MainPanel extends JTabbedPane {
     private static final String restAPI = "Rest API";
@@ -19,9 +18,9 @@ public class MainPanel extends JTabbedPane {
 
         JPanel coreApiPanel = new JPanel();
 
-        coreApiPanel.setLayout(new MigLayout("insets 0 0 0 0", "[][]"));
-        coreApiPanel.add(new ApiSidePanel(), "w 200,growy,pushy");
-        coreApiPanel.add(new ApiPanel(), "grow,push");
+        coreApiPanel.setLayout(new MigLayout("insets 0 0 0 0", "[fill,20%!][fill,grow]"));
+        coreApiPanel.add(new ApiSidePanel(), "pushy,growy");
+        coreApiPanel.add(new ApiPanel());
 
         add(restAPI, coreApiPanel);
         add(webSocket, new WebsocketPanel());

@@ -24,11 +24,11 @@ public class ApiSidePanel extends JPanel {
     JRadioButton collectionItem;
 
     public ApiSidePanel() {
-        setLayout(new MigLayout("fill,insets 3 5 0 0"));
+        setLayout(new MigLayout("fill,insets 5 5 0 0"));
 
         Color background = UIManager.getColor("Panel.background");
 
-        JPanel panel = new JPanel(new MigLayout());
+        JPanel panel = new JPanel(new MigLayout("", "", "[][fill,grow]"));
         panel.add(new JLabel("Collection"), "wrap");
         JButton addCollection = new JButton("Add Collection");
 

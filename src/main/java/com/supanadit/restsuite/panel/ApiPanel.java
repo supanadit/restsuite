@@ -1,5 +1,6 @@
 package com.supanadit.restsuite.panel;
 
+import com.jidesoft.swing.JideSplitButton;
 import com.supanadit.restsuite.component.InputTextURL;
 import com.supanadit.restsuite.component.RequestApiButton;
 import com.supanadit.restsuite.component.RequestTypeComboBox;
@@ -17,7 +18,7 @@ public class ApiPanel extends JPanel {
     public ApiPanel() {
         super(new MigLayout("insets 10 10 10 10"));
 
-        JLabel apiName = new JLabel("API URL");
+        JTextField apiName = new JTextField("Untitled");
         apiURL = new InputTextURL();
 
         requestTypeComboBox = new RequestTypeComboBox();
@@ -26,7 +27,9 @@ public class ApiPanel extends JPanel {
 
         RequestApiButton sendButton = new RequestApiButton(this);
 
-        add(apiName, "wrap");
+        add(apiName, "pushx,growx");
+        JButton saveButton = new JButton("Save");
+        add(saveButton, "growx,span 2,wrap");
         add(apiURL, "growx, pushx");
         add(requestTypeComboBox);
         add(sendButton, "wrap");
@@ -35,6 +38,10 @@ public class ApiPanel extends JPanel {
         add(responseTabPanel, "growx, growy, pushy, pushx, span 3, h 500");
 
         sendButton.setBodyPanel(this.responseTabPanel.body());
+
+        saveButton.addActionListener(e -> {
+
+        });
     }
 
     public ApiModel getModel() {

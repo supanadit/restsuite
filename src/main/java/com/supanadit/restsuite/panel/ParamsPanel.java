@@ -2,6 +2,7 @@ package com.supanadit.restsuite.panel;
 
 import com.supanadit.restsuite.component.RequestTable;
 import com.supanadit.restsuite.helper.UrlParser;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.PublishSubject;
 import net.miginfocom.swing.MigLayout;
 
@@ -19,7 +20,7 @@ public class ParamsPanel extends JPanel {
 
         paramsTable = new RequestTable(false, null);
 
-        urlSubject.throttleWithTimeout(300, TimeUnit.MILLISECONDS).subscribe((s) -> {
+        Disposable disposable = urlSubject.throttleWithTimeout(300, TimeUnit.MILLISECONDS).subscribe((s) -> {
             UrlParser urlParser = new UrlParser(s);
             paramsTable.setFromRequestArrayList(urlParser.getQueryParams());
         });
