@@ -33,7 +33,7 @@ class CollectionMouseMenu extends JPopupMenu {
                 if (node.getAllowsChildren()) {
                     JMenuItem addCollection = new JMenuItem("Add");
                     addCollection.addActionListener(e -> {
-                        apiSidePanel.addNewChildSubCollection();
+                        apiSidePanel.openNewDialog(node);
                     });
                     add(addCollection);
                 }

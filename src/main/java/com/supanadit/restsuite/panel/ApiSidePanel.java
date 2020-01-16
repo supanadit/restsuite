@@ -18,6 +18,11 @@ public class ApiSidePanel extends JPanel {
     JTextField collectionNameField;
     private DefaultMutableTreeNode selectedNode;
 
+    private DefaultMutableTreeNode parentNode;
+
+    JRadioButton collectionFolder;
+    JRadioButton collectionItem;
+
     public ApiSidePanel() {
         setLayout(new MigLayout("fill,insets 3 5 0 0"));
 
@@ -28,15 +33,25 @@ public class ApiSidePanel extends JPanel {
         JButton addCollection = new JButton("Add Collection");
 
         addCollection.addActionListener(e -> {
-            openNewDialog();
+            openNewDialog(rootCollection);
         });
 
         panel.add(addCollection, "pushx,growx");
 
         add(panel, "pushx,growx,wrap");
 
-        createNewCollection = new CoreDialog("Create Collection", 300, 130);
+        createNewCollection = new CoreDialog("Create Collection", 400, 130);
         createNewCollection.setResizable(false);
+
+        collectionFolder = new JRadioButton("Folder");
+        collectionItem = new JRadioButton("Collection");
+
+        collectionFolder.setSelected(true);
+
+        ButtonGroup group = new ButtonGroup();
+
+        group.add(collectionFolder);
+        group.add(collectionItem);
 
         JLabel collectionNameLabel = new JLabel("Collection Name");
         createNewCollection.add(collectionNameLabel, "wrap");
@@ -44,10 +59,17 @@ public class ApiSidePanel extends JPanel {
         createNewCollection.add(collectionNameField, "pushx,growx,wrap");
         JPanel bottomPanel = new JPanel(new MigLayout("rtl, insets 0 0 0 0"));
         createNewCollection.add(bottomPanel, "grow,push");
+
+        JPanel radioSelectionPanel = new JPanel(new MigLayout("insets n 0 n 0"));
+        radioSelectionPanel.add(collectionFolder);
+        radioSelectionPanel.add(collectionItem);
+
         JButton addButton = new JButton("Add");
         JButton cancelButton = new JButton("Cancel");
         bottomPanel.add(cancelButton);
         bottomPanel.add(addButton);
+        bottomPanel.add(radioSelectionPanel, "push,grow");
+
 
         addButton.setFocusable(false);
         cancelButton.setFocusable(false);
@@ -59,6 +81,7 @@ public class ApiSidePanel extends JPanel {
         addButton.addActionListener(e -> {
             addNewCollection(collectionNameField.getText());
             createNewCollection.setVisible(false);
+            collectionFolder.setSelected(true);
         });
 
         JPanel collectionListPanel = new JPanel(new MigLayout("insets 0 5 0 0"));
@@ -76,21 +99,14 @@ public class ApiSidePanel extends JPanel {
 
         collection.addTreeSelectionListener(e -> {
             selectedNode = (DefaultMutableTreeNode) collection.getLastSelectedPathComponent();
-
-            if (selectedNode != null) {
-                Object nodeInfo = selectedNode.getUserObject();
-
-                if (selectedNode.isLeaf()) {
-                    System.out.println((String) nodeInfo);
-                }
-            }
         });
 
         collectionListPanel.add(collection, "push, grow, span, wrap");
         add(scrollPane, "push,grow");
     }
 
-    public void openNewDialog() {
+    public void openNewDialog(DefaultMutableTreeNode parentNode) {
+        this.parentNode = parentNode;
         collectionNameField.setText(null);
         collectionNameField.setRequestFocusEnabled(true);
         createNewCollection.setVisible(true);
@@ -98,8 +114,8 @@ public class ApiSidePanel extends JPanel {
 
     public void addNewCollection(String name) {
         DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(name);
-        newNode.setAllowsChildren(true);
-        rootCollection.add(newNode);
+        newNode.setAllowsChildren(collectionFolder.isSelected());
+        parentNode.add(newNode);
         reloadJTree();
     }
 
@@ -112,7 +128,6 @@ public class ApiSidePanel extends JPanel {
         DefaultMutableTreeNode newNode = new DefaultMutableTreeNode("Test");
         selectedNode.add(newNode);
         System.out.println(rootCollection.getIndex(selectedNode));
-        reloadJTree();
     }
 
     public JTree getCollection() {
