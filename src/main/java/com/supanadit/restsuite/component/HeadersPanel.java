@@ -1,8 +1,11 @@
 package com.supanadit.restsuite.component;
 
+import com.supanadit.restsuite.Main;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
 
 public class HeadersPanel extends JPanel {
     private RequestTable requestTable;
@@ -14,8 +17,16 @@ public class HeadersPanel extends JPanel {
         requestTable = new RequestTable(this);
 
         JPanel containerButton = new JPanel(new MigLayout("flowy,insets 0 0 0 0"));
-        add = new JButton("Add");
-        remove = new JButton("Remove");
+        URL addIconURL = Main.class.getClassLoader().getResource("icon/add.png");
+        URL removeIconURL = Main.class.getClassLoader().getResource("icon/remove.png");
+
+        assert addIconURL != null;
+        Icon addIcon = new ImageIcon(new ImageIcon(addIconURL).getImage().getScaledInstance(15, 15, Image.SCALE_DEFAULT));
+        assert removeIconURL != null;
+        Icon removeIcon = new ImageIcon(new ImageIcon(removeIconURL).getImage().getScaledInstance(15, 15, Image.SCALE_DEFAULT));
+
+        add = new JButton(addIcon);
+        remove = new JButton(removeIcon);
 
         remove.setEnabled(false);
 
@@ -33,7 +44,7 @@ public class HeadersPanel extends JPanel {
         containerButton.add(add);
         containerButton.add(remove);
 
-        add(requestTable, "growx,pushx");
+        add(requestTable, "grow,push");
         add(containerButton, "growy");
     }
 

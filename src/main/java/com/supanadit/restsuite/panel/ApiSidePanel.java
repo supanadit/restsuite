@@ -6,6 +6,7 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import java.awt.*;
@@ -24,12 +25,11 @@ public class ApiSidePanel extends JPanel {
     JRadioButton collectionItem;
 
     public ApiSidePanel() {
-        setLayout(new MigLayout("fill,insets 5 5 0 0"));
+        setLayout(new MigLayout("fill,insets 4 5 0 0"));
 
         Color background = UIManager.getColor("Panel.background");
 
         JPanel panel = new JPanel(new MigLayout("", "", "[][fill,grow]"));
-        panel.add(new JLabel("Collection"), "wrap");
         JButton addCollection = new JButton("Add Collection");
 
         addCollection.addActionListener(e -> {
@@ -114,6 +114,7 @@ public class ApiSidePanel extends JPanel {
 
     public void addNewCollection(String name) {
         DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(name);
+        
         newNode.setAllowsChildren(collectionFolder.isSelected());
         parentNode.add(newNode);
         reloadJTree();
