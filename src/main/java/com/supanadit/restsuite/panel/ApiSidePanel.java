@@ -53,9 +53,10 @@ public class ApiSidePanel extends JPanel {
         group.add(collectionFolder);
         group.add(collectionItem);
 
+        collectionNameField = new JTextField();
+
         JLabel collectionNameLabel = new JLabel("Collection Name");
         createNewCollection.add(collectionNameLabel, "wrap");
-        collectionNameField = new JTextField();
         createNewCollection.add(collectionNameField, "pushx,growx,wrap");
         JPanel bottomPanel = new JPanel(new MigLayout("rtl, insets 0 0 0 0"));
         createNewCollection.add(bottomPanel, "grow,push");
@@ -66,6 +67,7 @@ public class ApiSidePanel extends JPanel {
 
         JButton addButton = new JButton("Add");
         JButton cancelButton = new JButton("Cancel");
+
         bottomPanel.add(cancelButton);
         bottomPanel.add(addButton);
         bottomPanel.add(radioSelectionPanel, "push,grow");
@@ -114,7 +116,7 @@ public class ApiSidePanel extends JPanel {
 
     public void addNewCollection(String name) {
         DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(name);
-        
+
         newNode.setAllowsChildren(collectionFolder.isSelected());
         parentNode.add(newNode);
         reloadJTree();

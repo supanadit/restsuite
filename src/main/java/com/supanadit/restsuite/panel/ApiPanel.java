@@ -2,6 +2,7 @@ package com.supanadit.restsuite.panel;
 
 import com.jidesoft.swing.JideSplitButton;
 import com.supanadit.restsuite.Main;
+import com.supanadit.restsuite.component.CoreDialog;
 import com.supanadit.restsuite.component.InputTextURL;
 import com.supanadit.restsuite.component.RequestApiButton;
 import com.supanadit.restsuite.component.RequestTypeComboBox;
@@ -17,9 +18,27 @@ public class ApiPanel extends JPanel {
     private RequestTabPanel requestTabPanel;
     private ResponseTabPanel responseTabPanel;
     private RequestTypeComboBox requestTypeComboBox;
+    private CoreDialog renameAPI;
+    private JTextField apiName;
 
     public ApiPanel() {
         super(new MigLayout("insets 10 10 10 10"));
+
+        apiName = new JTextField();
+
+        JButton saveButton = new JButton("Save");
+        JButton cancelButton = new JButton("Cancel");
+
+        renameAPI = new CoreDialog("Rename API", 400, 130);
+        renameAPI.setResizable(false);
+
+        renameAPI.add(new JLabel("Name"), "wrap");
+        renameAPI.add(apiName, "pushx,growx,wrap");
+
+        JPanel bottomPanel = new JPanel(new MigLayout("rtl, insets 0 0 0 0"));
+        renameAPI.add(bottomPanel, "grow,push");
+        bottomPanel.add(cancelButton);
+        bottomPanel.add(saveButton);
 
         apiURL = new InputTextURL();
 
@@ -41,7 +60,26 @@ public class ApiPanel extends JPanel {
 
         JButton saveAPI = new JButton(saveIcon);
         JButton title = new JButton("Untitled");
+        title.setSize(300, title.getHeight());
+        Dimension defaultDimension = new Dimension();
+        defaultDimension.setSize(200, title.getHeight());
+        title.setMinimumSize(defaultDimension);
+
         title.setIcon(editIcon);
+        title.setIconTextGap(5);
+        title.addActionListener(e -> {
+            renameAPI.setVisible(true);
+            apiName.setText(title.getText());
+        });
+
+        cancelButton.addActionListener(e -> {
+            renameAPI.setVisible(false);
+        });
+
+        saveButton.addActionListener(e -> {
+            title.setText(apiName.getText());
+            renameAPI.setVisible(false);
+        });
 
         restApiHeader.add(title);
         restApiHeader.add(saveAPI);

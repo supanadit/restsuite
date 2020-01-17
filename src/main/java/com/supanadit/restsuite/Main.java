@@ -23,7 +23,7 @@ public class Main {
                 frame.dispose();
             });
 
-            frame.setJMenuBar(menuBar);
+            // frame.setJMenuBar(menuBar);
 
             frame.add(new MainPanel(menuBar), BorderLayout.CENTER);
             frame.setVisible(true);
