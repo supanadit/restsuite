@@ -1,6 +1,5 @@
 package com.supanadit.restsuite.panel;
 
-import com.jidesoft.swing.JideSplitButton;
 import com.supanadit.restsuite.Main;
 import com.supanadit.restsuite.component.CoreDialog;
 import com.supanadit.restsuite.component.InputTextURL;
