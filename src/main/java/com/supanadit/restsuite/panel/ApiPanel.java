@@ -49,36 +49,6 @@ public class ApiPanel extends JPanel {
 
         JPanel restApiHeader = new JPanel(new MigLayout("insets 0 0 0 0"));
 
-        URL saveIconURL = Main.class.getClassLoader().getResource("icon/save.png");
-        URL editIconURL = Main.class.getClassLoader().getResource("icon/edit.png");
-
-        assert saveIconURL != null;
-        Icon saveIcon = new ImageIcon(new ImageIcon(saveIconURL).getImage().getScaledInstance(15, 15, Image.SCALE_DEFAULT));
-        assert editIconURL != null;
-        Icon editIcon = new ImageIcon(editIconURL);
-
-        JButton saveAPI = new JButton(saveIcon);
-        JButton title = new JButton("Untitled");
-        title.setSize(300, title.getHeight());
-
-        title.setIcon(editIcon);
-        title.setIconTextGap(5);
-        title.addActionListener(e -> {
-            renameAPI.setVisible(true);
-            apiName.setText(title.getText());
-        });
-
-        cancelButton.addActionListener(e -> {
-            renameAPI.setVisible(false);
-        });
-
-        saveButton.addActionListener(e -> {
-            title.setText(apiName.getText());
-            renameAPI.setVisible(false);
-        });
-
-        restApiHeader.add(saveAPI);
-        restApiHeader.add(title);
         add(restApiHeader, "pushx,growx,wrap");
         add(apiURL, "growx, pushx");
         add(requestTypeComboBox);
