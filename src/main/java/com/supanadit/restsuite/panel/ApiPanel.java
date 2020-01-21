@@ -60,9 +60,6 @@ public class ApiPanel extends JPanel {
         JButton saveAPI = new JButton(saveIcon);
         JButton title = new JButton("Untitled");
         title.setSize(300, title.getHeight());
-        Dimension defaultDimension = new Dimension();
-        defaultDimension.setSize(200, title.getHeight());
-        title.setMinimumSize(defaultDimension);
 
         title.setIcon(editIcon);
         title.setIconTextGap(5);
@@ -80,8 +77,8 @@ public class ApiPanel extends JPanel {
             renameAPI.setVisible(false);
         });
 
-        restApiHeader.add(title);
         restApiHeader.add(saveAPI);
+        restApiHeader.add(title);
         add(restApiHeader, "pushx,growx,wrap");
         add(apiURL, "growx, pushx");
         add(requestTypeComboBox);

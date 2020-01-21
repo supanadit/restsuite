@@ -16,13 +16,7 @@ public class MainPanel extends JTabbedPane {
     public MainPanel(MenuBar menuBar) {
         this.menuBar = menuBar;
 
-        JPanel coreApiPanel = new JPanel();
-
-        coreApiPanel.setLayout(new MigLayout("insets 0 0 0 0", "[fill,20%!][fill,grow]"));
-        coreApiPanel.add(new ApiSidePanel(), "pushy,growy");
-        coreApiPanel.add(new ApiPanel());
-
-        add(restAPI, coreApiPanel);
+        add(restAPI, new ApiPanel());
         add(webSocket, new WebsocketPanel());
         add(sse, new ServerSentEventPanel());
         add(socketIO, new SocketIoPanel());
