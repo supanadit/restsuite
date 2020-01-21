@@ -1,6 +1,5 @@
 package com.supanadit.restsuite.panel;
 
-import com.supanadit.restsuite.Main;
 import com.supanadit.restsuite.component.CoreDialog;
 import com.supanadit.restsuite.component.InputTextURL;
 import com.supanadit.restsuite.component.RequestApiButton;
@@ -9,26 +8,22 @@ import com.supanadit.restsuite.model.ApiModel;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import java.awt.*;
-import java.net.URL;
 
 public class ApiPanel extends JPanel {
     private InputTextURL apiURL;
     private RequestTabPanel requestTabPanel;
     private ResponseTabPanel responseTabPanel;
     private RequestTypeComboBox requestTypeComboBox;
-    private CoreDialog renameAPI;
-    private JTextField apiName;
 
     public ApiPanel() {
         super(new MigLayout("insets 10 10 10 10"));
 
-        apiName = new JTextField();
+        JTextField apiName = new JTextField();
 
         JButton saveButton = new JButton("Save");
         JButton cancelButton = new JButton("Cancel");
 
-        renameAPI = new CoreDialog("Rename API", 400, 130);
+        CoreDialog renameAPI = new CoreDialog("Rename API", 400, 130);
         renameAPI.setResizable(false);
 
         renameAPI.add(new JLabel("Name"), "wrap");
