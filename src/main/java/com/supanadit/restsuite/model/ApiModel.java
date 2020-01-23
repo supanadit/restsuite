@@ -1,9 +1,9 @@
 package com.supanadit.restsuite.model;
 
-import com.supanadit.restsuite.component.InputTextURL;
-import com.supanadit.restsuite.component.RequestTypeComboBox;
-import com.supanadit.restsuite.panel.RequestTabPanel;
-import com.supanadit.restsuite.panel.ResponseTabPanel;
+import com.supanadit.restsuite.component.input.api.InputTextURL;
+import com.supanadit.restsuite.component.combobox.RequestTypeComboBox;
+import com.supanadit.restsuite.panel.api.request.RequestTabPanel;
+import com.supanadit.restsuite.panel.api.response.ResponseTabPanel;
 
 public class ApiModel {
     private InputTextURL url;

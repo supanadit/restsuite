@@ -1,7 +1,10 @@
 package com.supanadit.restsuite.panel;
 
 import com.supanadit.restsuite.component.MenuBar;
-import net.miginfocom.swing.MigLayout;
+import com.supanadit.restsuite.panel.api.ApiPanel;
+import com.supanadit.restsuite.panel.socket.SocketIoPanel;
+import com.supanadit.restsuite.panel.sse.ServerSentEventPanel;
+import com.supanadit.restsuite.panel.websocket.WebsocketPanel;
 
 import javax.swing.*;
 

@@ -1,7 +1,7 @@
 package com.supanadit.restsuite;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.supanadit.restsuite.component.CoreFrame;
+import com.supanadit.restsuite.component.core.Frame;
 import com.supanadit.restsuite.component.MenuBar;
 import com.supanadit.restsuite.panel.MainPanel;
 
@@ -15,7 +15,7 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             FlatIntelliJLaf.install();
 
-            CoreFrame frame = new CoreFrame("Rest Suite");
+            Frame frame = new Frame("Rest Suite");
             frame.setName("Rest API Testing for Professional");
 
             MenuBar menuBar = new MenuBar();

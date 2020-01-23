@@ -1,10 +1,8 @@
 package com.supanadit.restsuite.model;
 
-import com.supanadit.restsuite.component.HeadersPanel;
-import com.supanadit.restsuite.panel.BodyPanel;
-import com.supanadit.restsuite.panel.ParamsPanel;
-import com.supanadit.restsuite.panel.RequestTabPanel;
-import com.supanadit.restsuite.panel.ResponseTabPanel;
+import com.supanadit.restsuite.panel.api.request.tab.header.HeadersPanel;
+import com.supanadit.restsuite.panel.api.BodyPanel;
+import com.supanadit.restsuite.panel.api.request.tab.param.ParamsPanel;
 
 public class ApiRequestModel {
     private BodyPanel bodyPanel;
