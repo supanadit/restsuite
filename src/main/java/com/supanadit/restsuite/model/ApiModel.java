@@ -5,17 +5,25 @@ import com.supanadit.restsuite.component.combobox.RequestTypeComboBox;
 import com.supanadit.restsuite.panel.api.request.TabPanel;
 import com.supanadit.restsuite.panel.api.response.ResponseTabPanel;
 
+import javax.swing.*;
+
 public class ApiModel {
+    private JButton title;
     private InputTextURL url;
     private RequestTypeComboBox requestMethod;
     private TabPanel tabPanel;
     private ResponseTabPanel responseTabPanel;
 
-    public ApiModel(InputTextURL url, RequestTypeComboBox requestMethod, TabPanel tabPanel, ResponseTabPanel responseTabPanel) {
+    public ApiModel(JButton title, InputTextURL url, RequestTypeComboBox requestMethod, TabPanel tabPanel, ResponseTabPanel responseTabPanel) {
+        this.title = title;
         this.url = url;
         this.requestMethod = requestMethod;
         this.tabPanel = tabPanel;
         this.responseTabPanel = responseTabPanel;
+    }
+
+    public JButton getTitle() {
+        return title;
     }
 
     public InputTextURL getUrl() {

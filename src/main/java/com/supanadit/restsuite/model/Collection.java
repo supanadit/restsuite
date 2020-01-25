@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Collection {
     private Collection parent;
-    private String name;
+    private String title;
     private String url;
     private String method;
     private ArrayList<RequestHeadersFormInputModel> headers;
@@ -15,9 +15,9 @@ public class Collection {
     private String bodyRawType;
     private String bodyRawValue;
 
-    public Collection(@Nullable Collection parent, @Nullable String name, String url, String method, ArrayList<RequestHeadersFormInputModel> headers, String bodyType, ArrayList<RequestBodyFormInputModel> bodyForm, String bodyRawType, String bodyRawValue) {
+    public Collection(@Nullable Collection parent, @Nullable String title, String url, String method, ArrayList<RequestHeadersFormInputModel> headers, String bodyType, ArrayList<RequestBodyFormInputModel> bodyForm, String bodyRawType, String bodyRawValue) {
         this.parent = parent;
-        this.name = name;
+        this.title = title;
         this.url = url;
         this.method = method;
         this.headers = headers;
@@ -27,11 +27,12 @@ public class Collection {
         this.bodyRawValue = bodyRawValue;
     }
 
-    public Collection(String name, String url, String method, ArrayList<RequestHeadersFormInputModel> headers, String bodyType, ArrayList<RequestBodyFormInputModel> bodyForm, String bodyRawType, String bodyRawValue) {
-        this(null, name, url, method, headers, bodyType, bodyForm, bodyRawType, bodyRawValue);
+    public Collection(String title, String url, String method, ArrayList<RequestHeadersFormInputModel> headers, String bodyType, ArrayList<RequestBodyFormInputModel> bodyForm, String bodyRawType, String bodyRawValue) {
+        this(null, title, url, method, headers, bodyType, bodyForm, bodyRawType, bodyRawValue);
     }
 
     public static Collection fromApiModel(ApiModel apiModel) {
+        String title = apiModel.getTitle().getText();
         String url = apiModel.getUrl().getText();
         String method = apiModel.getRequestMethod().getName();
         ArrayList<RequestHeadersFormInputModel> headers = apiModel.getTabPanel().getRequestModel().getHeadersPanel().getHeadersFormPanel().getModel().getAllFormInput();
@@ -39,19 +40,19 @@ public class Collection {
         ArrayList<RequestBodyFormInputModel> bodyForm = apiModel.getTabPanel().getRequestModel().getBodyPanel().getBodyFormPanel().getModel().getAllFormInput();
         String bodyRawType = apiModel.getTabPanel().getRequestModel().getBodyPanel().getRequestBodyRawType().getName();
         String bodyRawValue = apiModel.getTabPanel().getRequestModel().getBodyPanel().getRequestBodyRawValue();
-        return new Collection(null, null, url, method, headers, bodyType, bodyForm, bodyRawType, bodyRawValue);
+        return new Collection(null, title, url, method, headers, bodyType, bodyForm, bodyRawType, bodyRawValue);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Collection getParent() {
         return parent;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public String getUrl() {
@@ -84,8 +85,8 @@ public class Collection {
 
     @Override
     public String toString() {
-        String stringCollection = "Parent Collection : ".concat((getParent() != null) ? getParent().getName() : "null").concat("\n")
-                .concat("Name : ").concat((getName() != null) ? getName() : "null").concat("\n")
+        String stringCollection = "Parent Collection : ".concat((getParent() != null) ? getParent().getTitle() : "null").concat("\n")
+                .concat("Name : ").concat((getTitle() != null) ? getTitle() : "null").concat("\n")
                 .concat("URL : ").concat(getUrl()).concat("\n")
                 .concat("Method : ").concat(getMethod()).concat("\n")
                 .concat("Header : ").concat("\n");
