@@ -2,18 +2,18 @@ package com.supanadit.restsuite.panel.api.request;
 
 import com.supanadit.restsuite.panel.api.request.tab.header.HeadersPanel;
 import com.supanadit.restsuite.model.*;
-import com.supanadit.restsuite.panel.api.BodyPanel;
+import com.supanadit.restsuite.panel.api.request.tab.body.BodyPanel;
 import com.supanadit.restsuite.panel.api.request.tab.param.ParamsPanel;
 import io.reactivex.subjects.PublishSubject;
 
 import javax.swing.*;
 
-public class RequestTabPanel extends JTabbedPane {
+public class TabPanel extends JTabbedPane {
     private BodyPanel bodyPanel;
     private HeadersPanel headersPanel;
     private ParamsPanel paramsPanel;
 
-    public RequestTabPanel(PublishSubject<String> urlSubject) {
+    public TabPanel(PublishSubject<String> urlSubject) {
         paramsPanel = new ParamsPanel(urlSubject);
         headersPanel = new HeadersPanel();
         bodyPanel = new BodyPanel(true);

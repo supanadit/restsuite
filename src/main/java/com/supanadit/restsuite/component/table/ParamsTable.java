@@ -7,11 +7,11 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
-public class RequestTable extends JScrollPane {
+public class ParamsTable extends JScrollPane {
     private DefaultTableModel defaultTableModel;
     private JTable requestTable;
 
-    public RequestTable(boolean editable, HeadersPanel headersPanel) {
+    public ParamsTable(boolean editable, HeadersPanel headersPanel) {
         defaultTableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -27,17 +27,9 @@ public class RequestTable extends JScrollPane {
         setViewportView(requestTable);
 
         requestTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        ListSelectionModel selectionModel = requestTable.getSelectionModel();
-
-        selectionModel.addListSelectionListener(e -> {
-            if (headersPanel != null) {
-                headersPanel.getRemoveButton().setEnabled(true);
-            }
-        });
     }
 
-    public RequestTable(HeadersPanel headersPanel) {
+    public ParamsTable(HeadersPanel headersPanel) {
         this(true, headersPanel);
     }
 

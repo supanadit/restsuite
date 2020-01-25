@@ -1,19 +1,17 @@
 package com.supanadit.restsuite.panel.api.response;
 
-import com.supanadit.restsuite.panel.api.BodyPanel;
-
 import javax.swing.*;
 
 public class ResponseTabPanel extends JTabbedPane {
-    protected BodyPanel bodyPanel;
+    protected ResponseBodyPanel responseBodyPanel;
 
     public ResponseTabPanel() {
-        bodyPanel = new BodyPanel(false);
+        responseBodyPanel = new ResponseBodyPanel(false);
 
-        add("Response", bodyPanel);
+        add("Response", responseBodyPanel);
     }
 
-    public BodyPanel body() {
-        return bodyPanel;
+    public ResponseBodyPanel body() {
+        return responseBodyPanel;
     }
 }

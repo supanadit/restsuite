@@ -1,8 +1,8 @@
-package com.supanadit.restsuite.panel.api;
+package com.supanadit.restsuite.panel.api.response;
 
-import com.supanadit.restsuite.component.textarea.BodyTextArea;
 import com.supanadit.restsuite.component.combobox.RequestBodyRawTypeComboBox;
 import com.supanadit.restsuite.component.combobox.RequestBodyTypeComboBox;
+import com.supanadit.restsuite.component.textarea.BodyTextArea;
 import com.supanadit.restsuite.model.RequestBodyRawType;
 import com.supanadit.restsuite.model.RequestBodyType;
 import com.supanadit.restsuite.panel.api.request.tab.body.BodyFormPanel;
@@ -14,7 +14,7 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 import javax.swing.*;
 import java.awt.*;
 
-public class BodyPanel extends JPanel {
+public class ResponseBodyPanel extends JPanel {
     protected BodyTextArea bodyTextArea;
     protected boolean withOptions;
     protected String defaultFormat = SyntaxConstants.SYNTAX_STYLE_NONE;
@@ -24,7 +24,7 @@ public class BodyPanel extends JPanel {
     protected RequestBodyTypeComboBox requestBodyTypeComboBox;
     protected RequestBodyRawTypeComboBox requestBodyRawTypeComboBox;
 
-    public BodyPanel(boolean withOptions) {
+    public ResponseBodyPanel(boolean withOptions) {
         super(new MigLayout());
         Color lineColor = UIManager.getColor("Table.gridColor");
         Color fontColor = UIManager.getColor("TableHeader.foreground");

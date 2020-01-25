@@ -9,13 +9,13 @@ public class Collection {
     private String name;
     private String url;
     private String method;
-    private ArrayList<Request> headers;
+    private ArrayList<RequestHeadersFormInputModel> headers;
     private String bodyType;
     private ArrayList<RequestBodyFormInputModel> bodyForm;
     private String bodyRawType;
     private String bodyRawValue;
 
-    public Collection(@Nullable Collection parent, @Nullable String name, String url, String method, ArrayList<Request> headers, String bodyType, ArrayList<RequestBodyFormInputModel> bodyForm, String bodyRawType, String bodyRawValue) {
+    public Collection(@Nullable Collection parent, @Nullable String name, String url, String method, ArrayList<RequestHeadersFormInputModel> headers, String bodyType, ArrayList<RequestBodyFormInputModel> bodyForm, String bodyRawType, String bodyRawValue) {
         this.parent = parent;
         this.name = name;
         this.url = url;
@@ -27,18 +27,18 @@ public class Collection {
         this.bodyRawValue = bodyRawValue;
     }
 
-    public Collection(String name, String url, String method, ArrayList<Request> headers, String bodyType, ArrayList<RequestBodyFormInputModel> bodyForm, String bodyRawType, String bodyRawValue) {
+    public Collection(String name, String url, String method, ArrayList<RequestHeadersFormInputModel> headers, String bodyType, ArrayList<RequestBodyFormInputModel> bodyForm, String bodyRawType, String bodyRawValue) {
         this(null, name, url, method, headers, bodyType, bodyForm, bodyRawType, bodyRawValue);
     }
 
     public static Collection fromApiModel(ApiModel apiModel) {
         String url = apiModel.getUrl().getText();
         String method = apiModel.getRequestMethod().getName();
-        ArrayList<Request> headers = apiModel.getRequestTabPanel().getRequestModel().getHeadersPanel().getRequestTable().getRequest();
-        String bodyType = apiModel.getRequestTabPanel().getRequestModel().getBodyPanel().getRequestBodyType().getName();
-        ArrayList<RequestBodyFormInputModel> bodyForm = apiModel.getRequestTabPanel().getRequestModel().getBodyPanel().getBodyFormPanel().getModel().getAllFormInput();
-        String bodyRawType = apiModel.getRequestTabPanel().getRequestModel().getBodyPanel().getRequestBodyRawType().getName();
-        String bodyRawValue = apiModel.getRequestTabPanel().getRequestModel().getBodyPanel().getRequestBodyRawValue();
+        ArrayList<RequestHeadersFormInputModel> headers = apiModel.getTabPanel().getRequestModel().getHeadersPanel().getHeadersFormPanel().getModel().getAllFormInput();
+        String bodyType = apiModel.getTabPanel().getRequestModel().getBodyPanel().getRequestBodyType().getName();
+        ArrayList<RequestBodyFormInputModel> bodyForm = apiModel.getTabPanel().getRequestModel().getBodyPanel().getBodyFormPanel().getModel().getAllFormInput();
+        String bodyRawType = apiModel.getTabPanel().getRequestModel().getBodyPanel().getRequestBodyRawType().getName();
+        String bodyRawValue = apiModel.getTabPanel().getRequestModel().getBodyPanel().getRequestBodyRawValue();
         return new Collection(null, null, url, method, headers, bodyType, bodyForm, bodyRawType, bodyRawValue);
     }
 
@@ -62,7 +62,7 @@ public class Collection {
         return method;
     }
 
-    public ArrayList<Request> getHeaders() {
+    public ArrayList<RequestHeadersFormInputModel> getHeaders() {
         return headers;
     }
 
@@ -89,7 +89,7 @@ public class Collection {
                 .concat("URL : ").concat(getUrl()).concat("\n")
                 .concat("Method : ").concat(getMethod()).concat("\n")
                 .concat("Header : ").concat("\n");
-        for (Request header : getHeaders()) {
+        for (RequestHeadersFormInputModel header : getHeaders()) {
             stringCollection = stringCollection.concat("-").concat(" ").concat(header.getKey()).concat(" = ").concat(header.getValue()).concat("\n");
         }
         stringCollection = stringCollection.concat("Body Type : ").concat(getBodyType()).concat("\n")

@@ -4,8 +4,8 @@ import com.supanadit.restsuite.component.combobox.RequestTypeComboBox;
 import com.supanadit.restsuite.component.input.api.InputTextURL;
 import com.supanadit.restsuite.model.*;
 import com.supanadit.restsuite.panel.api.ApiPanel;
-import com.supanadit.restsuite.panel.api.BodyPanel;
-import com.supanadit.restsuite.panel.api.request.RequestTabPanel;
+import com.supanadit.restsuite.panel.api.request.TabPanel;
+import com.supanadit.restsuite.panel.api.response.ResponseBodyPanel;
 import okhttp3.Request;
 import okhttp3.*;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
@@ -19,7 +19,7 @@ import java.util.Objects;
 public class RequestApiButton extends JButton {
     protected InputTextURL inputTextURL;
     protected OkHttpClient client;
-    protected BodyPanel bodyPanel;
+    protected ResponseBodyPanel responseBodyPanel;
     protected RequestTypeComboBox requestTypeComboBox;
     protected String bodyRawValue;
     protected RequestBodyType requestType;
@@ -36,15 +36,19 @@ public class RequestApiButton extends JButton {
             this.requestTypeComboBox = apiPanel.getModel().getRequestMethodComboBox();
             this.inputTextURL = apiPanel.getModel().getUrl();
 
-            RequestTabPanel requestTabPanel = apiPanel.getModel().getRequestTabPanel();
+            TabPanel tabPanel = apiPanel.getModel().getTabPanel();
 
-            bodyRawValue = requestTabPanel.getRequestModel().getBodyPanel().getRequestBodyRawValue();
-            requestType = requestTabPanel.getRequestModel().getBodyPanel().getRequestBodyType();
-            requestBodyRawType = requestTabPanel.getRequestModel().getBodyPanel().getRequestBodyRawType();
+            bodyRawValue = tabPanel.getRequestModel().getBodyPanel().getRequestBodyRawValue();
+            requestType = tabPanel.getRequestModel().getBodyPanel().getRequestBodyType();
+            requestBodyRawType = tabPanel.getRequestModel().getBodyPanel().getRequestBodyRawType();
 
             Request.Builder requestBuilder = new Request.Builder();
-            for (com.supanadit.restsuite.model.Request request : requestTabPanel.getRequestModel().getHeadersPanel().getRequestTable().getRequest()) {
-                requestBuilder.addHeader(request.getKey(), request.getValue());
+
+            ArrayList<RequestHeadersFormInputModel> listHeaderFormInput = tabPanel.getRequestModel().getHeadersPanel().getHeadersFormPanel().getModel().getAllFormInput();
+            for (RequestHeadersFormInputModel request : listHeaderFormInput) {
+                if (!request.getKey().isEmpty() && !request.getValue().isEmpty()) {
+                    requestBuilder.addHeader(request.getKey(), request.getValue());
+                }
             }
 
             RequestType requestTypeRequest = (RequestType) requestTypeComboBox.getSelectedItem();
@@ -58,7 +62,7 @@ public class RequestApiButton extends JButton {
                     MultipartBody.Builder builder = new MultipartBody.Builder();
 
                     builder.setType(MultipartBody.FORM);
-                    ArrayList<RequestBodyFormInputModel> listFormInput = requestTabPanel.getRequestModel().getBodyPanel().getBodyFormPanel().getModel().getAllFormInput();
+                    ArrayList<RequestBodyFormInputModel> listFormInput = tabPanel.getRequestModel().getBodyPanel().getBodyFormPanel().getModel().getAllFormInput();
                     if (listFormInput.size() != 0) {
                         for (RequestBodyFormInputModel input : listFormInput) {
                             if (input.getType().equals(RequestBodyFormType.FIELD().getName())) {
@@ -109,28 +113,27 @@ public class RequestApiButton extends JButton {
                                 header = headerSplit[0];
                                 break;
                         }
-                        bodyPanel.setSyntax(header);
+                        responseBodyPanel.setSyntax(header);
                     } else {
-                        bodyPanel.setSyntax(SyntaxConstants.SYNTAX_STYLE_NONE);
+                        responseBodyPanel.setSyntax(SyntaxConstants.SYNTAX_STYLE_NONE);
                     }
-                    if (bodyPanel == null) {
+                    if (responseBodyPanel == null) {
                         System.out.println(Objects.requireNonNull(response.body()).string());
                     } else {
-                        bodyPanel.setText(Objects.requireNonNull(response.body()).string());
+                        responseBodyPanel.setText(Objects.requireNonNull(response.body()).string());
                     }
                 } catch (IOException ex) {
-                    bodyPanel.setText(ex.getMessage());
+                    responseBodyPanel.setText(ex.getMessage());
                 }
             } catch (Exception ex) {
-                bodyPanel.setText(ex.getMessage());
+                responseBodyPanel.setText(ex.getMessage());
             }
-
             setText("Send");
             setEnabled(true);
         });
     }
 
-    public void setBodyPanel(BodyPanel bodyPanel) {
-        this.bodyPanel = bodyPanel;
+    public void setResponseBodyPanel(ResponseBodyPanel responseBodyPanel) {
+        this.responseBodyPanel = responseBodyPanel;
     }
 }

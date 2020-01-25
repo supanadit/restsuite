@@ -1,8 +1,8 @@
 package com.supanadit.restsuite;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.supanadit.restsuite.component.core.Frame;
 import com.supanadit.restsuite.component.MenuBar;
+import com.supanadit.restsuite.component.core.Frame;
 import com.supanadit.restsuite.panel.MainPanel;
 
 import javax.swing.*;
