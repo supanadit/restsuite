@@ -13,4 +13,11 @@ public class RequestTypeComboBox extends JComboBox<RequestTypeModel> {
         addItem(RequestTypeModel.DELETE());
         addItem(RequestTypeModel.PUT());
     }
+
+    @Override
+    public String toString() {
+        RequestTypeModel model = (RequestTypeModel) getSelectedItem();
+        assert model != null;
+        return model.getName();
+    }
 }

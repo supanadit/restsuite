@@ -3,8 +3,7 @@ package com.supanadit.restsuite.panel.api.request.tab.body;
 import com.supanadit.restsuite.component.input.api.InputBodyKey;
 import com.supanadit.restsuite.component.input.api.InputBodyValue;
 import com.supanadit.restsuite.component.combobox.RequestBodyFormTypeComboBox;
-import com.supanadit.restsuite.model.RequestBodyFormInputModel;
-import com.supanadit.restsuite.model.RequestBodyFormTypeModel;
+import com.supanadit.restsuite.model.BodyFormTypeModel;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -13,7 +12,8 @@ import javax.swing.event.DocumentListener;
 import java.io.File;
 
 public class BodyFormInputPanel extends JPanel implements DocumentListener {
-    RequestBodyFormTypeComboBox comboBox;
+    int id;
+    RequestBodyFormTypeComboBox typeComboBox;
     InputBodyKey keyField;
     InputBodyValue valueField;
     BodyFormPanel bodyFormPanel;
@@ -21,8 +21,8 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
     public BodyFormInputPanel(BodyFormPanel bodyFormPanel) {
         this.bodyFormPanel = bodyFormPanel;
         setLayout(new MigLayout("insets 0 0 0 0", "[]5[100]5[100]5[]5[]"));
-        comboBox = new RequestBodyFormTypeComboBox();
-        add(comboBox, "growx");
+        typeComboBox = new RequestBodyFormTypeComboBox();
+        add(typeComboBox, "growx");
         keyField = new InputBodyKey();
         valueField = new InputBodyValue();
 
@@ -36,9 +36,9 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
         JButton removeButton = new JButton("X");
 
         removeButton.addActionListener(e -> {
-            bodyFormPanel.getPanel().remove(this);
-            bodyFormPanel.getListInputPanel().remove(this);
-            bodyFormPanel.getPanel().updateUI();
+            bodyFormPanel.formGroupPanel.remove(this);
+            bodyFormPanel.listInputPanel.remove(this);
+            bodyFormPanel.formGroupPanel.updateUI();
             bodyFormPanel.updateChange();
         });
 
@@ -47,11 +47,11 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
 
         browseButton.setEnabled(false);
 
-        comboBox.addActionListener(e -> {
-            RequestBodyFormTypeModel type = (RequestBodyFormTypeModel) comboBox.getSelectedItem();
+        typeComboBox.addActionListener(e -> {
+            BodyFormTypeModel type = (BodyFormTypeModel) this.typeComboBox.getSelectedItem();
             assert type != null;
             valueField.setText(null);
-            boolean isFile = type.getName().equals(RequestBodyFormTypeModel.FILE().getName());
+            boolean isFile = type.getName().equals(BodyFormTypeModel.FILE().getName());
             browseButton.setEnabled(isFile);
             valueField.setEditable(!isFile);
         });
@@ -67,13 +67,40 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
         });
     }
 
-    public RequestBodyFormInputModel getModel() {
-        RequestBodyFormTypeModel comboBoxType = (RequestBodyFormTypeModel) comboBox.getSelectedItem();
-        assert comboBoxType != null;
-        String type = comboBoxType.getName();
-        String key = keyField.getText();
-        String value = valueField.getText();
-        return new RequestBodyFormInputModel(type, key, value);
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public RequestBodyFormTypeComboBox getTypeComboBox() {
+        return typeComboBox;
+    }
+
+    public InputBodyKey getKeyField() {
+        return keyField;
+    }
+
+    public void setKeyField(InputBodyKey keyField) {
+        this.keyField = keyField;
+    }
+
+    public InputBodyValue getValueField() {
+        return valueField;
+    }
+
+    public void setValueField(InputBodyValue valueField) {
+        this.valueField = valueField;
+    }
+
+    public BodyFormPanel getBodyFormPanel() {
+        return bodyFormPanel;
+    }
+
+    public void setBodyFormPanel(BodyFormPanel bodyFormPanel) {
+        this.bodyFormPanel = bodyFormPanel;
     }
 
     @Override

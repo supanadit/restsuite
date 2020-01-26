@@ -1,11 +1,11 @@
 package com.supanadit.restsuite.component.combobox;
 
 import com.supanadit.restsuite.renderer.RequestBodyRawTypeRenderer;
-import com.supanadit.restsuite.model.RequestBodyRawTypeModel;
+import com.supanadit.restsuite.model.BodyRawTypeModel;
 
 import javax.swing.*;
 
-public class RequestBodyRawTypeComboBox extends JComboBox<RequestBodyRawTypeModel> {
+public class RequestBodyRawTypeComboBox extends JComboBox<BodyRawTypeModel> {
     public RequestBodyRawTypeComboBox() {
         setRenderer(new RequestBodyRawTypeRenderer());
     }
@@ -13,12 +13,19 @@ public class RequestBodyRawTypeComboBox extends JComboBox<RequestBodyRawTypeMode
     public static RequestBodyRawTypeComboBox getComponent() {
         RequestBodyRawTypeComboBox requestBodyRawTypeComboBox = new RequestBodyRawTypeComboBox();
 
-        requestBodyRawTypeComboBox.addItem(RequestBodyRawTypeModel.JSON());
-        requestBodyRawTypeComboBox.addItem(RequestBodyRawTypeModel.TEXT());
-        requestBodyRawTypeComboBox.addItem(RequestBodyRawTypeModel.XML());
-        requestBodyRawTypeComboBox.addItem(RequestBodyRawTypeModel.HTML());
-        requestBodyRawTypeComboBox.addItem(RequestBodyRawTypeModel.JAVASCRIPT());
+        requestBodyRawTypeComboBox.addItem(BodyRawTypeModel.JSON());
+        requestBodyRawTypeComboBox.addItem(BodyRawTypeModel.TEXT());
+        requestBodyRawTypeComboBox.addItem(BodyRawTypeModel.XML());
+        requestBodyRawTypeComboBox.addItem(BodyRawTypeModel.HTML());
+        requestBodyRawTypeComboBox.addItem(BodyRawTypeModel.JAVASCRIPT());
 
         return requestBodyRawTypeComboBox;
+    }
+
+    @Override
+    public String toString() {
+        BodyRawTypeModel model = (BodyRawTypeModel) getSelectedItem();
+        assert model != null;
+        return model.getName();
     }
 }

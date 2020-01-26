@@ -9,8 +9,9 @@ import com.supanadit.restsuite.entity.CollectionBodyEntity;
 import com.supanadit.restsuite.entity.CollectionEntity;
 import com.supanadit.restsuite.entity.CollectionHeaderEntity;
 import com.supanadit.restsuite.model.ApiModel;
-import com.supanadit.restsuite.model.RequestBodyFormInputModel;
 import com.supanadit.restsuite.panel.api.request.TabPanel;
+import com.supanadit.restsuite.panel.api.request.tab.body.BodyFormInputPanel;
+import com.supanadit.restsuite.panel.api.request.tab.body.BodyFormPanel;
 import com.supanadit.restsuite.panel.api.request.tab.header.HeadersFormInputPanel;
 import com.supanadit.restsuite.panel.api.request.tab.header.HeadersFormPanel;
 import com.supanadit.restsuite.panel.api.response.ResponseTabPanel;
@@ -22,7 +23,6 @@ import org.hibernate.Transaction;
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class ApiPanel extends JPanel {
     public int id;
@@ -66,7 +66,7 @@ public class ApiPanel extends JPanel {
 
         apiURL = new InputTextURL();
 
-        tabPanel = new TabPanel(apiURL.getSubject());
+        tabPanel = new TabPanel(apiURL);
         responseTabPanel = new ResponseTabPanel();
         requestTypeComboBox = new RequestTypeComboBox();
 
@@ -119,13 +119,13 @@ public class ApiPanel extends JPanel {
         // Get URL
         String url = apiURL.getText();
         // Get Request Method whether is GET, POST, PUT, or DELETE
-        String method = requestTypeComboBox.getName();
+        String method = requestTypeComboBox.toString();
         // Get Type of Body whether is Form or Raw
         String bodyType = tabPanel.bodyPanel.getRequestBodyType().getName();
         // Get All Body Form Input
-        ArrayList<RequestBodyFormInputModel> bodyForm = tabPanel.bodyPanel.bodyFormPanel.getModel().getAllFormInput();
+        BodyFormPanel bodyForm = tabPanel.bodyPanel.bodyFormPanel;
         // Get Raw Type whether JSON, HTML, XML, Javascript, or Plain Text
-        String bodyRawType = tabPanel.bodyPanel.getRequestBodyRawType().getName();
+        String bodyRawType = tabPanel.bodyPanel.requestBodyRawTypeComboBox.toString();
         // Get Raw Value
         String bodyRawValue = tabPanel.bodyPanel.getRequestBodyRawValue();
         // Create Collection Entity
@@ -162,8 +162,15 @@ public class ApiPanel extends JPanel {
                 header.setId(headerEntity.getId());
             }
             // Save Body
-            for (RequestBodyFormInputModel body : bodyForm) {
-                CollectionBodyEntity bodyEntity = new CollectionBodyEntity(id, body.getType(), body.getKey(), body.getValue());
+            for (BodyFormInputPanel body : bodyForm.listInputPanel) {
+                // Get Type
+                String type = body.getTypeComboBox().toString();
+                // Get Key
+                String key = body.getKeyField().getText();
+                // Get Value
+                String value = body.getValueField().getText();
+                // Set ID Collection, Key Name and Value
+                CollectionBodyEntity bodyEntity = new CollectionBodyEntity(id, type, key, value);
                 // Set Body ID
                 if (body.getId() != 0) {
                     bodyEntity.setId(body.getId());

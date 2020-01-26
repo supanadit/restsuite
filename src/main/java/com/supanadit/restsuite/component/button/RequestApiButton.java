@@ -5,6 +5,7 @@ import com.supanadit.restsuite.component.input.api.InputTextURL;
 import com.supanadit.restsuite.model.*;
 import com.supanadit.restsuite.panel.api.ApiPanel;
 import com.supanadit.restsuite.panel.api.request.TabPanel;
+import com.supanadit.restsuite.panel.api.request.tab.body.BodyFormInputPanel;
 import com.supanadit.restsuite.panel.api.request.tab.header.HeadersFormInputPanel;
 import com.supanadit.restsuite.panel.api.response.ResponseBodyPanel;
 import okhttp3.Request;
@@ -23,8 +24,8 @@ public class RequestApiButton extends JButton {
     protected ResponseBodyPanel responseBodyPanel;
     protected RequestTypeComboBox requestTypeComboBox;
     protected String bodyRawValue;
-    protected RequestBodyTypeModel requestType;
-    protected RequestBodyRawTypeModel requestBodyRawTypeModel;
+    protected BodyTypeModel requestType;
+    protected BodyRawTypeModel bodyRawTypeModel;
 
     public RequestApiButton(ApiPanel apiPanel) {
         setText("Send");
@@ -35,19 +36,19 @@ public class RequestApiButton extends JButton {
             setText("Requesting");
 
             // Get Request Type whether is POST, GET, PUT, or DELETE
-            this.requestTypeComboBox = apiPanel.getModel().getRequestMethodComboBox();
+            this.requestTypeComboBox = apiPanel.requestTypeComboBox;
             // Get Value URL
-            this.inputTextURL = apiPanel.getModel().getUrl();
+            this.inputTextURL = apiPanel.apiURL;
 
             // Create Tab Panel
-            TabPanel tabPanel = apiPanel.getModel().getTabPanel();
+            TabPanel tabPanel = apiPanel.tabPanel;
 
             // Get the value of Body Raw
-            bodyRawValue = tabPanel.getRequestModel().getBodyPanel().getRequestBodyRawValue();
+            bodyRawValue = tabPanel.bodyPanel.getRequestBodyRawValue();
             // Get the Request Type whether Form or Raw
-            requestType = tabPanel.getRequestModel().getBodyPanel().getRequestBodyType();
+            requestType = tabPanel.bodyPanel.getRequestBodyType();
             // Get Body Raw Type whether is JSON, Plain Text, HTML, XML or Javascript
-            requestBodyRawTypeModel = tabPanel.getRequestModel().getBodyPanel().getRequestBodyRawType();
+            bodyRawTypeModel = tabPanel.bodyPanel.getRequestBodyRawType();
 
             // Create request Builder
             Request.Builder requestBuilder = new Request.Builder();
@@ -71,25 +72,31 @@ public class RequestApiButton extends JButton {
             if (requestTypeRequestModel != null) {
                 RequestBody requestBody;
 
-                if (requestType.getName().equals(RequestBodyTypeModel.RAW().getName())) {
-                    MediaType mediaType = MediaType.parse(requestBodyRawTypeModel.getHeader());
+                if (requestType.getName().equals(BodyTypeModel.RAW().getName())) {
+                    MediaType mediaType = MediaType.parse(bodyRawTypeModel.getHeader());
                     requestBody = RequestBody.create(bodyRawValue, mediaType);
                 } else {
                     MultipartBody.Builder builder = new MultipartBody.Builder();
 
                     builder.setType(MultipartBody.FORM);
-                    ArrayList<RequestBodyFormInputModel> listFormInput = tabPanel.getRequestModel().getBodyPanel().getBodyFormPanel().getModel().getAllFormInput();
+                    ArrayList<BodyFormInputPanel> listFormInput = tabPanel.bodyPanel.bodyFormPanel.listInputPanel;
                     if (listFormInput.size() != 0) {
-                        for (RequestBodyFormInputModel input : listFormInput) {
-                            if (input.getType().equals(RequestBodyFormTypeModel.FIELD().getName())) {
-                                builder.addFormDataPart(input.getKey(), input.getValue());
+                        for (BodyFormInputPanel body : listFormInput) {
+                            // Get Type
+                            String type = body.getTypeComboBox().getName();
+                            // Get Key
+                            String key = body.getKeyField().getText();
+                            // Get Value
+                            String value = body.getValueField().getText();
+                            if (type.equals(BodyFormTypeModel.FIELD().getName())) {
+                                builder.addFormDataPart(key, value);
                             } else {
-                                builder.addFormDataPart(input.getKey(), input.getValue(), RequestBody.create(new File(input.getValue()), MediaType.parse("application/octet-stream")));
+                                builder.addFormDataPart(key, value, RequestBody.create(new File(value), MediaType.parse("application/octet-stream")));
                             }
                         }
                         requestBody = builder.build();
                     } else {
-                        requestBody = RequestBody.create("", MediaType.parse(RequestBodyRawTypeModel.TEXT().getHeader()));
+                        requestBody = RequestBody.create("", MediaType.parse(BodyRawTypeModel.TEXT().getHeader()));
                     }
                 }
 
