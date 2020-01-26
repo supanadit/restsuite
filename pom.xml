@@ -85,9 +85,19 @@
             <version>0.9.0</version>
         </dependency>
         <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.200</version>
+        </dependency>
+        <dependency>
             <groupId>com.jidesoft</groupId>
             <artifactId>jide-oss</artifactId>
             <version>3.6.18</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.10.Final</version>
         </dependency>
     </dependencies>
 
