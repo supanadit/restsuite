@@ -5,10 +5,10 @@ import io.reactivex.subjects.PublishSubject;
 public class BodySubjectModel {
     private PublishSubject<String> bodyRaw;
     private PublishSubject<RequestBodyFormModel> requestBodyFormModelSubject;
-    private PublishSubject<RequestBodyRawType> requestBodyRawTypeSubject;
-    private PublishSubject<RequestBodyType> requestBodyTypeSubject;
+    private PublishSubject<RequestBodyRawTypeModel> requestBodyRawTypeSubject;
+    private PublishSubject<RequestBodyTypeModel> requestBodyTypeSubject;
 
-    public BodySubjectModel(PublishSubject<String> bodyRaw, PublishSubject<RequestBodyFormModel> requestBodyFormModelSubject, PublishSubject<RequestBodyRawType> requestBodyRawTypeSubject, PublishSubject<RequestBodyType> requestBodyTypeSubject) {
+    public BodySubjectModel(PublishSubject<String> bodyRaw, PublishSubject<RequestBodyFormModel> requestBodyFormModelSubject, PublishSubject<RequestBodyRawTypeModel> requestBodyRawTypeSubject, PublishSubject<RequestBodyTypeModel> requestBodyTypeSubject) {
         this.bodyRaw = bodyRaw;
         this.requestBodyFormModelSubject = requestBodyFormModelSubject;
         this.requestBodyRawTypeSubject = requestBodyRawTypeSubject;
@@ -23,11 +23,11 @@ public class BodySubjectModel {
         return requestBodyFormModelSubject;
     }
 
-    public PublishSubject<RequestBodyRawType> getRequestBodyRawTypeSubject() {
+    public PublishSubject<RequestBodyRawTypeModel> getRequestBodyRawTypeSubject() {
         return requestBodyRawTypeSubject;
     }
 
-    public PublishSubject<RequestBodyType> getRequestBodyTypeSubject() {
+    public PublishSubject<RequestBodyTypeModel> getRequestBodyTypeSubject() {
         return requestBodyTypeSubject;
     }
 }

@@ -3,7 +3,7 @@ package com.supanadit.restsuite;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.supanadit.restsuite.component.MenuBar;
 import com.supanadit.restsuite.component.core.Frame;
-import com.supanadit.restsuite.entity.Project;
+import com.supanadit.restsuite.entity.ProjectEntity;
 import com.supanadit.restsuite.panel.MainPanel;
 import com.supanadit.restsuite.system.Restsuite;
 import com.supanadit.restsuite.system.hibernate.HibernateUtil;
@@ -22,13 +22,13 @@ public class Main {
         Restsuite.createWorkspaceDirectory();
 
         // Test Hibernate
-        Project project = new Project("IFGF");
+        ProjectEntity projectEntity = new ProjectEntity("IFGF");
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
             // save the project objects
-            session.save(project);
+            session.save(projectEntity);
             // commit transaction
             transaction.commit();
         } catch (Exception e) {
@@ -39,8 +39,8 @@ public class Main {
         }
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<Project> projects = session.createQuery("from Project", Project.class).list();
-            projects.forEach(s -> System.out.println(s.getName()));
+            List<ProjectEntity> projectEntities = session.createQuery("from ProjectEntity", ProjectEntity.class).list();
+            projectEntities.forEach(s -> System.out.println(s.getName()));
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();

@@ -1,11 +1,8 @@
 package com.supanadit.restsuite.model;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.util.ArrayList;
 
-public class Collection {
-    private Collection parent;
+public class CollectionModel {
     private String title;
     private String url;
     private String method;
@@ -15,8 +12,7 @@ public class Collection {
     private String bodyRawType;
     private String bodyRawValue;
 
-    public Collection(@Nullable Collection parent, @Nullable String title, String url, String method, ArrayList<RequestHeadersFormInputModel> headers, String bodyType, ArrayList<RequestBodyFormInputModel> bodyForm, String bodyRawType, String bodyRawValue) {
-        this.parent = parent;
+    public CollectionModel(String title, String url, String method, ArrayList<RequestHeadersFormInputModel> headers, String bodyType, ArrayList<RequestBodyFormInputModel> bodyForm, String bodyRawType, String bodyRawValue) {
         this.title = title;
         this.url = url;
         this.method = method;
@@ -27,11 +23,7 @@ public class Collection {
         this.bodyRawValue = bodyRawValue;
     }
 
-    public Collection(String title, String url, String method, ArrayList<RequestHeadersFormInputModel> headers, String bodyType, ArrayList<RequestBodyFormInputModel> bodyForm, String bodyRawType, String bodyRawValue) {
-        this(null, title, url, method, headers, bodyType, bodyForm, bodyRawType, bodyRawValue);
-    }
-
-    public static Collection fromApiModel(ApiModel apiModel) {
+    public static CollectionModel fromApiModel(ApiModel apiModel) {
         String title = apiModel.getTitle().getText();
         String url = apiModel.getUrl().getText();
         String method = apiModel.getRequestMethod().getName();
@@ -40,15 +32,11 @@ public class Collection {
         ArrayList<RequestBodyFormInputModel> bodyForm = apiModel.getTabPanel().getRequestModel().getBodyPanel().getBodyFormPanel().getModel().getAllFormInput();
         String bodyRawType = apiModel.getTabPanel().getRequestModel().getBodyPanel().getRequestBodyRawType().getName();
         String bodyRawValue = apiModel.getTabPanel().getRequestModel().getBodyPanel().getRequestBodyRawValue();
-        return new Collection(null, title, url, method, headers, bodyType, bodyForm, bodyRawType, bodyRawValue);
+        return new CollectionModel(title, url, method, headers, bodyType, bodyForm, bodyRawType, bodyRawValue);
     }
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Collection getParent() {
-        return parent;
     }
 
     public String getTitle() {
@@ -85,11 +73,11 @@ public class Collection {
 
     @Override
     public String toString() {
-        String stringCollection = "Parent Collection : ".concat((getParent() != null) ? getParent().getTitle() : "null").concat("\n")
-                .concat("Name : ").concat((getTitle() != null) ? getTitle() : "null").concat("\n")
+        String stringCollection = "Name : ".concat((getTitle() != null) ? getTitle() : "null").concat("\n")
                 .concat("URL : ").concat(getUrl()).concat("\n")
                 .concat("Method : ").concat(getMethod()).concat("\n")
                 .concat("Header : ").concat("\n");
+
         for (RequestHeadersFormInputModel header : getHeaders()) {
             stringCollection = stringCollection.concat("-").concat(" ").concat(header.getKey()).concat(" = ").concat(header.getValue()).concat("\n");
         }

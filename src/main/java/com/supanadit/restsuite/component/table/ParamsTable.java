@@ -1,6 +1,6 @@
 package com.supanadit.restsuite.component.table;
 
-import com.supanadit.restsuite.model.Request;
+import com.supanadit.restsuite.model.RequestModel;
 import com.supanadit.restsuite.panel.api.request.tab.header.HeadersPanel;
 
 import javax.swing.*;
@@ -48,15 +48,15 @@ public class ParamsTable extends JScrollPane {
     }
 
     public void addNewEmptyRow() {
-        addRow(new Request("", ""));
+        addRow(new RequestModel("", ""));
     }
 
-    public void addRow(Request request) {
-        addRow(request, true);
+    public void addRow(RequestModel requestModel) {
+        addRow(requestModel, true);
     }
 
-    public void addRow(Request request, boolean withFocus) {
-        getModel().addRow(new Object[]{request.getKey(), request.getValue()});
+    public void addRow(RequestModel requestModel, boolean withFocus) {
+        getModel().addRow(new Object[]{requestModel.getKey(), requestModel.getValue()});
         if (withFocus) {
             if (getModel().getRowCount() != 0) {
                 requestTable.editCellAt(getModel().getRowCount() - 1, 0);
@@ -65,24 +65,24 @@ public class ParamsTable extends JScrollPane {
         }
     }
 
-    public void setFromRequestArrayList(ArrayList<Request> requestArrayList) {
+    public void setFromRequestArrayList(ArrayList<RequestModel> requestModelArrayList) {
         int rowCount = getModel().getRowCount();
         for (int i = rowCount - 1; i >= 0; i--) {
             getModel().removeRow(i);
         }
 
-        for (Request request : requestArrayList) {
-            addRow(request, false);
+        for (RequestModel requestModel : requestModelArrayList) {
+            addRow(requestModel, false);
         }
     }
 
-    public ArrayList<Request> getRequest() {
-        ArrayList<Request> requests = new ArrayList<>();
+    public ArrayList<RequestModel> getRequest() {
+        ArrayList<RequestModel> requestModels = new ArrayList<>();
         for (int i = 0; i < defaultTableModel.getRowCount(); i++) {
             String key = defaultTableModel.getValueAt(i, 0).toString();
             String value = defaultTableModel.getValueAt(i, 1).toString();
-            requests.add(new Request(key, value));
+            requestModels.add(new RequestModel(key, value));
         }
-        return requests;
+        return requestModels;
     }
 }

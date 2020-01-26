@@ -4,7 +4,7 @@ import com.supanadit.restsuite.component.input.api.InputBodyKey;
 import com.supanadit.restsuite.component.input.api.InputBodyValue;
 import com.supanadit.restsuite.component.combobox.RequestBodyFormTypeComboBox;
 import com.supanadit.restsuite.model.RequestBodyFormInputModel;
-import com.supanadit.restsuite.model.RequestBodyFormType;
+import com.supanadit.restsuite.model.RequestBodyFormTypeModel;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -48,10 +48,10 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
         browseButton.setEnabled(false);
 
         comboBox.addActionListener(e -> {
-            RequestBodyFormType type = (RequestBodyFormType) comboBox.getSelectedItem();
+            RequestBodyFormTypeModel type = (RequestBodyFormTypeModel) comboBox.getSelectedItem();
             assert type != null;
             valueField.setText(null);
-            boolean isFile = type.getName().equals(RequestBodyFormType.FILE().getName());
+            boolean isFile = type.getName().equals(RequestBodyFormTypeModel.FILE().getName());
             browseButton.setEnabled(isFile);
             valueField.setEditable(!isFile);
         });
@@ -68,7 +68,7 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
     }
 
     public RequestBodyFormInputModel getModel() {
-        RequestBodyFormType comboBoxType = (RequestBodyFormType) comboBox.getSelectedItem();
+        RequestBodyFormTypeModel comboBoxType = (RequestBodyFormTypeModel) comboBox.getSelectedItem();
         assert comboBoxType != null;
         String type = comboBoxType.getName();
         String key = keyField.getText();

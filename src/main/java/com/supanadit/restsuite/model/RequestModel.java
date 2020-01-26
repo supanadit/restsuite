@@ -1,10 +1,10 @@
 package com.supanadit.restsuite.model;
 
-public class Request {
+public class RequestModel {
     private String key;
     private String value;
 
-    public Request(String key, String value) {
+    public RequestModel(String key, String value) {
         this.key = key;
         this.value = value;
     }

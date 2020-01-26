@@ -34,8 +34,8 @@ public class ApiModel {
         return requestMethod;
     }
 
-    public RequestType getRequestMethod() {
-        return (RequestType) getRequestMethodComboBox().getSelectedItem();
+    public RequestTypeModel getRequestMethod() {
+        return (RequestTypeModel) getRequestMethodComboBox().getSelectedItem();
     }
 
     public TabPanel getTabPanel() {

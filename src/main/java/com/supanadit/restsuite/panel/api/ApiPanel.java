@@ -6,7 +6,7 @@ import com.supanadit.restsuite.component.input.api.InputTextURL;
 import com.supanadit.restsuite.component.button.RequestApiButton;
 import com.supanadit.restsuite.component.combobox.RequestTypeComboBox;
 import com.supanadit.restsuite.model.ApiModel;
-import com.supanadit.restsuite.model.Collection;
+import com.supanadit.restsuite.model.CollectionModel;
 import com.supanadit.restsuite.panel.api.request.TabPanel;
 import com.supanadit.restsuite.panel.api.response.ResponseTabPanel;
 import net.miginfocom.swing.MigLayout;
@@ -22,6 +22,7 @@ public class ApiPanel extends JPanel {
     private ResponseTabPanel responseTabPanel;
     private RequestTypeComboBox requestTypeComboBox;
 
+    protected int id;
     protected RequestApiButton sendButton;
     protected JButton title;
 
@@ -89,8 +90,8 @@ public class ApiPanel extends JPanel {
 
         saveAPI.addActionListener(e -> {
             System.out.println(title.getText());
-            Collection collection = Collection.fromApiModel(getModel());
-            System.out.println(collection.toString());
+            CollectionModel collectionModel = CollectionModel.fromApiModel(getModel());
+            System.out.println(collectionModel.toString());
         });
 
         JPanel panelHeader = new JPanel(new MigLayout("insets 0 0 0 0"));

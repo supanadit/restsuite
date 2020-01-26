@@ -22,8 +22,8 @@ public class RequestApiButton extends JButton {
     protected ResponseBodyPanel responseBodyPanel;
     protected RequestTypeComboBox requestTypeComboBox;
     protected String bodyRawValue;
-    protected RequestBodyType requestType;
-    protected RequestBodyRawType requestBodyRawType;
+    protected RequestBodyTypeModel requestType;
+    protected RequestBodyRawTypeModel requestBodyRawTypeModel;
 
     public RequestApiButton(ApiPanel apiPanel) {
         setText("Send");
@@ -40,7 +40,7 @@ public class RequestApiButton extends JButton {
 
             bodyRawValue = tabPanel.getRequestModel().getBodyPanel().getRequestBodyRawValue();
             requestType = tabPanel.getRequestModel().getBodyPanel().getRequestBodyType();
-            requestBodyRawType = tabPanel.getRequestModel().getBodyPanel().getRequestBodyRawType();
+            requestBodyRawTypeModel = tabPanel.getRequestModel().getBodyPanel().getRequestBodyRawType();
 
             Request.Builder requestBuilder = new Request.Builder();
 
@@ -51,12 +51,12 @@ public class RequestApiButton extends JButton {
                 }
             }
 
-            RequestType requestTypeRequest = (RequestType) requestTypeComboBox.getSelectedItem();
-            if (requestTypeRequest != null) {
+            RequestTypeModel requestTypeRequestModel = (RequestTypeModel) requestTypeComboBox.getSelectedItem();
+            if (requestTypeRequestModel != null) {
                 RequestBody requestBody;
 
-                if (requestType.getName().equals(RequestBodyType.RAW().getName())) {
-                    MediaType mediaType = MediaType.parse(requestBodyRawType.getHeader());
+                if (requestType.getName().equals(RequestBodyTypeModel.RAW().getName())) {
+                    MediaType mediaType = MediaType.parse(requestBodyRawTypeModel.getHeader());
                     requestBody = RequestBody.create(bodyRawValue, mediaType);
                 } else {
                     MultipartBody.Builder builder = new MultipartBody.Builder();
@@ -65,7 +65,7 @@ public class RequestApiButton extends JButton {
                     ArrayList<RequestBodyFormInputModel> listFormInput = tabPanel.getRequestModel().getBodyPanel().getBodyFormPanel().getModel().getAllFormInput();
                     if (listFormInput.size() != 0) {
                         for (RequestBodyFormInputModel input : listFormInput) {
-                            if (input.getType().equals(RequestBodyFormType.FIELD().getName())) {
+                            if (input.getType().equals(RequestBodyFormTypeModel.FIELD().getName())) {
                                 builder.addFormDataPart(input.getKey(), input.getValue());
                             } else {
                                 builder.addFormDataPart(input.getKey(), input.getValue(), RequestBody.create(new File(input.getValue()), MediaType.parse("application/octet-stream")));
@@ -73,20 +73,20 @@ public class RequestApiButton extends JButton {
                         }
                         requestBody = builder.build();
                     } else {
-                        requestBody = RequestBody.create("", MediaType.parse(RequestBodyRawType.TEXT().getHeader()));
+                        requestBody = RequestBody.create("", MediaType.parse(RequestBodyRawTypeModel.TEXT().getHeader()));
                     }
                 }
 
-                if (requestTypeRequest.getName().equals(RequestType.GET().getName())) {
+                if (requestTypeRequestModel.getName().equals(RequestTypeModel.GET().getName())) {
                     // GET
                     requestBuilder.get();
-                } else if (requestTypeRequest.getName().equals(RequestType.POST().getName())) {
+                } else if (requestTypeRequestModel.getName().equals(RequestTypeModel.POST().getName())) {
                     // POST
                     requestBuilder.post(requestBody);
-                } else if (requestTypeRequest.getName().equals(RequestType.PUT().getName())) {
+                } else if (requestTypeRequestModel.getName().equals(RequestTypeModel.PUT().getName())) {
                     // PUT
                     requestBuilder.put(requestBody);
-                } else if (requestTypeRequest.getName().equals(RequestType.DELETE().getName())) {
+                } else if (requestTypeRequestModel.getName().equals(RequestTypeModel.DELETE().getName())) {
                     // DELETE
                     if (!bodyRawValue.isBlank() && !bodyRawValue.isEmpty()) {
                         requestBuilder.delete(requestBody);

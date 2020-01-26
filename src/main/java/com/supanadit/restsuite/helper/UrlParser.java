@@ -2,7 +2,7 @@ package com.supanadit.restsuite.helper;
 
 // Author Supan Adit Pratama <supanadit@gmail.com>
 
-import com.supanadit.restsuite.model.Request;
+import com.supanadit.restsuite.model.RequestModel;
 
 import java.util.ArrayList;
 
@@ -134,8 +134,8 @@ public class UrlParser {
         return isHasQueryParams;
     }
 
-    public ArrayList<Request> getQueryParams() {
-        ArrayList<Request> request = new ArrayList<>();
+    public ArrayList<RequestModel> getQueryParams() {
+        ArrayList<RequestModel> requestModel = new ArrayList<>();
         int index = -1;
         if (this.isHttp()) {
             index = this.http.length();
@@ -161,19 +161,19 @@ public class UrlParser {
                             String[] params = queryParams[1].split("&");
                             for (int i = 0; i < params.length; i++) {
                                 String[] keyValue = params[i].split("=");
-                                Request requestData;
+                                RequestModel requestModelData;
                                 if (keyValue.length > 1) {
-                                    requestData = new Request(keyValue[0], keyValue[1]);
+                                    requestModelData = new RequestModel(keyValue[0], keyValue[1]);
                                 } else {
-                                    requestData = new Request(keyValue[0], "");
+                                    requestModelData = new RequestModel(keyValue[0], "");
                                 }
-                                request.add(requestData);
+                                requestModel.add(requestModelData);
                             }
                         }
                     }
                 }
             }
         }
-        return request;
+        return requestModel;
     }
 }

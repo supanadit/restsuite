@@ -1,0 +1,55 @@
+package com.supanadit.restsuite.model;
+
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+
+public class RequestBodyRawTypeModel {
+    protected String name;
+    protected String syntax;
+    protected String header;
+
+    public RequestBodyRawTypeModel(String name, String syntax, String header) {
+        this.name = name;
+        this.syntax = syntax;
+        this.header = header;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSyntax() {
+        return syntax;
+    }
+
+    public void setSyntax(String syntax) {
+        this.syntax = syntax;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public static RequestBodyRawTypeModel TEXT() {
+        return new RequestBodyRawTypeModel("TEXT", SyntaxConstants.SYNTAX_STYLE_NONE, "text/plain;charset=utf-8");
+    }
+
+    public static RequestBodyRawTypeModel JSON() {
+        return new RequestBodyRawTypeModel("JSON", SyntaxConstants.SYNTAX_STYLE_JSON, "application/json;charset=utf-8");
+    }
+
+    public static RequestBodyRawTypeModel HTML() {
+        return new RequestBodyRawTypeModel("HTML", SyntaxConstants.SYNTAX_STYLE_HTML, "text/html;charset=utf-8");
+    }
+
+    public static RequestBodyRawTypeModel XML() {
+        return new RequestBodyRawTypeModel("XML", SyntaxConstants.SYNTAX_STYLE_XML, "application/xml;charset=utf-8");
+    }
+
+    public static RequestBodyRawTypeModel JAVASCRIPT() {
+        return new RequestBodyRawTypeModel("JAVASCRIPT", SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT, "application/javascript;charset=utf-8");
+    }
+}

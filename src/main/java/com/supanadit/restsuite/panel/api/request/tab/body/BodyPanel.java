@@ -3,9 +3,8 @@ package com.supanadit.restsuite.panel.api.request.tab.body;
 import com.supanadit.restsuite.component.textarea.BodyTextArea;
 import com.supanadit.restsuite.component.combobox.RequestBodyRawTypeComboBox;
 import com.supanadit.restsuite.component.combobox.RequestBodyTypeComboBox;
-import com.supanadit.restsuite.model.RequestBodyRawType;
-import com.supanadit.restsuite.model.RequestBodyType;
-import com.supanadit.restsuite.panel.api.request.tab.body.BodyFormPanel;
+import com.supanadit.restsuite.model.RequestBodyRawTypeModel;
+import com.supanadit.restsuite.model.RequestBodyTypeModel;
 import net.miginfocom.swing.MigLayout;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.Gutter;
@@ -45,14 +44,14 @@ public class BodyPanel extends JPanel {
             requestBodyRawTypeComboBox = RequestBodyRawTypeComboBox.getComponent();
 
             if (requestBodyRawTypeComboBox.getItemCount() != 0) {
-                RequestBodyRawType requestBodyRawType = requestBodyRawTypeComboBox.getItemAt(0);
-                bodyTextArea.setSyntaxEditingStyle(requestBodyRawType.getSyntax());
+                RequestBodyRawTypeModel requestBodyRawTypeModel = requestBodyRawTypeComboBox.getItemAt(0);
+                bodyTextArea.setSyntaxEditingStyle(requestBodyRawTypeModel.getSyntax());
             }
 
             requestBodyTypeComboBox.addActionListener((e) -> {
-                RequestBodyType requestBodyType = (RequestBodyType) requestBodyTypeComboBox.getSelectedItem();
-                assert requestBodyType != null;
-                if (requestBodyType.getName().equals(RequestBodyType.RAW().getName())) {
+                RequestBodyTypeModel requestBodyTypeModel = (RequestBodyTypeModel) requestBodyTypeComboBox.getSelectedItem();
+                assert requestBodyTypeModel != null;
+                if (requestBodyTypeModel.getName().equals(RequestBodyTypeModel.RAW().getName())) {
                     requestBodyRawTypeComboBox.setEnabled(true);
                     add(spBody, "grow, push, span 3");
                     remove(bodyFormPanel);
@@ -66,9 +65,9 @@ public class BodyPanel extends JPanel {
             });
 
             requestBodyRawTypeComboBox.addActionListener((e) -> {
-                RequestBodyRawType requestBodyRawType = (RequestBodyRawType) requestBodyRawTypeComboBox.getSelectedItem();
-                assert requestBodyRawType != null;
-                bodyTextArea.setSyntaxEditingStyle(requestBodyRawType.getSyntax());
+                RequestBodyRawTypeModel requestBodyRawTypeModel = (RequestBodyRawTypeModel) requestBodyRawTypeComboBox.getSelectedItem();
+                assert requestBodyRawTypeModel != null;
+                bodyTextArea.setSyntaxEditingStyle(requestBodyRawTypeModel.getSyntax());
             });
 
             add(requestBodyTypeComboBox);
@@ -83,12 +82,12 @@ public class BodyPanel extends JPanel {
         return bodyFormPanel;
     }
 
-    public RequestBodyType getRequestBodyType() {
-        return (RequestBodyType) requestBodyTypeComboBox.getSelectedItem();
+    public RequestBodyTypeModel getRequestBodyType() {
+        return (RequestBodyTypeModel) requestBodyTypeComboBox.getSelectedItem();
     }
 
-    public RequestBodyRawType getRequestBodyRawType() {
-        return (RequestBodyRawType) requestBodyRawTypeComboBox.getSelectedItem();
+    public RequestBodyRawTypeModel getRequestBodyRawType() {
+        return (RequestBodyRawTypeModel) requestBodyRawTypeComboBox.getSelectedItem();
     }
 
     public String getRequestBodyRawValue() {

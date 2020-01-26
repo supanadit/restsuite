@@ -1,16 +1,16 @@
 package com.supanadit.restsuite.component.combobox;
 
 import com.supanadit.restsuite.renderer.RequestTypeRenderer;
-import com.supanadit.restsuite.model.RequestType;
+import com.supanadit.restsuite.model.RequestTypeModel;
 
 import javax.swing.*;
 
-public class RequestTypeComboBox extends JComboBox<RequestType> {
+public class RequestTypeComboBox extends JComboBox<RequestTypeModel> {
     public RequestTypeComboBox() {
         setRenderer(new RequestTypeRenderer());
-        addItem(RequestType.GET());
-        addItem(RequestType.POST());
-        addItem(RequestType.DELETE());
-        addItem(RequestType.PUT());
+        addItem(RequestTypeModel.GET());
+        addItem(RequestTypeModel.POST());
+        addItem(RequestTypeModel.DELETE());
+        addItem(RequestTypeModel.PUT());
     }
 }
