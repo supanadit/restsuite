@@ -5,6 +5,7 @@ import com.supanadit.restsuite.component.input.api.InputTextURL;
 import com.supanadit.restsuite.model.*;
 import com.supanadit.restsuite.panel.api.ApiPanel;
 import com.supanadit.restsuite.panel.api.request.TabPanel;
+import com.supanadit.restsuite.panel.api.request.tab.header.HeadersFormInputPanel;
 import com.supanadit.restsuite.panel.api.response.ResponseBodyPanel;
 import okhttp3.Request;
 import okhttp3.*;
@@ -33,21 +34,36 @@ public class RequestApiButton extends JButton {
             setEnabled(false);
             setText("Requesting");
 
+            // Get Request Type whether is POST, GET, PUT, or DELETE
             this.requestTypeComboBox = apiPanel.getModel().getRequestMethodComboBox();
+            // Get Value URL
             this.inputTextURL = apiPanel.getModel().getUrl();
 
+            // Create Tab Panel
             TabPanel tabPanel = apiPanel.getModel().getTabPanel();
 
+            // Get the value of Body Raw
             bodyRawValue = tabPanel.getRequestModel().getBodyPanel().getRequestBodyRawValue();
+            // Get the Request Type whether Form or Raw
             requestType = tabPanel.getRequestModel().getBodyPanel().getRequestBodyType();
+            // Get Body Raw Type whether is JSON, Plain Text, HTML, XML or Javascript
             requestBodyRawTypeModel = tabPanel.getRequestModel().getBodyPanel().getRequestBodyRawType();
 
+            // Create request Builder
             Request.Builder requestBuilder = new Request.Builder();
 
-            ArrayList<RequestHeadersFormInputModel> listHeaderFormInput = tabPanel.getRequestModel().getHeadersPanel().getHeadersFormPanel().getModel().getAllFormInput();
-            for (RequestHeadersFormInputModel request : listHeaderFormInput) {
-                if (!request.getKey().isEmpty() && !request.getValue().isEmpty()) {
-                    requestBuilder.addHeader(request.getKey(), request.getValue());
+            // Get All Header List
+            ArrayList<HeadersFormInputPanel> listHeaderFormInput = tabPanel.headersPanel.headersFormPanel.listInputPanel;
+            // Set Request Headers
+            for (HeadersFormInputPanel header : listHeaderFormInput) {
+                // Get Key
+                String key = header.getKeyField().getText();
+                // Get Value of Key
+                String value = header.getValueField().getText();
+                // Verify that the Key and Value isn't empty
+                if (!key.isEmpty() && !value.isEmpty()) {
+                    // Add to the Request
+                    requestBuilder.addHeader(key, value);
                 }
             }
 

@@ -1,6 +1,7 @@
 package com.supanadit.restsuite.model;
 
 public class RequestBodyFormInputModel {
+    int id;
     String type;
     String key;
     String value;
@@ -9,6 +10,14 @@ public class RequestBodyFormInputModel {
         this.type = type;
         this.key = key;
         this.value = value;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getType() {

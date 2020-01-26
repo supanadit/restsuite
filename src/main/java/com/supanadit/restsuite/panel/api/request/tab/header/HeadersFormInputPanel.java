@@ -2,7 +2,6 @@ package com.supanadit.restsuite.panel.api.request.tab.header;
 
 import com.supanadit.restsuite.component.input.api.InputBodyKey;
 import com.supanadit.restsuite.component.input.api.InputBodyValue;
-import com.supanadit.restsuite.model.RequestHeadersFormInputModel;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -10,6 +9,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class HeadersFormInputPanel extends JPanel implements DocumentListener {
+    int id;
     InputBodyKey keyField;
     InputBodyValue valueField;
     HeadersFormPanel headersFormPanel;
@@ -31,7 +31,7 @@ public class HeadersFormInputPanel extends JPanel implements DocumentListener {
 
         removeButton.addActionListener(e -> {
             headersFormPanel.getPanel().remove(this);
-            headersFormPanel.getListInputPanel().remove(this);
+            headersFormPanel.listInputPanel.remove(this);
             headersFormPanel.getPanel().updateUI();
             headersFormPanel.updateChange();
         });
@@ -39,10 +39,20 @@ public class HeadersFormInputPanel extends JPanel implements DocumentListener {
         add(removeButton);
     }
 
-    public RequestHeadersFormInputModel getModel() {
-        String key = keyField.getText();
-        String value = valueField.getText();
-        return new RequestHeadersFormInputModel(key, value);
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public InputBodyKey getKeyField() {
+        return keyField;
+    }
+
+    public InputBodyValue getValueField() {
+        return valueField;
     }
 
     @Override

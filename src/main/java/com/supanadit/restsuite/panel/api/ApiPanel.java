@@ -1,30 +1,37 @@
 package com.supanadit.restsuite.panel.api;
 
 import com.supanadit.restsuite.Main;
-import com.supanadit.restsuite.component.core.Dialog;
-import com.supanadit.restsuite.component.input.api.InputTextURL;
 import com.supanadit.restsuite.component.button.RequestApiButton;
 import com.supanadit.restsuite.component.combobox.RequestTypeComboBox;
+import com.supanadit.restsuite.component.core.Dialog;
+import com.supanadit.restsuite.component.input.api.InputTextURL;
+import com.supanadit.restsuite.entity.CollectionBodyEntity;
+import com.supanadit.restsuite.entity.CollectionEntity;
+import com.supanadit.restsuite.entity.CollectionHeaderEntity;
 import com.supanadit.restsuite.model.ApiModel;
-import com.supanadit.restsuite.model.CollectionModel;
+import com.supanadit.restsuite.model.RequestBodyFormInputModel;
 import com.supanadit.restsuite.panel.api.request.TabPanel;
+import com.supanadit.restsuite.panel.api.request.tab.header.HeadersFormInputPanel;
+import com.supanadit.restsuite.panel.api.request.tab.header.HeadersFormPanel;
 import com.supanadit.restsuite.panel.api.response.ResponseTabPanel;
+import com.supanadit.restsuite.system.hibernate.HibernateUtil;
 import net.miginfocom.swing.MigLayout;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class ApiPanel extends JPanel {
-    private InputTextURL apiURL;
-    private TabPanel tabPanel;
-    private ResponseTabPanel responseTabPanel;
-    private RequestTypeComboBox requestTypeComboBox;
-
-    protected int id;
-    protected RequestApiButton sendButton;
-    protected JButton title;
+    public int id;
+    public JButton titleButton;
+    public TabPanel tabPanel;
+    public InputTextURL apiURL;
+    public ResponseTabPanel responseTabPanel;
+    public RequestApiButton sendButton;
+    public RequestTypeComboBox requestTypeComboBox;
 
     public ApiPanel() {
         super(new MigLayout("insets 10 10 10 10"));
@@ -59,9 +66,9 @@ public class ApiPanel extends JPanel {
 
         apiURL = new InputTextURL();
 
-        requestTypeComboBox = new RequestTypeComboBox();
         tabPanel = new TabPanel(apiURL.getSubject());
         responseTabPanel = new ResponseTabPanel();
+        requestTypeComboBox = new RequestTypeComboBox();
 
         sendButton = new RequestApiButton(this);
         sendButton.setIcon(sendIcon);
@@ -69,14 +76,13 @@ public class ApiPanel extends JPanel {
         JButton saveAPI = new JButton("Save");
         saveAPI.setIcon(saveIcon);
 
-        title = new JButton("Untitled");
-        title.setSize(300, title.getHeight());
-
-        title.setIcon(editIcon);
-        title.setIconTextGap(5);
-        title.addActionListener(e -> {
+        titleButton = new JButton("Untitled");
+        titleButton.setSize(300, titleButton.getHeight());
+        titleButton.setIcon(editIcon);
+        titleButton.setIconTextGap(5);
+        titleButton.addActionListener(e -> {
             renameAPI.setVisible(true);
-            apiName.setText(title.getText());
+            apiName.setText(titleButton.getText());
         });
 
         cancelButton.addActionListener(e -> {
@@ -84,16 +90,16 @@ public class ApiPanel extends JPanel {
         });
 
         saveButton.addActionListener(e -> {
-            title.setText(apiName.getText());
+            titleButton.setText(apiName.getText());
             renameAPI.setVisible(false);
         });
 
         saveAPI.addActionListener(e -> {
-            id = CollectionModel.fromApiModel(getModel()).save().getId();
+            save();
         });
 
         JPanel panelHeader = new JPanel(new MigLayout("insets 0 0 0 0"));
-        panelHeader.add(title);
+        panelHeader.add(titleButton);
 
         add(panelHeader, "pushx,growx,span 2");
         add(saveAPI, "wrap");
@@ -107,7 +113,76 @@ public class ApiPanel extends JPanel {
         sendButton.setResponseBodyPanel(this.responseTabPanel.body());
     }
 
+    public void save() {
+        // Get Title
+        String title = titleButton.getText();
+        // Get URL
+        String url = apiURL.getText();
+        // Get Request Method whether is GET, POST, PUT, or DELETE
+        String method = requestTypeComboBox.getName();
+        // Get Type of Body whether is Form or Raw
+        String bodyType = tabPanel.bodyPanel.getRequestBodyType().getName();
+        // Get All Body Form Input
+        ArrayList<RequestBodyFormInputModel> bodyForm = tabPanel.bodyPanel.bodyFormPanel.getModel().getAllFormInput();
+        // Get Raw Type whether JSON, HTML, XML, Javascript, or Plain Text
+        String bodyRawType = tabPanel.bodyPanel.getRequestBodyRawType().getName();
+        // Get Raw Value
+        String bodyRawValue = tabPanel.bodyPanel.getRequestBodyRawValue();
+        // Create Collection Entity
+        CollectionEntity collection = new CollectionEntity(title, url, method, bodyType, bodyRawType, bodyRawValue);
+        if (id != 0) {
+            collection.setId(id);
+        }
+        // Initialize Transaction
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+            // save the project objects
+            session.saveOrUpdate(collection);
+            // Set ID
+            id = collection.getId();
+            // Get Headers Panel
+            HeadersFormPanel headers = tabPanel.headersPanel.headersFormPanel;
+            // Save Headers
+            for (HeadersFormInputPanel header : headers.listInputPanel) {
+                // Get Key
+                String key = header.getKeyField().getText();
+                // Get Value
+                String value = header.getValueField().getText();
+                // Set ID Collection, Key Name and Value
+                CollectionHeaderEntity headerEntity = new CollectionHeaderEntity(id, key, value);
+                // Set Collection ID
+                if (header.getId() != 0) {
+                    headerEntity.setId(header.getId());
+                }
+                // Let Hibernate pick whether Save or Update
+                session.saveOrUpdate(headerEntity);
+                // Set ID on List
+                header.setId(headerEntity.getId());
+            }
+            // Save Body
+            for (RequestBodyFormInputModel body : bodyForm) {
+                CollectionBodyEntity bodyEntity = new CollectionBodyEntity(id, body.getType(), body.getKey(), body.getValue());
+                // Set Body ID
+                if (body.getId() != 0) {
+                    bodyEntity.setId(body.getId());
+                }
+                session.saveOrUpdate(bodyEntity);
+                // Set the ID to the List
+                body.setId(bodyEntity.getId());
+            }
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
     public ApiModel getModel() {
-        return new ApiModel(id, title, apiURL, requestTypeComboBox, tabPanel, responseTabPanel);
+        return new ApiModel(id, titleButton, apiURL, requestTypeComboBox, tabPanel, responseTabPanel);
     }
 }

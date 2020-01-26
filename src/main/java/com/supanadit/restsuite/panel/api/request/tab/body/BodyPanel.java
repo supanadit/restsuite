@@ -14,14 +14,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class BodyPanel extends JPanel {
-    protected BodyTextArea bodyTextArea;
-    protected boolean withOptions;
-    protected String defaultFormat = SyntaxConstants.SYNTAX_STYLE_NONE;
-    protected RTextScrollPane spBody;
-    protected BodyFormPanel bodyFormPanel;
+    public BodyTextArea bodyTextArea;
+    public boolean withOptions;
+    public String defaultFormat = SyntaxConstants.SYNTAX_STYLE_NONE;
+    public RTextScrollPane spBody;
+    public BodyFormPanel bodyFormPanel;
 
-    protected RequestBodyTypeComboBox requestBodyTypeComboBox;
-    protected RequestBodyRawTypeComboBox requestBodyRawTypeComboBox;
+    public RequestBodyTypeComboBox requestBodyTypeComboBox;
+    public RequestBodyRawTypeComboBox requestBodyRawTypeComboBox;
 
     public BodyPanel(boolean withOptions) {
         super(new MigLayout());

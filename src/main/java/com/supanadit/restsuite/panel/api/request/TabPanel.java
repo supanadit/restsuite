@@ -9,9 +9,9 @@ import io.reactivex.subjects.PublishSubject;
 import javax.swing.*;
 
 public class TabPanel extends JTabbedPane {
-    private BodyPanel bodyPanel;
-    private HeadersPanel headersPanel;
-    private ParamsPanel paramsPanel;
+    public BodyPanel bodyPanel;
+    public HeadersPanel headersPanel;
+    public ParamsPanel paramsPanel;
 
     public TabPanel(PublishSubject<String> urlSubject) {
         paramsPanel = new ParamsPanel(urlSubject);
