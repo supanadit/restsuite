@@ -12,6 +12,9 @@ public class CollectionEntity {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "project_id")
+    private int projectID;
+
     @Column(name = "title")
     private String title;
 
@@ -41,6 +44,19 @@ public class CollectionEntity {
         this.bodyType = bodyType;
         this.bodyRawType = bodyRawType;
         this.bodyRawValue = bodyRawValue;
+    }
+
+    public CollectionEntity(int projectID, String title, String url, String method, String bodyType, String bodyRawType, String bodyRawValue) {
+        this(title, url, method, bodyType, bodyRawType, bodyRawValue);
+        this.projectID = projectID;
+    }
+
+    public int getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(int projectID) {
+        this.projectID = projectID;
     }
 
     public int getId() {

@@ -8,6 +8,7 @@ import com.supanadit.restsuite.panel.api.response.ResponseTabPanel;
 import javax.swing.*;
 
 public class ApiModel {
+    private int id;
     private JButton title;
     private InputTextURL url;
     private RequestTypeComboBox requestMethod;
@@ -20,6 +21,15 @@ public class ApiModel {
         this.requestMethod = requestMethod;
         this.tabPanel = tabPanel;
         this.responseTabPanel = responseTabPanel;
+    }
+
+    public ApiModel(int id, JButton title, InputTextURL url, RequestTypeComboBox requestMethod, TabPanel tabPanel, ResponseTabPanel responseTabPanel) {
+        this(title, url, requestMethod, tabPanel, responseTabPanel);
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public JButton getTitle() {

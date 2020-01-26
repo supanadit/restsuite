@@ -11,7 +11,7 @@ public class CollectionBodyEntity {
     private int id;
 
     @Column(name = "collection_id")
-    private int collection_id;
+    private int collectionID;
 
     @Column(name = "type")
     private String type;
@@ -25,8 +25,8 @@ public class CollectionBodyEntity {
     public CollectionBodyEntity() {
     }
 
-    public CollectionBodyEntity(int collection_id, String type, String key, String value) {
-        this.collection_id = collection_id;
+    public CollectionBodyEntity(int collectionID, String type, String key, String value) {
+        this.collectionID = collectionID;
         this.type = type;
         this.key = key;
         this.value = value;
@@ -40,12 +40,12 @@ public class CollectionBodyEntity {
         this.id = id;
     }
 
-    public int getCollection_id() {
-        return collection_id;
+    public int getCollectionID() {
+        return collectionID;
     }
 
-    public void setCollection_id(int collection_id) {
-        this.collection_id = collection_id;
+    public void setCollectionID(int collection_id) {
+        this.collectionID = collection_id;
     }
 
     public String getType() {

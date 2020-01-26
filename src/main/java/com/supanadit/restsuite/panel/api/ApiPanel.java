@@ -89,9 +89,7 @@ public class ApiPanel extends JPanel {
         });
 
         saveAPI.addActionListener(e -> {
-            System.out.println(title.getText());
-            CollectionModel collectionModel = CollectionModel.fromApiModel(getModel());
-            System.out.println(collectionModel.toString());
+            id = CollectionModel.fromApiModel(getModel()).save().getId();
         });
 
         JPanel panelHeader = new JPanel(new MigLayout("insets 0 0 0 0"));
@@ -110,6 +108,6 @@ public class ApiPanel extends JPanel {
     }
 
     public ApiModel getModel() {
-        return new ApiModel(title, apiURL, requestTypeComboBox, tabPanel, responseTabPanel);
+        return new ApiModel(id, title, apiURL, requestTypeComboBox, tabPanel, responseTabPanel);
     }
 }

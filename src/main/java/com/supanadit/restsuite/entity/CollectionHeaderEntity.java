@@ -11,7 +11,7 @@ public class CollectionHeaderEntity {
     private int id;
 
     @Column(name = "collection_id")
-    private int collection_id;
+    private int collectionID;
 
     @Column(name = "key")
     private String key;
@@ -22,8 +22,8 @@ public class CollectionHeaderEntity {
     public CollectionHeaderEntity() {
     }
 
-    public CollectionHeaderEntity(int collection_id, String key, String value) {
-        this.collection_id = collection_id;
+    public CollectionHeaderEntity(int collectionID, String key, String value) {
+        this.collectionID = collectionID;
         this.key = key;
         this.value = value;
     }
@@ -36,12 +36,12 @@ public class CollectionHeaderEntity {
         this.id = id;
     }
 
-    public int getCollection_id() {
-        return collection_id;
+    public int getCollectionID() {
+        return collectionID;
     }
 
-    public void setCollection_id(int collection_id) {
-        this.collection_id = collection_id;
+    public void setCollectionID(int collection_id) {
+        this.collectionID = collection_id;
     }
 
     public String getKey() {
