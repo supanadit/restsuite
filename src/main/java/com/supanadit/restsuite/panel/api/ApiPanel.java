@@ -34,7 +34,7 @@ public class ApiPanel extends JPanel {
     public RequestTypeComboBox requestTypeComboBox;
 
     public ApiPanel() {
-        super(new MigLayout("insets 10 10 10 10"));
+        super(new MigLayout("insets 10 10 10 0"));
 
         JTextField apiName = new JTextField();
 
