@@ -1,4 +1,4 @@
-package com.supanadit.restsuite.panel.api.response;
+package com.supanadit.restsuite.panel.rest.response;
 
 import javax.swing.*;
 

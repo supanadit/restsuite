@@ -1,4 +1,4 @@
-package com.supanadit.restsuite.panel.api.request.tab.header;
+package com.supanadit.restsuite.panel.rest.request.tab.header;
 
 import com.supanadit.restsuite.component.input.api.InputBodyKey;
 import com.supanadit.restsuite.component.input.api.InputBodyValue;

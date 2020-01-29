@@ -1,4 +1,4 @@
-package com.supanadit.restsuite.panel.api.request.tab.header;
+package com.supanadit.restsuite.panel.rest.request.tab.header;
 
 import net.miginfocom.swing.MigLayout;
 

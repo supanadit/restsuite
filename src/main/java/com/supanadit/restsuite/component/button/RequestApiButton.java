@@ -3,11 +3,11 @@ package com.supanadit.restsuite.component.button;
 import com.supanadit.restsuite.component.combobox.RequestTypeComboBox;
 import com.supanadit.restsuite.component.input.api.InputTextURL;
 import com.supanadit.restsuite.model.*;
-import com.supanadit.restsuite.panel.api.ApiPanel;
-import com.supanadit.restsuite.panel.api.request.TabPanel;
-import com.supanadit.restsuite.panel.api.request.tab.body.BodyFormInputPanel;
-import com.supanadit.restsuite.panel.api.request.tab.header.HeadersFormInputPanel;
-import com.supanadit.restsuite.panel.api.response.ResponseBodyPanel;
+import com.supanadit.restsuite.panel.rest.RestPanel;
+import com.supanadit.restsuite.panel.rest.request.TabPanel;
+import com.supanadit.restsuite.panel.rest.request.tab.body.BodyFormInputPanel;
+import com.supanadit.restsuite.panel.rest.request.tab.header.HeadersFormInputPanel;
+import com.supanadit.restsuite.panel.rest.response.ResponseBodyPanel;
 import okhttp3.Request;
 import okhttp3.*;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
@@ -27,7 +27,7 @@ public class RequestApiButton extends JButton {
     protected BodyTypeModel requestType;
     protected BodyRawTypeModel bodyRawTypeModel;
 
-    public RequestApiButton(ApiPanel apiPanel) {
+    public RequestApiButton(RestPanel restPanel) {
         setText("Send");
         client = new OkHttpClient();
 
@@ -36,12 +36,12 @@ public class RequestApiButton extends JButton {
             setText("Requesting");
 
             // Get Request Type whether is POST, GET, PUT, or DELETE
-            this.requestTypeComboBox = apiPanel.requestTypeComboBox;
+            this.requestTypeComboBox = restPanel.requestTypeComboBox;
             // Get Value URL
-            this.inputTextURL = apiPanel.apiURL;
+            this.inputTextURL = restPanel.apiURL;
 
             // Create Tab Panel
-            TabPanel tabPanel = apiPanel.tabPanel;
+            TabPanel tabPanel = restPanel.tabPanel;
 
             // Get the value of Body Raw
             bodyRawValue = tabPanel.bodyPanel.getRequestBodyRawValue();
@@ -83,12 +83,15 @@ public class RequestApiButton extends JButton {
                     if (listFormInput.size() != 0) {
                         for (BodyFormInputPanel body : listFormInput) {
                             // Get Type
-                            String type = body.getTypeComboBox().getName();
+                            BodyFormTypeModel type = (BodyFormTypeModel) body.getTypeComboBox().getSelectedItem();
                             // Get Key
                             String key = body.getKeyField().getText();
                             // Get Value
                             String value = body.getValueField().getText();
-                            if (type.equals(BodyFormTypeModel.FIELD().getName())) {
+
+                            assert type != null;
+
+                            if (type.getName().equals(BodyFormTypeModel.FIELD().getName())) {
                                 builder.addFormDataPart(key, value);
                             } else {
                                 builder.addFormDataPart(key, value, RequestBody.create(new File(value), MediaType.parse("application/octet-stream")));

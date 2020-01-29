@@ -1,10 +1,11 @@
-package com.supanadit.restsuite.panel.api.request.tab.body;
+package com.supanadit.restsuite.panel.rest.response;
 
-import com.supanadit.restsuite.component.textarea.BodyTextArea;
 import com.supanadit.restsuite.component.combobox.RequestBodyRawTypeComboBox;
 import com.supanadit.restsuite.component.combobox.RequestBodyTypeComboBox;
+import com.supanadit.restsuite.component.textarea.BodyTextArea;
 import com.supanadit.restsuite.model.BodyRawTypeModel;
 import com.supanadit.restsuite.model.BodyTypeModel;
+import com.supanadit.restsuite.panel.rest.request.tab.body.BodyFormPanel;
 import net.miginfocom.swing.MigLayout;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.Gutter;
@@ -13,17 +14,17 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 import javax.swing.*;
 import java.awt.*;
 
-public class BodyPanel extends JPanel {
-    public BodyTextArea bodyTextArea;
-    public boolean withOptions;
-    public String defaultFormat = SyntaxConstants.SYNTAX_STYLE_NONE;
-    public RTextScrollPane spBody;
-    public BodyFormPanel bodyFormPanel;
+public class ResponseBodyPanel extends JPanel {
+    protected BodyTextArea bodyTextArea;
+    protected boolean withOptions;
+    protected String defaultFormat = SyntaxConstants.SYNTAX_STYLE_NONE;
+    protected RTextScrollPane spBody;
+    protected BodyFormPanel bodyFormPanel;
 
-    public RequestBodyTypeComboBox requestBodyTypeComboBox;
-    public RequestBodyRawTypeComboBox requestBodyRawTypeComboBox;
+    protected RequestBodyTypeComboBox requestBodyTypeComboBox;
+    protected RequestBodyRawTypeComboBox requestBodyRawTypeComboBox;
 
-    public BodyPanel(boolean withOptions) {
+    public ResponseBodyPanel(boolean withOptions) {
         super(new MigLayout());
         Color lineColor = UIManager.getColor("Table.gridColor");
         Color fontColor = UIManager.getColor("TableHeader.foreground");

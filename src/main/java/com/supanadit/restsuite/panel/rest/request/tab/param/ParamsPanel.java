@@ -1,4 +1,4 @@
-package com.supanadit.restsuite.panel.api.request.tab.param;
+package com.supanadit.restsuite.panel.rest.request.tab.param;
 
 import com.supanadit.restsuite.component.input.api.InputTextURL;
 import com.supanadit.restsuite.component.table.ParamsTable;

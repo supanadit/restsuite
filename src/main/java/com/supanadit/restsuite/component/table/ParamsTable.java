@@ -1,7 +1,7 @@
 package com.supanadit.restsuite.component.table;
 
 import com.supanadit.restsuite.model.RequestModel;
-import com.supanadit.restsuite.panel.api.request.tab.header.HeadersPanel;
+import com.supanadit.restsuite.panel.rest.request.tab.header.HeadersPanel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

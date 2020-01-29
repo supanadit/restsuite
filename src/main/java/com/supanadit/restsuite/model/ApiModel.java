@@ -2,8 +2,8 @@ package com.supanadit.restsuite.model;
 
 import com.supanadit.restsuite.component.input.api.InputTextURL;
 import com.supanadit.restsuite.component.combobox.RequestTypeComboBox;
-import com.supanadit.restsuite.panel.api.request.TabPanel;
-import com.supanadit.restsuite.panel.api.response.ResponseTabPanel;
+import com.supanadit.restsuite.panel.rest.request.TabPanel;
+import com.supanadit.restsuite.panel.rest.response.ResponseTabPanel;
 
 import javax.swing.*;
 

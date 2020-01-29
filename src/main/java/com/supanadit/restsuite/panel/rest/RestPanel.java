@@ -1,4 +1,4 @@
-package com.supanadit.restsuite.panel.api;
+package com.supanadit.restsuite.panel.rest;
 
 import com.supanadit.restsuite.Main;
 import com.supanadit.restsuite.component.button.RequestApiButton;
@@ -9,12 +9,12 @@ import com.supanadit.restsuite.entity.CollectionBodyEntity;
 import com.supanadit.restsuite.entity.CollectionEntity;
 import com.supanadit.restsuite.entity.CollectionHeaderEntity;
 import com.supanadit.restsuite.model.ApiModel;
-import com.supanadit.restsuite.panel.api.request.TabPanel;
-import com.supanadit.restsuite.panel.api.request.tab.body.BodyFormInputPanel;
-import com.supanadit.restsuite.panel.api.request.tab.body.BodyFormPanel;
-import com.supanadit.restsuite.panel.api.request.tab.header.HeadersFormInputPanel;
-import com.supanadit.restsuite.panel.api.request.tab.header.HeadersFormPanel;
-import com.supanadit.restsuite.panel.api.response.ResponseTabPanel;
+import com.supanadit.restsuite.panel.rest.request.TabPanel;
+import com.supanadit.restsuite.panel.rest.request.tab.body.BodyFormInputPanel;
+import com.supanadit.restsuite.panel.rest.request.tab.body.BodyFormPanel;
+import com.supanadit.restsuite.panel.rest.request.tab.header.HeadersFormInputPanel;
+import com.supanadit.restsuite.panel.rest.request.tab.header.HeadersFormPanel;
+import com.supanadit.restsuite.panel.rest.response.ResponseTabPanel;
 import com.supanadit.restsuite.system.hibernate.HibernateUtil;
 import net.miginfocom.swing.MigLayout;
 import org.hibernate.Session;
@@ -24,7 +24,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
-public class ApiPanel extends JPanel {
+public class RestPanel extends JPanel {
     public int id;
     public JButton titleButton;
     public TabPanel tabPanel;
@@ -33,7 +33,7 @@ public class ApiPanel extends JPanel {
     public RequestApiButton sendButton;
     public RequestTypeComboBox requestTypeComboBox;
 
-    public ApiPanel() {
+    public RestPanel() {
         super(new MigLayout("insets 10 10 10 0"));
 
         JTextField apiName = new JTextField();
