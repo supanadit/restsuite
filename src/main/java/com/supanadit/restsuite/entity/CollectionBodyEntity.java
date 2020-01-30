@@ -10,16 +10,16 @@ public class CollectionBodyEntity {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "collection_id")
+    @Column(name = "collection_id", nullable = false)
     private int collectionID;
 
-    @Column(name = "type")
+    @Column(name = "type", nullable = false)
     private String type;
 
-    @Column(name = "key")
+    @Column(name = "key", nullable = false)
     private String key;
 
-    @Column(name = "value")
+    @Column(name = "value", nullable = false)
     private String value;
 
     public CollectionBodyEntity() {

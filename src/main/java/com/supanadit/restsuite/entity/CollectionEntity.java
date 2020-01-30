@@ -15,19 +15,19 @@ public class CollectionEntity {
     @Column(name = "project_id")
     private int projectID;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "url")
+    @Column(name = "url", nullable = false)
     private String url;
 
-    @Column(name = "method")
+    @Column(name = "method", nullable = false)
     private String method;
 
-    @Column(name = "body_type")
+    @Column(name = "body_type", nullable = false)
     private String bodyType;
 
-    @Column(name = "body_raw_type")
+    @Column(name = "body_raw_type", nullable = false)
     private String bodyRawType;
 
     @Column(name = "body_raw_value")

@@ -3,20 +3,24 @@ package com.supanadit.restsuite.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "project")
-public class ProjectEntity {
+@Table(name = "collection_structure_folder")
+public class CollectionStructureFolderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
+    @Column(name = "parentID")
+    private int parentID;
+
     @Column(name = "name", nullable = false)
     private String name;
 
-    public ProjectEntity() {
+    public CollectionStructureFolderEntity() {
     }
 
-    public ProjectEntity(String name) {
+    public CollectionStructureFolderEntity(int parentID, String name) {
+        this.parentID = parentID;
         this.name = name;
     }
 
@@ -26,6 +30,14 @@ public class ProjectEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getParentID() {
+        return parentID;
+    }
+
+    public void setParentID(int parentID) {
+        this.parentID = parentID;
     }
 
     public String getName() {
