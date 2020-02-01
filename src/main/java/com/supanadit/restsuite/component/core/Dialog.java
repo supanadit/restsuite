@@ -27,4 +27,12 @@ public class Dialog extends JDialog {
     public Dialog(String title) {
         this(title, Frame.defaultWidth, Frame.defaultHeight);
     }
+
+    public void close() {
+        setVisible(false);
+    }
+
+    public void open() {
+        setVisible(true);
+    }
 }

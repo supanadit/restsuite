@@ -10,7 +10,7 @@ public class CollectionStructureFolderEntity {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "parentID")
+    @Column(name = "parent_id")
     private int parentID;
 
     @Column(name = "name", nullable = false)

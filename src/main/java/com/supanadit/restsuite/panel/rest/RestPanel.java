@@ -3,12 +3,15 @@ package com.supanadit.restsuite.panel.rest;
 import com.supanadit.restsuite.Main;
 import com.supanadit.restsuite.component.button.RequestApiButton;
 import com.supanadit.restsuite.component.combobox.RequestTypeComboBox;
-import com.supanadit.restsuite.component.core.Dialog;
+import com.supanadit.restsuite.component.core.callback.ActionDialogCallback;
 import com.supanadit.restsuite.component.input.api.InputTextURL;
 import com.supanadit.restsuite.entity.CollectionBodyEntity;
 import com.supanadit.restsuite.entity.CollectionEntity;
 import com.supanadit.restsuite.entity.CollectionHeaderEntity;
+import com.supanadit.restsuite.entity.CollectionStructureEntity;
 import com.supanadit.restsuite.model.ApiModel;
+import com.supanadit.restsuite.panel.rest.dialog.RenameApi;
+import com.supanadit.restsuite.panel.rest.dialog.SaveApi;
 import com.supanadit.restsuite.panel.rest.request.TabPanel;
 import com.supanadit.restsuite.panel.rest.request.tab.body.BodyFormInputPanel;
 import com.supanadit.restsuite.panel.rest.request.tab.body.BodyFormPanel;
@@ -26,43 +29,24 @@ import java.net.URL;
 
 public class RestPanel extends JPanel {
     public int id;
+    public int structureID;
     public JButton titleButton;
     public TabPanel tabPanel;
     public InputTextURL apiURL;
     public ResponseTabPanel responseTabPanel;
     public RequestApiButton sendButton;
     public RequestTypeComboBox requestTypeComboBox;
+    public SaveApi saveApiDialog;
 
     public RestPanel() {
         super(new MigLayout("insets 10 10 10 0"));
 
-        JTextField apiName = new JTextField();
+        RenameApi renameApiDialog = new RenameApi();
+        saveApiDialog = new SaveApi();
 
-        JButton saveButton = new JButton("Save");
-        JButton cancelButton = new JButton("Cancel");
-
-        Dialog renameAPI = new Dialog("Rename API", 400, 130);
-        renameAPI.setResizable(false);
-
-        JPanel bottomPanel = new JPanel(new MigLayout("rtl, insets 0 0 0 0"));
-        bottomPanel.add(cancelButton);
-        bottomPanel.add(saveButton);
-
-        renameAPI.add(new JLabel("Name"), "wrap");
-        renameAPI.add(apiName, "pushx,growx,wrap");
-        renameAPI.add(bottomPanel, "grow,push");
-
-        URL saveIconURL = Main.class.getClassLoader().getResource("icon/save.png");
-        URL editIconURL = Main.class.getClassLoader().getResource("icon/edit.png");
-        URL sendIconURL = Main.class.getClassLoader().getResource("icon/send.png");
-
-        assert saveIconURL != null;
-        assert editIconURL != null;
-        assert sendIconURL != null;
-
-        Icon saveIcon = new ImageIcon(new ImageIcon(saveIconURL).getImage().getScaledInstance(15, 15, Image.SCALE_DEFAULT));
-        Icon editIcon = new ImageIcon(editIconURL);
-        Icon sendIcon = new ImageIcon(sendIconURL);
+        Icon saveIcon = getIcon("save.png");
+        Icon editIcon = getIcon("edit.png");
+        Icon sendIcon = getIcon("send.png");
 
         apiURL = new InputTextURL();
 
@@ -81,21 +65,38 @@ public class RestPanel extends JPanel {
         titleButton.setIcon(editIcon);
         titleButton.setIconTextGap(5);
         titleButton.addActionListener(e -> {
-            renameAPI.setVisible(true);
-            apiName.setText(titleButton.getText());
-        });
-
-        cancelButton.addActionListener(e -> {
-            renameAPI.setVisible(false);
-        });
-
-        saveButton.addActionListener(e -> {
-            titleButton.setText(apiName.getText());
-            renameAPI.setVisible(false);
+            renameApiDialog.open();
+            renameApiDialog.setName(titleButton.getText());
         });
 
         saveAPI.addActionListener(e -> {
-            save();
+            saveApiDialog.setVisible(true);
+        });
+
+        saveApiDialog.addAction(new ActionDialogCallback() {
+            @Override
+            public void cancelAction() {
+                saveApiDialog.close();
+            }
+
+            @Override
+            public void saveAction() {
+                save();
+                saveApiDialog.close();
+            }
+        });
+
+        renameApiDialog.addAction(new ActionDialogCallback() {
+            @Override
+            public void cancelAction() {
+                renameApiDialog.close();
+            }
+
+            @Override
+            public void saveAction() {
+                titleButton.setText(renameApiDialog.getName());
+                renameApiDialog.close();
+            }
         });
 
         JPanel panelHeader = new JPanel(new MigLayout("insets 0 0 0 0"));
@@ -111,6 +112,16 @@ public class RestPanel extends JPanel {
         add(responseTabPanel, "growx, growy, pushy, pushx, span 3, h 500");
 
         sendButton.setResponseBodyPanel(this.responseTabPanel.body());
+    }
+
+    public ImageIcon getIcon(String iconName) {
+        String fullIconName = "icon/".concat(iconName);
+        // Get Resources URL
+        URL iconURL = Main.class.getClassLoader().getResource(fullIconName);
+        // Make sure the url does not return null value
+        assert iconURL != null;
+        // Create Image icon from URL
+        return new ImageIcon(new ImageIcon(iconURL).getImage().getScaledInstance(15, 15, Image.SCALE_DEFAULT));
     }
 
     public void save() {
@@ -179,6 +190,22 @@ public class RestPanel extends JPanel {
                 // Set the ID to the List
                 body.setId(bodyEntity.getId());
             }
+            // Get Folder ID
+            int folderID = (saveApiDialog.getSelectedItem().getId() != null) ? saveApiDialog.getSelectedItem().getId() : 0;
+            // Create Structure Entity for Menu
+            CollectionStructureEntity structureEntity = new CollectionStructureEntity(id, folderID);
+            // Set Existing ID, if exist
+            if (structureID != 0) {
+                structureEntity.setId(structureID);
+            }
+            // Save Structure Entity
+            session.saveOrUpdate(structureEntity);
+            // Get Structure ID
+            structureID = structureEntity.getId();
+            // Set Structure ID
+            collection.setStructureID(structureID);
+            // Update Collection
+            session.update(collection);
             // commit transaction
             transaction.commit();
         } catch (Exception e) {

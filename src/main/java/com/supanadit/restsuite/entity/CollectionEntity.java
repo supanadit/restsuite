@@ -12,6 +12,9 @@ public class CollectionEntity {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "structure_id")
+    private int structureID;
+
     @Column(name = "project_id")
     private int projectID;
 
@@ -113,5 +116,13 @@ public class CollectionEntity {
 
     public void setBodyRawValue(String bodyRawValue) {
         this.bodyRawValue = bodyRawValue;
+    }
+
+    public int getStructureID() {
+        return structureID;
+    }
+
+    public void setStructureID(int collectionStructureID) {
+        this.structureID = collectionStructureID;
     }
 }
