@@ -2,6 +2,7 @@ package com.supanadit.restsuite.panel.rest;
 
 import com.supanadit.restsuite.entity.CollectionStructureEntity;
 import com.supanadit.restsuite.panel.rest.callback.RestCallback;
+import com.supanadit.restsuite.panel.rest.dialog.renderer.CollectionTreeRenderer;
 import com.supanadit.restsuite.system.hibernate.HibernateUtil;
 import net.miginfocom.swing.MigLayout;
 import org.hibernate.Session;
@@ -27,6 +28,18 @@ public class SidePanel extends JScrollPane implements RestCallback {
 
         tree = new JTree(treeModel);
         tree.setBackground(background);
+        tree.setCellRenderer(new CollectionTreeRenderer());
+        tree.addTreeSelectionListener(e -> {
+            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+            if (selectedNode != null) {
+                Object userValue = selectedNode.getUserObject();
+
+                if (userValue instanceof CollectionStructureEntity) {
+                    CollectionStructureEntity collectionStructureEntity = ((CollectionStructureEntity) userValue);
+                    restPanel.setData(collectionStructureEntity.getCollectionEntity());
+                }
+            }
+        });
 
         panel.add(tree, "push,grow");
 
@@ -43,10 +56,8 @@ public class SidePanel extends JScrollPane implements RestCallback {
             List<CollectionStructureEntity> projects = session.createQuery("from CollectionStructureEntity ", CollectionStructureEntity.class).list();
             root.removeAllChildren();
             projects.forEach(s -> {
-                String title = s.getCollectionEntity().getTitle();
-                DefaultMutableTreeNode node = new DefaultMutableTreeNode(title);
+                DefaultMutableTreeNode node = new DefaultMutableTreeNode(s);
                 root.add(node);
-                System.out.println(title);
             });
             treeModel.reload();
         } catch (Exception e) {

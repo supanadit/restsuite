@@ -166,7 +166,9 @@ public class RestPanel extends JPanel {
                 CollectionHeaderEntity headerEntity = new CollectionHeaderEntity(collection, key, value);
                 // Set Collection ID
                 if (header.getId() != 0) {
-                    headerEntity.setId(header.getId());
+                    if (!saveApiDialog.isChecked()) {
+                        headerEntity.setId(header.getId());
+                    }
                 }
                 // Let Hibernate pick whether Save or Update
                 session.saveOrUpdate(headerEntity);
@@ -185,7 +187,9 @@ public class RestPanel extends JPanel {
                 CollectionBodyEntity bodyEntity = new CollectionBodyEntity(collection, type, key, value);
                 // Set Body ID
                 if (body.getId() != 0) {
-                    bodyEntity.setId(body.getId());
+                    if (!saveApiDialog.isChecked()) {
+                        bodyEntity.setId(body.getId());
+                    }
                 }
                 session.saveOrUpdate(bodyEntity);
                 // Set the ID to the List
@@ -229,5 +233,14 @@ public class RestPanel extends JPanel {
 
     public void addCallback(RestCallback restCallback) {
         this.restCallback = restCallback;
+    }
+
+    public void setData(CollectionEntity collectionEntity) {
+        id = collectionEntity.getId();
+        structureID = collectionEntity.getCollectionStructure().getId();
+        titleButton.setText(collectionEntity.getTitle());
+        apiURL.setText(collectionEntity.getUrl());
+
+
     }
 }
