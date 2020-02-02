@@ -10,8 +10,9 @@ public class CollectionHeaderEntity {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "collection_id", nullable = false)
-    private int collectionID;
+    @OneToOne
+    @JoinColumn(name = "collection_id")
+    private CollectionEntity collection;
 
     @Column(name = "key", nullable = false)
     private String key;
@@ -22,8 +23,8 @@ public class CollectionHeaderEntity {
     public CollectionHeaderEntity() {
     }
 
-    public CollectionHeaderEntity(int collectionID, String key, String value) {
-        this.collectionID = collectionID;
+    public CollectionHeaderEntity(CollectionEntity collection, String key, String value) {
+        this.collection = collection;
         this.key = key;
         this.value = value;
     }
@@ -36,12 +37,12 @@ public class CollectionHeaderEntity {
         this.id = id;
     }
 
-    public int getCollectionID() {
-        return collectionID;
+    public CollectionEntity getCollection() {
+        return collection;
     }
 
-    public void setCollectionID(int collection_id) {
-        this.collectionID = collection_id;
+    public void setCollection(CollectionEntity collection) {
+        this.collection = collection;
     }
 
     public String getKey() {

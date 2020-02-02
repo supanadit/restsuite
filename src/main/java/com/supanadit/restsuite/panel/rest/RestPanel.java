@@ -5,11 +5,9 @@ import com.supanadit.restsuite.component.button.RequestApiButton;
 import com.supanadit.restsuite.component.combobox.RequestTypeComboBox;
 import com.supanadit.restsuite.component.core.callback.ActionDialogCallback;
 import com.supanadit.restsuite.component.input.api.InputTextURL;
-import com.supanadit.restsuite.entity.CollectionBodyEntity;
-import com.supanadit.restsuite.entity.CollectionEntity;
-import com.supanadit.restsuite.entity.CollectionHeaderEntity;
-import com.supanadit.restsuite.entity.CollectionStructureEntity;
+import com.supanadit.restsuite.entity.*;
 import com.supanadit.restsuite.model.ApiModel;
+import com.supanadit.restsuite.panel.rest.callback.RestCallback;
 import com.supanadit.restsuite.panel.rest.dialog.RenameApi;
 import com.supanadit.restsuite.panel.rest.dialog.SaveApi;
 import com.supanadit.restsuite.panel.rest.request.TabPanel;
@@ -37,6 +35,7 @@ public class RestPanel extends JPanel {
     public RequestApiButton sendButton;
     public RequestTypeComboBox requestTypeComboBox;
     public SaveApi saveApiDialog;
+    public RestCallback restCallback;
 
     public RestPanel() {
         super(new MigLayout("insets 10 10 10 0"));
@@ -142,7 +141,9 @@ public class RestPanel extends JPanel {
         // Create Collection Entity
         CollectionEntity collection = new CollectionEntity(title, url, method, bodyType, bodyRawType, bodyRawValue);
         if (id != 0) {
-            collection.setId(id);
+            if (!saveApiDialog.isChecked()) {
+                collection.setId(id);
+            }
         }
         // Initialize Transaction
         Transaction transaction = null;
@@ -162,7 +163,7 @@ public class RestPanel extends JPanel {
                 // Get Value
                 String value = header.getValueField().getText();
                 // Set ID Collection, Key Name and Value
-                CollectionHeaderEntity headerEntity = new CollectionHeaderEntity(id, key, value);
+                CollectionHeaderEntity headerEntity = new CollectionHeaderEntity(collection, key, value);
                 // Set Collection ID
                 if (header.getId() != 0) {
                     headerEntity.setId(header.getId());
@@ -181,7 +182,7 @@ public class RestPanel extends JPanel {
                 // Get Value
                 String value = body.getValueField().getText();
                 // Set ID Collection, Key Name and Value
-                CollectionBodyEntity bodyEntity = new CollectionBodyEntity(id, type, key, value);
+                CollectionBodyEntity bodyEntity = new CollectionBodyEntity(collection, type, key, value);
                 // Set Body ID
                 if (body.getId() != 0) {
                     bodyEntity.setId(body.getId());
@@ -191,23 +192,29 @@ public class RestPanel extends JPanel {
                 body.setId(bodyEntity.getId());
             }
             // Get Folder ID
-            int folderID = (saveApiDialog.getSelectedItem().getId() != null) ? saveApiDialog.getSelectedItem().getId() : 0;
+            CollectionStructureFolderEntity folder = saveApiDialog.getSelectedItem();
             // Create Structure Entity for Menu
-            CollectionStructureEntity structureEntity = new CollectionStructureEntity(id, folderID);
+            CollectionStructureEntity structureEntity = new CollectionStructureEntity(collection, (folder.getId() != 0) ? folder : null);
             // Set Existing ID, if exist
             if (structureID != 0) {
-                structureEntity.setId(structureID);
+                if (!saveApiDialog.isChecked()) {
+                    structureEntity.setId(structureID);
+                }
             }
             // Save Structure Entity
             session.saveOrUpdate(structureEntity);
             // Get Structure ID
             structureID = structureEntity.getId();
             // Set Structure ID
-            collection.setStructureID(structureID);
+            collection.setCollectionStructure(structureEntity);
             // Update Collection
-            session.update(collection);
+            session.saveOrUpdate(collection);
             // commit transaction
             transaction.commit();
+            // Call the Callback
+            if (restCallback != null) {
+                restCallback.saved();
+            }
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -218,5 +225,9 @@ public class RestPanel extends JPanel {
 
     public ApiModel getModel() {
         return new ApiModel(id, titleButton, apiURL, requestTypeComboBox, tabPanel, responseTabPanel);
+    }
+
+    public void addCallback(RestCallback restCallback) {
+        this.restCallback = restCallback;
     }
 }

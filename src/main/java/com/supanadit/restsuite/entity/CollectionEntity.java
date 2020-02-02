@@ -12,11 +12,13 @@ public class CollectionEntity {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "structure_id")
-    private int structureID;
+    @OneToOne
+    @JoinColumn(name = "structure_id")
+    private CollectionStructureEntity collectionStructure;
 
-    @Column(name = "project_id")
-    private int projectID;
+    @OneToOne
+    @JoinColumn(name = "project_id")
+    private ProjectEntity project;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -41,25 +43,25 @@ public class CollectionEntity {
     }
 
     public CollectionEntity(String title, String url, String method, String bodyType, String bodyRawType, String bodyRawValue) {
+        this(null, title, url, method, bodyType, bodyRawType, bodyRawValue);
+    }
+
+    public CollectionEntity(ProjectEntity project, String title, String url, String method, String bodyType, String bodyRawType, String bodyRawValue) {
         this.title = title;
         this.url = url;
         this.method = method;
         this.bodyType = bodyType;
         this.bodyRawType = bodyRawType;
         this.bodyRawValue = bodyRawValue;
+        this.project = project;
     }
 
-    public CollectionEntity(int projectID, String title, String url, String method, String bodyType, String bodyRawType, String bodyRawValue) {
-        this(title, url, method, bodyType, bodyRawType, bodyRawValue);
-        this.projectID = projectID;
+    public ProjectEntity getProject() {
+        return project;
     }
 
-    public int getProjectID() {
-        return projectID;
-    }
-
-    public void setProjectID(int projectID) {
-        this.projectID = projectID;
+    public void setProject(ProjectEntity project) {
+        this.project = project;
     }
 
     public int getId() {
@@ -118,11 +120,11 @@ public class CollectionEntity {
         this.bodyRawValue = bodyRawValue;
     }
 
-    public int getStructureID() {
-        return structureID;
+    public CollectionStructureEntity getCollectionStructure() {
+        return collectionStructure;
     }
 
-    public void setStructureID(int collectionStructureID) {
-        this.structureID = collectionStructureID;
+    public void setCollectionStructure(CollectionStructureEntity collectionStructure) {
+        this.collectionStructure = collectionStructure;
     }
 }

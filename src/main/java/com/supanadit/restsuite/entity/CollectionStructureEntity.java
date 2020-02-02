@@ -10,18 +10,20 @@ public class CollectionStructureEntity {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "collection_id", nullable = false)
-    private int collectionID;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "collection_structure_folder_id")
+    private CollectionStructureFolderEntity collectionStructureFolderEntity;
 
-    @Column(name = "collection_structure_folder_id")
-    private int collectionStructureFolderID;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "collection_id", nullable = false)
+    private CollectionEntity collectionEntity;
 
     public CollectionStructureEntity() {
     }
 
-    public CollectionStructureEntity(int collectionID, int collectionStructureFolderID) {
-        this.collectionID = collectionID;
-        this.collectionStructureFolderID = collectionStructureFolderID;
+    public CollectionStructureEntity(CollectionEntity collectionEntity, CollectionStructureFolderEntity collectionStructureFolderEntity) {
+        this.collectionEntity = collectionEntity;
+        this.collectionStructureFolderEntity = collectionStructureFolderEntity;
     }
 
     public int getId() {
@@ -32,19 +34,19 @@ public class CollectionStructureEntity {
         this.id = id;
     }
 
-    public int getCollectionID() {
-        return collectionID;
+    public CollectionStructureFolderEntity getCollectionStructureFolderEntity() {
+        return collectionStructureFolderEntity;
     }
 
-    public void setCollectionID(int collectionID) {
-        this.collectionID = collectionID;
+    public void setCollectionStructureFolderEntity(CollectionStructureFolderEntity collectionStructureFolderEntity) {
+        this.collectionStructureFolderEntity = collectionStructureFolderEntity;
     }
 
-    public int getCollectionStructureFolderID() {
-        return collectionStructureFolderID;
+    public CollectionEntity getCollectionEntity() {
+        return collectionEntity;
     }
 
-    public void setCollectionStructureFolderID(int collectionStructureFolderID) {
-        this.collectionStructureFolderID = collectionStructureFolderID;
+    public void setCollectionEntity(CollectionEntity collectionEntity) {
+        this.collectionEntity = collectionEntity;
     }
 }

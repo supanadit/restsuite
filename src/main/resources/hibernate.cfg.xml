@@ -25,11 +25,11 @@
         <property name="hibernate.dbcp.minIdle">5</property>
         <property name="hibernate.dbcp.maxWaitMillis">-1</property>
         <!-- Collection Entity -->
-        <mapping class="com.supanadit.restsuite.entity.CollectionBodyEntity"/>
-        <mapping class="com.supanadit.restsuite.entity.CollectionEntity"/>
-        <mapping class="com.supanadit.restsuite.entity.CollectionHeaderEntity"/>
-        <mapping class="com.supanadit.restsuite.entity.CollectionStructureEntity"/>
         <mapping class="com.supanadit.restsuite.entity.CollectionStructureFolderEntity"/>
+        <mapping class="com.supanadit.restsuite.entity.CollectionStructureEntity"/>
+        <mapping class="com.supanadit.restsuite.entity.CollectionBodyEntity"/>
+        <mapping class="com.supanadit.restsuite.entity.CollectionHeaderEntity"/>
+        <mapping class="com.supanadit.restsuite.entity.CollectionEntity"/>
         <!-- Entity -->
         <mapping class="com.supanadit.restsuite.entity.ProjectEntity"/>
     </session-factory>

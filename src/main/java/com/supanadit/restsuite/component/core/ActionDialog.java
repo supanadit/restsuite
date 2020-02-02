@@ -8,6 +8,7 @@ import javax.swing.*;
 public class ActionDialog extends Dialog {
     protected ActionDialogCallback action;
     protected JPanel panel;
+    protected JPanel bottomPanel;
 
     public ActionDialog(String title) {
         super(title, 400, 130);
@@ -18,7 +19,7 @@ public class ActionDialog extends Dialog {
         JButton saveButton = new JButton("Save");
         JButton cancelButton = new JButton("Cancel");
 
-        JPanel bottomPanel = new JPanel(new MigLayout("rtl, insets 0 0 0 0"));
+        bottomPanel = new JPanel(new MigLayout("rtl, insets 0 0 0 0"));
         bottomPanel.add(cancelButton);
         bottomPanel.add(saveButton);
 
@@ -44,5 +45,9 @@ public class ActionDialog extends Dialog {
 
     public JPanel getPanel() {
         return panel;
+    }
+
+    public JPanel getBottomPanel() {
+        return bottomPanel;
     }
 }
