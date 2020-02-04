@@ -34,7 +34,6 @@ public class SidePanel extends JScrollPane implements RestCallback {
             DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
             if (selectedNode != null) {
                 Object userValue = selectedNode.getUserObject();
-
                 if (userValue instanceof CollectionStructureEntity) {
                     CollectionStructureEntity collectionStructureEntity = ((CollectionStructureEntity) userValue);
                     restPanel.setData(collectionStructureEntity.getCollectionEntity());
@@ -58,7 +57,10 @@ public class SidePanel extends JScrollPane implements RestCallback {
             List<CollectionStructureEntity> projects = session.createQuery("from CollectionStructureEntity ", CollectionStructureEntity.class).list();
             root.removeAllChildren();
             projects.forEach(s -> {
+                // Create Node Menu
                 DefaultMutableTreeNode node = new DefaultMutableTreeNode(s);
+                // This is collection and cannot add sub collection inside collection
+                node.setAllowsChildren(false);
                 root.add(node);
             });
             treeModel.reload();
