@@ -1,6 +1,7 @@
 package com.supanadit.restsuite.panel.rest;
 
 import com.supanadit.restsuite.entity.CollectionStructureEntity;
+import com.supanadit.restsuite.entity.CollectionStructureFolderEntity;
 import com.supanadit.restsuite.listener.api.CollectionTreeMouseMenuListener;
 import com.supanadit.restsuite.panel.rest.callback.RestCallback;
 import com.supanadit.restsuite.panel.rest.dialog.renderer.CollectionTreeRenderer;
@@ -54,13 +55,26 @@ public class SidePanel extends JScrollPane implements RestCallback {
 
     public void loadData() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<CollectionStructureEntity> projects = session.createQuery("from CollectionStructureEntity ", CollectionStructureEntity.class).list();
+            // Clear first
             root.removeAllChildren();
-            projects.forEach(s -> {
+            // Folders
+            List<CollectionStructureFolderEntity> folders = session.createQuery("from CollectionStructureFolderEntity", CollectionStructureFolderEntity.class).list();
+            folders.forEach(s -> {
+                // Create Node Menu
+                DefaultMutableTreeNode folder = new DefaultMutableTreeNode(s);
+                // This is folder and can add sub collection inside folder
+                folder.setAllowsChildren(true);
+                // add folder to root tree
+                root.add(folder);
+            });
+            // Collections
+            List<CollectionStructureEntity> collections = session.createQuery("from CollectionStructureEntity", CollectionStructureEntity.class).list();
+            collections.forEach(s -> {
                 // Create Node Menu
                 DefaultMutableTreeNode node = new DefaultMutableTreeNode(s);
                 // This is collection and cannot add sub collection inside collection
                 node.setAllowsChildren(false);
+                // add collection to root tree
                 root.add(node);
             });
             treeModel.reload();

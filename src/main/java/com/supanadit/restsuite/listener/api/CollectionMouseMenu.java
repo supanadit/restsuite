@@ -36,13 +36,13 @@ class CollectionMouseMenu extends JPopupMenu {
                         if (!selectedNode.getAllowsChildren()) {
                             // Make sure user value is type of collection structure entity
                             if (userValue instanceof CollectionStructureEntity) {
-                                JMenuItem deleteCollection, duplicateCollection, moveCollection;
+                                JMenuItem deleteCollection, duplicateCollection, moveCollectionToFolder;
                                 // Create Menu for Delete Collection
                                 deleteCollection = new JMenuItem("Delete Collection");
                                 // Create Menu for Duplicate Collection
                                 duplicateCollection = new JMenuItem("Duplicate Collection");
                                 // Create Menu for Move Collection to another folder
-                                moveCollection = new JMenuItem("Move Collection");
+                                moveCollectionToFolder = new JMenuItem("Move Collection to Folder");
                                 // Menu Delete Action
                                 deleteCollection.addActionListener((e) -> {
                                     // Create collection structure entity from userValue
@@ -63,13 +63,33 @@ class CollectionMouseMenu extends JPopupMenu {
                                         ex.printStackTrace();
                                     }
                                 });
-                                // Add Delete menu to parent Menu
-                                add(deleteCollection);
                                 // Add Duplicate collection
                                 add(duplicateCollection);
                                 // Add Move Collection menu
-                                add(moveCollection);
+                                add(moveCollectionToFolder);
+                                // Add Separator
+                                addSeparator();
+                                // Add Delete menu to parent Menu
+                                add(deleteCollection);
                             }
+                        } else {
+                            JMenuItem deleteFolder, duplicateFolder, moveFolder;
+                            JMenuItem addNewCollection;
+
+                            deleteFolder = new JMenuItem("Delete Folder");
+                            duplicateFolder = new JMenuItem("Duplicate Folder");
+                            moveFolder = new JMenuItem("Move Folder");
+
+                            addNewCollection = new JMenuItem("Add New Collection");
+
+                            add(addNewCollection);
+                            addSeparator();
+
+                            add(duplicateFolder);
+                            add(moveFolder);
+
+                            addSeparator();
+                            add(deleteFolder);
                         }
                     } else {
                         // Declare Variable

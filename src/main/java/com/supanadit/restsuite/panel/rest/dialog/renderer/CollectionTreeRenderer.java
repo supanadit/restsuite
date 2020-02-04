@@ -1,6 +1,7 @@
 package com.supanadit.restsuite.panel.rest.dialog.renderer;
 
 import com.supanadit.restsuite.entity.CollectionStructureEntity;
+import com.supanadit.restsuite.entity.CollectionStructureFolderEntity;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -18,6 +19,9 @@ public class CollectionTreeRenderer extends DefaultTreeCellRenderer {
 
             if (userValue instanceof CollectionStructureEntity) {
                 setText(((CollectionStructureEntity) userValue).getCollectionEntity().getTitle());
+            }
+            if (userValue instanceof CollectionStructureFolderEntity) {
+                setText(((CollectionStructureFolderEntity) userValue).getName());
             }
         }
         return this;
