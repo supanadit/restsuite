@@ -10,7 +10,7 @@ public class CollectionBodyEntity {
     @Column(name = "id")
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "collection_id", nullable = false)
     private CollectionEntity collection;
 

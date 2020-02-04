@@ -1,6 +1,7 @@
 package com.supanadit.restsuite.panel.rest;
 
 import com.supanadit.restsuite.entity.CollectionStructureEntity;
+import com.supanadit.restsuite.listener.api.CollectionTreeMouseMenuListener;
 import com.supanadit.restsuite.panel.rest.callback.RestCallback;
 import com.supanadit.restsuite.panel.rest.dialog.renderer.CollectionTreeRenderer;
 import com.supanadit.restsuite.system.hibernate.HibernateUtil;
@@ -40,6 +41,7 @@ public class SidePanel extends JScrollPane implements RestCallback {
                 }
             }
         });
+        tree.addMouseListener(new CollectionTreeMouseMenuListener(tree));
 
         panel.add(tree, "push,grow");
 

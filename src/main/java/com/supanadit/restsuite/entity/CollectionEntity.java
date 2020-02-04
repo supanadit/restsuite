@@ -12,11 +12,11 @@ public class CollectionEntity {
     @Column(name = "id")
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "structure_id")
     private CollectionStructureEntity collectionStructure;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "project_id")
     private ProjectEntity project;
 

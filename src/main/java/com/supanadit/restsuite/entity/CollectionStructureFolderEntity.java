@@ -16,7 +16,7 @@ public class CollectionStructureFolderEntity {
     private int id;
 
     @NotFound(action = NotFoundAction.IGNORE)
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_id")
     private CollectionStructureFolderEntity parentFolder;
 
