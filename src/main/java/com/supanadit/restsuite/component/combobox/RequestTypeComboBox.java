@@ -4,14 +4,26 @@ import com.supanadit.restsuite.renderer.RequestTypeRenderer;
 import com.supanadit.restsuite.model.RequestTypeModel;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class RequestTypeComboBox extends JComboBox<RequestTypeModel> {
+    ArrayList<RequestTypeModel> listRequestType = new ArrayList<>();
+
     public RequestTypeComboBox() {
         setRenderer(new RequestTypeRenderer());
-        addItem(RequestTypeModel.GET());
-        addItem(RequestTypeModel.POST());
-        addItem(RequestTypeModel.DELETE());
-        addItem(RequestTypeModel.PUT());
+
+        listRequestType.add(RequestTypeModel.GET());
+        listRequestType.add(RequestTypeModel.POST());
+        listRequestType.add(RequestTypeModel.DELETE());
+        listRequestType.add(RequestTypeModel.PUT());
+
+        for (RequestTypeModel requestTypeModel : listRequestType) {
+            addItem(requestTypeModel);
+        }
+    }
+
+    public ArrayList<RequestTypeModel> getListRequestType() {
+        return listRequestType;
     }
 
     @Override

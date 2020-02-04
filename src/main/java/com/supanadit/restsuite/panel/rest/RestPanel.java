@@ -7,6 +7,7 @@ import com.supanadit.restsuite.component.core.callback.ActionDialogCallback;
 import com.supanadit.restsuite.component.input.api.InputTextURL;
 import com.supanadit.restsuite.entity.*;
 import com.supanadit.restsuite.model.ApiModel;
+import com.supanadit.restsuite.model.RequestTypeModel;
 import com.supanadit.restsuite.panel.rest.callback.RestCallback;
 import com.supanadit.restsuite.panel.rest.dialog.RenameApi;
 import com.supanadit.restsuite.panel.rest.dialog.SaveApi;
@@ -236,11 +237,19 @@ public class RestPanel extends JPanel {
     }
 
     public void setData(CollectionEntity collectionEntity) {
+        // Set ID
         id = collectionEntity.getId();
+        // Set Structure ID
         structureID = collectionEntity.getCollectionStructure().getId();
+        // Set Title
         titleButton.setText(collectionEntity.getTitle());
+        // Set URL
         apiURL.setText(collectionEntity.getUrl());
-
-
+        // Set Method ( GET, POST, PUT, DELETE )
+        for (RequestTypeModel requestTypeModel : requestTypeComboBox.getListRequestType()) {
+            if (requestTypeModel.getName().equals(collectionEntity.getMethod())) {
+                requestTypeComboBox.setSelectedItem(requestTypeModel);
+            }
+        }
     }
 }
