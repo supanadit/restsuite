@@ -255,7 +255,7 @@ public class RestPanel extends JPanel {
             }
         }
         // Clear Request Header
-//        tabPanel.headersPanel.headersFormPanel.clearFormInput();
+        tabPanel.headersPanel.headersFormPanel.clearFormInput();
         // Get Request Header
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // Query get collection header entity
@@ -266,8 +266,7 @@ public class RestPanel extends JPanel {
             List<CollectionHeaderEntity> headers = query.list();
             // set headers to headers form panel
             headers.forEach(s -> {
-//                tabPanel.headersPanel.headersFormPanel.addFormInput(s);
-                System.out.println(s.getKey());
+                tabPanel.headersPanel.headersFormPanel.addFormInput(s);
             });
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,6 +1,5 @@
 package com.supanadit.restsuite.panel.rest.request.tab.header;
 
-import com.supanadit.restsuite.entity.CollectionEntity;
 import com.supanadit.restsuite.entity.CollectionHeaderEntity;
 import net.miginfocom.swing.MigLayout;
 
@@ -55,7 +54,12 @@ public class HeadersFormPanel extends JScrollPane {
     }
 
     public void clearFormInput() {
-        for (HeadersFormInputPanel formInputPanel : listInputPanel) {
+        // Clone
+        ArrayList<HeadersFormInputPanel> listInputPanelClone = listInputPanel;
+        // Clear original variable
+        listInputPanel = new ArrayList<>();
+        // Looping
+        for (HeadersFormInputPanel formInputPanel : listInputPanelClone) {
             formInputPanel.remove();
         }
         updateChange();
