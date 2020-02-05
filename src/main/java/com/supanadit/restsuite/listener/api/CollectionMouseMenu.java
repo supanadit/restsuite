@@ -1,6 +1,7 @@
 package com.supanadit.restsuite.listener.api;
 
 import com.supanadit.restsuite.entity.CollectionStructureEntity;
+import com.supanadit.restsuite.panel.rest.SidePanel;
 import com.supanadit.restsuite.system.hibernate.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -11,17 +12,17 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 class CollectionMouseMenu extends JPopupMenu {
-    public JTree collection;
+    public SidePanel sidePanel;
 
-    public CollectionMouseMenu(JTree collection) {
+    public CollectionMouseMenu(SidePanel sidePanel) {
         // Declare JTree Collection variable
-        this.collection = collection;
+        this.sidePanel = sidePanel;
         // Make sure collection tree have a data
-        if (collection.getSelectionCount() != 0) {
+        if (sidePanel.tree.getSelectionCount() != 0) {
             // Get model from tree collection
-            DefaultTreeModel model = (DefaultTreeModel) collection.getModel();
+            DefaultTreeModel model = (DefaultTreeModel) sidePanel.tree.getModel();
             // Get selection path
-            TreePath[] paths = collection.getSelectionPaths();
+            TreePath[] paths = sidePanel.tree.getSelectionPaths();
             // Make sure selection path not null
             if (paths != null) {
                 // Looping Path
@@ -96,6 +97,9 @@ class CollectionMouseMenu extends JPopupMenu {
                         JMenuItem addNewCollection, addNewFolder;
                         // Create Menu New Collection
                         addNewCollection = new JMenuItem("Add New Collection");
+                        addNewCollection.addActionListener(e -> {
+                            sidePanel.restPanel.clear();
+                        });
                         // Create Menu New Folder
                         addNewFolder = new JMenuItem("Add New Folder");
                         // Add menu new collection

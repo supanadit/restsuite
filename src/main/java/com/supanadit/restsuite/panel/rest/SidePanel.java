@@ -17,11 +17,14 @@ import java.awt.*;
 import java.util.List;
 
 public class SidePanel extends JScrollPane implements RestCallback {
-    DefaultMutableTreeNode root;
-    DefaultTreeModel treeModel;
-    JTree tree;
+    public DefaultMutableTreeNode root;
+    public DefaultTreeModel treeModel;
+    public JTree tree;
+    public RestPanel restPanel;
 
     public SidePanel(RestPanel restPanel) {
+        this.restPanel = restPanel;
+
         Color background = UIManager.getColor("Panel.background");
 
         JPanel panel = new JPanel(new MigLayout("insets 10 0 0 0"));
@@ -43,7 +46,7 @@ public class SidePanel extends JScrollPane implements RestCallback {
                 }
             }
         });
-        tree.addMouseListener(new CollectionTreeMouseMenuListener(tree));
+        tree.addMouseListener(new CollectionTreeMouseMenuListener(this));
 
         panel.add(tree, "push,grow");
 

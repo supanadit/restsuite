@@ -277,6 +277,8 @@ public class RestPanel extends JPanel {
     }
 
     public void setData(CollectionEntity collectionEntity) {
+        // Clear body response
+        responseTabPanel.body().setText(null);
         // Set ID
         id = collectionEntity.getId();
         // Set Structure ID
@@ -331,5 +333,33 @@ public class RestPanel extends JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void clear() {
+        // Clear All Input
+        tabPanel.headersPanel.headersFormPanel.clearFormInput();
+        // Clear Removed Input Panel
+        if (!tabPanel.headersPanel.headersFormPanel.listRemovedInputPanel.isEmpty()) {
+            tabPanel.headersPanel.headersFormPanel.listRemovedInputPanel = new ArrayList<>();
+        }
+        // Clear All Input
+        tabPanel.bodyPanel.bodyFormPanel.clearFormInput();
+        // Clear Removed Input Panel
+        if (!tabPanel.bodyPanel.bodyFormPanel.listRemovedInputPanel.isEmpty()) {
+            tabPanel.bodyPanel.bodyFormPanel.listRemovedInputPanel = new ArrayList<>();
+        }
+        tabPanel.bodyPanel.requestBodyTypeComboBox.setSelectedIndex(0);
+        tabPanel.bodyPanel.requestBodyRawTypeComboBox.setSelectedIndex(0);
+        tabPanel.bodyPanel.setText(null);
+        // Set Method to default
+        requestTypeComboBox.setSelectedIndex(0);
+        // Set URL to null
+        apiURL.setText(null);
+        // Set ID to 0
+        id = 0;
+        // Set title to default
+        titleButton.setText("Untitled");
+        // Set body to empty
+        responseTabPanel.body().setText(null);
     }
 }
