@@ -44,6 +44,9 @@ public class SidePanel extends JScrollPane implements RestCallback {
                     CollectionEntity collectionEntity = collectionStructureEntity.getCollectionEntity();
                     restPanel.setData(collectionEntity);
                 }
+                if (selectedNode.getParent() == null) {
+                    restPanel.clear();
+                }
             }
         });
         tree.addMouseListener(new CollectionTreeMouseMenuListener(this));
