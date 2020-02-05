@@ -14,12 +14,12 @@ public class HeadersFormInputPanel extends JPanel implements DocumentListener {
     InputBodyValue valueField;
     HeadersFormPanel headersFormPanel;
 
-    public HeadersFormInputPanel(HeadersFormPanel headersFormPanel) {
+    public HeadersFormInputPanel(HeadersFormPanel headersFormPanel, String key, String value) {
         this.headersFormPanel = headersFormPanel;
         setLayout(new MigLayout("insets 0 0 0 0", "[135]5[100]5[]"));
 
-        keyField = new InputBodyKey();
-        valueField = new InputBodyValue();
+        keyField = new InputBodyKey(key);
+        valueField = new InputBodyValue(value);
 
         add(keyField, "pushx,growx");
         add(valueField, "pushx,growx");
@@ -30,13 +30,21 @@ public class HeadersFormInputPanel extends JPanel implements DocumentListener {
         JButton removeButton = new JButton("X");
 
         removeButton.addActionListener(e -> {
-            headersFormPanel.getPanel().remove(this);
-            headersFormPanel.listInputPanel.remove(this);
-            headersFormPanel.getPanel().updateUI();
-            headersFormPanel.updateChange();
+            remove();
         });
 
         add(removeButton);
+    }
+
+    public HeadersFormInputPanel(HeadersFormPanel headersFormPanel) {
+        this(headersFormPanel, null, null);
+    }
+
+    public void remove() {
+        headersFormPanel.getPanel().remove(this);
+        headersFormPanel.listInputPanel.remove(this);
+        headersFormPanel.getPanel().updateUI();
+        headersFormPanel.updateChange();
     }
 
     public int getId() {

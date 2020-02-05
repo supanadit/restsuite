@@ -6,4 +6,9 @@ public class InputBodyValue extends InputComponent {
     public InputBodyValue() {
         setPlaceholder("Value");
     }
+
+    public InputBodyValue(String value) {
+        this();
+        setText(value);
+    }
 }

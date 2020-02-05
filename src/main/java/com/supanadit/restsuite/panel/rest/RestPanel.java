@@ -21,10 +21,13 @@ import com.supanadit.restsuite.system.hibernate.HibernateUtil;
 import net.miginfocom.swing.MigLayout;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.net.URL;
+import java.util.List;
 
 public class RestPanel extends JPanel {
     public int id;
@@ -250,6 +253,24 @@ public class RestPanel extends JPanel {
             if (requestTypeModel.getName().equals(collectionEntity.getMethod())) {
                 requestTypeComboBox.setSelectedItem(requestTypeModel);
             }
+        }
+        // Clear Request Header
+//        tabPanel.headersPanel.headersFormPanel.clearFormInput();
+        // Get Request Header
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // Query get collection header entity
+            Query<CollectionHeaderEntity> query = session.createQuery("from CollectionHeaderEntity where collection=:collection", CollectionHeaderEntity.class);
+            // where collection parameter
+            query.setParameter("collection", collectionEntity);
+            // headers from query list
+            List<CollectionHeaderEntity> headers = query.list();
+            // set headers to headers form panel
+            headers.forEach(s -> {
+//                tabPanel.headersPanel.headersFormPanel.addFormInput(s);
+                System.out.println(s.getKey());
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.supanadit.restsuite.panel.rest;
 
+import com.supanadit.restsuite.entity.CollectionEntity;
 import com.supanadit.restsuite.entity.CollectionStructureEntity;
 import com.supanadit.restsuite.entity.CollectionStructureFolderEntity;
 import com.supanadit.restsuite.listener.api.CollectionTreeMouseMenuListener;
@@ -37,7 +38,8 @@ public class SidePanel extends JScrollPane implements RestCallback {
                 Object userValue = selectedNode.getUserObject();
                 if (userValue instanceof CollectionStructureEntity) {
                     CollectionStructureEntity collectionStructureEntity = ((CollectionStructureEntity) userValue);
-                    restPanel.setData(collectionStructureEntity.getCollectionEntity());
+                    CollectionEntity collectionEntity = collectionStructureEntity.getCollectionEntity();
+                    restPanel.setData(collectionEntity);
                 }
             }
         });
