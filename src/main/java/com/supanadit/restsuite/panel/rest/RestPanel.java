@@ -217,6 +217,25 @@ public class RestPanel extends JPanel {
                 // Set the ID to the List
                 body.setId(bodyEntity.getId());
             }
+            // Delete removed body from storage
+            for (BodyFormInputPanel body : bodyForm.listRemovedInputPanel) {
+                // Get Type
+                String type = body.getTypeComboBox().toString();
+                // Get Key
+                String key = body.getKeyField().getText();
+                // Get Value
+                String value = body.getValueField().getText();
+                // Set ID Collection, Key Name and Value
+                CollectionBodyEntity bodyEntity = new CollectionBodyEntity(collection, type, key, value);
+                // Set Body ID
+                bodyEntity.setId(body.getId());
+                // Delete from storage
+                session.delete(bodyEntity);
+            }
+            // Clear Removed Input Panel
+            if (!bodyForm.listRemovedInputPanel.isEmpty()) {
+                bodyForm.listRemovedInputPanel = new ArrayList<>();
+            }
             // Get Folder ID
             CollectionStructureFolderEntity folder = saveApiDialog.getSelectedItem();
             // Create Structure Entity for Menu
@@ -303,10 +322,10 @@ public class RestPanel extends JPanel {
             Query<CollectionBodyEntity> query = session.createQuery("from CollectionBodyEntity where collection=:collection", CollectionBodyEntity.class);
             // where collection parameter
             query.setParameter("collection", collectionEntity);
-            // headers from query list
-            List<CollectionBodyEntity> headers = query.list();
-            // set headers to headers form panel
-            headers.forEach(s -> {
+            // body from query list
+            List<CollectionBodyEntity> body = query.list();
+            // set body to body form panel
+            body.forEach(s -> {
                 tabPanel.bodyPanel.bodyFormPanel.addFormInput(s);
             });
         } catch (Exception e) {

@@ -22,9 +22,17 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
 
     public BodyFormInputPanel(BodyFormPanel bodyFormPanel, String type, String key, String value) {
         this.bodyFormPanel = bodyFormPanel;
+
+        browseButton = new JButton("Browse");
+        removeButton = new JButton("X");
+
         setLayout(new MigLayout("insets 0 0 0 0", "[]5[100]5[100]5[]5[]"));
         typeComboBox = new RequestBodyFormTypeComboBox(type);
+        // Check Type for first time
+        checkType();
+        // Add Type Combobox
         add(typeComboBox, "growx");
+
         keyField = new InputBodyKey(key);
         valueField = new InputBodyValue(value);
 
@@ -34,11 +42,8 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
         keyField.getDocument().addDocumentListener(this);
         valueField.getDocument().addDocumentListener(this);
 
-        browseButton = new JButton("Browse");
-        removeButton = new JButton("X");
-
         removeButton.addActionListener(e -> {
-            remove();
+            removeFromStorage();
         });
 
         add(browseButton, "growx");
@@ -46,8 +51,6 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
 
         browseButton.setEnabled(false);
 
-        // Check Type for first time
-        checkType();
         // Check type every change combobox type
         typeComboBox.addActionListener(e -> {
             checkType();
@@ -71,10 +74,12 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
     public void checkType() {
         BodyFormTypeModel bodyFormTypeModel = (BodyFormTypeModel) this.typeComboBox.getSelectedItem();
         assert bodyFormTypeModel != null;
-        valueField.setText(null);
         boolean isFile = bodyFormTypeModel.getName().equals(BodyFormTypeModel.FILE().getName());
         browseButton.setEnabled(isFile);
-        valueField.setEditable(!isFile);
+        if (valueField != null) {
+            valueField.setText(null);
+            valueField.setEditable(!isFile);
+        }
     }
 
     public void remove() {
@@ -82,6 +87,13 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
         bodyFormPanel.listInputPanel.remove(this);
         bodyFormPanel.formGroupPanel.updateUI();
         bodyFormPanel.updateChange();
+    }
+
+    public void removeFromStorage() {
+        remove();
+        if (id != 0) {
+            bodyFormPanel.listRemovedInputPanel.add(this);
+        }
     }
 
     public int getId() {

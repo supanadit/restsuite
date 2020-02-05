@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 public class BodyFormPanel extends JScrollPane {
     public ArrayList<BodyFormInputPanel> listInputPanel = new ArrayList<>();
+    public ArrayList<BodyFormInputPanel> listRemovedInputPanel = new ArrayList<>();
+
     public JPanel formGroupPanel;
     public JButton addField;
 
