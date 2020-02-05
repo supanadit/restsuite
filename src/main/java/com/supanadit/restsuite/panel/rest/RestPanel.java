@@ -27,6 +27,7 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RestPanel extends JPanel {
@@ -178,6 +179,23 @@ public class RestPanel extends JPanel {
                 session.saveOrUpdate(headerEntity);
                 // Set ID on List
                 header.setId(headerEntity.getId());
+            }
+            // Delete removed header from storage
+            for (HeadersFormInputPanel header : tabPanel.headersPanel.headersFormPanel.listRemovedInputPanel) {
+                // Get Key
+                String key = header.getKeyField().getText();
+                // Get Value
+                String value = header.getValueField().getText();
+                // Set ID Collection, Key Name and Value
+                CollectionHeaderEntity headerEntity = new CollectionHeaderEntity(collection, key, value);
+                // Set Collection ID
+                headerEntity.setId(header.getId());
+                // Delete header
+                session.delete(headerEntity);
+            }
+            // Clear Removed Input Panel
+            if (!tabPanel.headersPanel.headersFormPanel.listRemovedInputPanel.isEmpty()) {
+                tabPanel.headersPanel.headersFormPanel.listRemovedInputPanel = new ArrayList<>();
             }
             // Save Body
             for (BodyFormInputPanel body : bodyForm.listInputPanel) {

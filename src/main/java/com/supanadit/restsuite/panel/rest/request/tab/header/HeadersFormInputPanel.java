@@ -30,7 +30,7 @@ public class HeadersFormInputPanel extends JPanel implements DocumentListener {
         JButton removeButton = new JButton("X");
 
         removeButton.addActionListener(e -> {
-            remove();
+            removeFromStorage();
         });
 
         add(removeButton);
@@ -45,6 +45,13 @@ public class HeadersFormInputPanel extends JPanel implements DocumentListener {
         headersFormPanel.listInputPanel.remove(this);
         headersFormPanel.getPanel().updateUI();
         headersFormPanel.updateChange();
+    }
+
+    public void removeFromStorage() {
+        remove();
+        if (id != 0) {
+            headersFormPanel.listRemovedInputPanel.add(this);
+        }
     }
 
     public int getId() {

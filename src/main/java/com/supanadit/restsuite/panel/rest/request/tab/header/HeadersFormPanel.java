@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class HeadersFormPanel extends JScrollPane {
     public ArrayList<HeadersFormInputPanel> listInputPanel = new ArrayList<>();
+    public ArrayList<HeadersFormInputPanel> listRemovedInputPanel = new ArrayList<>();
+
     public JPanel formGroupPanel;
     public JButton addField;
 
@@ -58,6 +60,8 @@ public class HeadersFormPanel extends JScrollPane {
         ArrayList<HeadersFormInputPanel> listInputPanelClone = listInputPanel;
         // Clear original variable
         listInputPanel = new ArrayList<>();
+        // Clear removed input list
+        listRemovedInputPanel = new ArrayList<>();
         // Looping
         for (HeadersFormInputPanel formInputPanel : listInputPanelClone) {
             formInputPanel.remove();
