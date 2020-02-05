@@ -271,5 +271,28 @@ public class RestPanel extends JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // Set Body Type
+        tabPanel.bodyPanel.requestBodyTypeComboBox.setType(collectionEntity.getBodyType());
+        // Set body raw type
+        tabPanel.bodyPanel.requestBodyRawTypeComboBox.setType(collectionEntity.getBodyRawType());
+        // Set body raw value
+        tabPanel.bodyPanel.setText(collectionEntity.getBodyRawValue());
+        // Clear Body Form Input
+        tabPanel.bodyPanel.bodyFormPanel.clearFormInput();
+        // Get Body Form Input
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // Query get collection body entity
+            Query<CollectionBodyEntity> query = session.createQuery("from CollectionBodyEntity where collection=:collection", CollectionBodyEntity.class);
+            // where collection parameter
+            query.setParameter("collection", collectionEntity);
+            // headers from query list
+            List<CollectionBodyEntity> headers = query.list();
+            // set headers to headers form panel
+            headers.forEach(s -> {
+                tabPanel.bodyPanel.bodyFormPanel.addFormInput(s);
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

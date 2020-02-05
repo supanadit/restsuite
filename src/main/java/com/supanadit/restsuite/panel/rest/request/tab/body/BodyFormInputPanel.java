@@ -1,8 +1,8 @@
 package com.supanadit.restsuite.panel.rest.request.tab.body;
 
+import com.supanadit.restsuite.component.combobox.RequestBodyFormTypeComboBox;
 import com.supanadit.restsuite.component.input.api.InputBodyKey;
 import com.supanadit.restsuite.component.input.api.InputBodyValue;
-import com.supanadit.restsuite.component.combobox.RequestBodyFormTypeComboBox;
 import com.supanadit.restsuite.model.BodyFormTypeModel;
 import net.miginfocom.swing.MigLayout;
 
@@ -17,14 +17,16 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
     InputBodyKey keyField;
     InputBodyValue valueField;
     BodyFormPanel bodyFormPanel;
+    JButton browseButton;
+    JButton removeButton;
 
-    public BodyFormInputPanel(BodyFormPanel bodyFormPanel) {
+    public BodyFormInputPanel(BodyFormPanel bodyFormPanel, String type, String key, String value) {
         this.bodyFormPanel = bodyFormPanel;
         setLayout(new MigLayout("insets 0 0 0 0", "[]5[100]5[100]5[]5[]"));
-        typeComboBox = new RequestBodyFormTypeComboBox();
+        typeComboBox = new RequestBodyFormTypeComboBox(type);
         add(typeComboBox, "growx");
-        keyField = new InputBodyKey();
-        valueField = new InputBodyValue();
+        keyField = new InputBodyKey(key);
+        valueField = new InputBodyValue(value);
 
         add(keyField, "pushx,growx");
         add(valueField, "pushx,growx");
@@ -32,14 +34,11 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
         keyField.getDocument().addDocumentListener(this);
         valueField.getDocument().addDocumentListener(this);
 
-        JButton browseButton = new JButton("Browse");
-        JButton removeButton = new JButton("X");
+        browseButton = new JButton("Browse");
+        removeButton = new JButton("X");
 
         removeButton.addActionListener(e -> {
-            bodyFormPanel.formGroupPanel.remove(this);
-            bodyFormPanel.listInputPanel.remove(this);
-            bodyFormPanel.formGroupPanel.updateUI();
-            bodyFormPanel.updateChange();
+            remove();
         });
 
         add(browseButton, "growx");
@@ -47,13 +46,11 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
 
         browseButton.setEnabled(false);
 
+        // Check Type for first time
+        checkType();
+        // Check type every change combobox type
         typeComboBox.addActionListener(e -> {
-            BodyFormTypeModel type = (BodyFormTypeModel) this.typeComboBox.getSelectedItem();
-            assert type != null;
-            valueField.setText(null);
-            boolean isFile = type.getName().equals(BodyFormTypeModel.FILE().getName());
-            browseButton.setEnabled(isFile);
-            valueField.setEditable(!isFile);
+            checkType();
         });
 
         browseButton.addActionListener(e -> {
@@ -65,6 +62,26 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
                 valueField.setText(selectedFile.getAbsolutePath());
             }
         });
+    }
+
+    public BodyFormInputPanel(BodyFormPanel bodyFormPanel) {
+        this(bodyFormPanel, null, null, null);
+    }
+
+    public void checkType() {
+        BodyFormTypeModel bodyFormTypeModel = (BodyFormTypeModel) this.typeComboBox.getSelectedItem();
+        assert bodyFormTypeModel != null;
+        valueField.setText(null);
+        boolean isFile = bodyFormTypeModel.getName().equals(BodyFormTypeModel.FILE().getName());
+        browseButton.setEnabled(isFile);
+        valueField.setEditable(!isFile);
+    }
+
+    public void remove() {
+        bodyFormPanel.formGroupPanel.remove(this);
+        bodyFormPanel.listInputPanel.remove(this);
+        bodyFormPanel.formGroupPanel.updateUI();
+        bodyFormPanel.updateChange();
     }
 
     public int getId() {

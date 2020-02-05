@@ -41,8 +41,8 @@ public class ResponseBodyPanel extends JPanel {
         bodyFormPanel = new BodyFormPanel();
 
         if (withOptions) {
-            requestBodyTypeComboBox = RequestBodyTypeComboBox.getComponent();
-            requestBodyRawTypeComboBox = RequestBodyRawTypeComboBox.getComponent();
+            requestBodyTypeComboBox = new RequestBodyTypeComboBox();
+            requestBodyRawTypeComboBox = new RequestBodyRawTypeComboBox();
 
             if (requestBodyRawTypeComboBox.getItemCount() != 0) {
                 BodyRawTypeModel bodyRawTypeModel = requestBodyRawTypeComboBox.getItemAt(0);
