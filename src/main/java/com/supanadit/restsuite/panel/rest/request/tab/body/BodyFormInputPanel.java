@@ -28,13 +28,11 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
 
         setLayout(new MigLayout("insets 0 0 0 0", "[]5[100]5[100]5[]5[]"));
         typeComboBox = new RequestBodyFormTypeComboBox(type);
-        // Check Type for first time
-        checkType();
         // Add Type Combobox
         add(typeComboBox, "growx");
 
         keyField = new InputBodyKey(key);
-        valueField = new InputBodyValue(value);
+        valueField = new InputBodyValue();
 
         add(keyField, "pushx,growx");
         add(valueField, "pushx,growx");
@@ -55,6 +53,11 @@ public class BodyFormInputPanel extends JPanel implements DocumentListener {
         typeComboBox.addActionListener(e -> {
             checkType();
         });
+
+        // Check Type for first time
+        checkType();
+
+        valueField.setText(value);
 
         browseButton.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
