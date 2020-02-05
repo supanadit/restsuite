@@ -24,7 +24,6 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -357,6 +356,8 @@ public class RestPanel extends JPanel {
         apiURL.setText(null);
         // Set ID to 0
         id = 0;
+        // set structure ID to 0
+        structureID = 0;
         // Set title to default
         titleButton.setText("Untitled");
         // Set body to empty
