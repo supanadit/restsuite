@@ -60,6 +60,8 @@ class CollectionMouseMenu extends JPopupMenu {
                                         transaction.commit();
                                         // delete from side panel collection menu
                                         model.removeNodeFromParent(selectedNode);
+                                        // clear
+                                        sidePanel.restPanel.clear();
                                     } catch (Exception ex) {
                                         ex.printStackTrace();
                                     }
