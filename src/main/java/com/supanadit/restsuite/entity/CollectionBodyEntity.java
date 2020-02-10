@@ -10,8 +10,7 @@ public class CollectionBodyEntity {
     @Column(name = "id")
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "collection_id", nullable = false)
+    @ManyToOne
     private CollectionEntity collection;
 
     @Column(name = "type", nullable = false)

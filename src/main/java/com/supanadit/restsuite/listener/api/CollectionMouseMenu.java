@@ -55,7 +55,7 @@ class CollectionMouseMenu extends JPopupMenu {
                                         // Start a transaction
                                         transaction = session.beginTransaction();
                                         // Delete collection structure entity with the relationship
-                                        session.delete(collectionStructureEntity);
+                                        session.remove(collectionStructureEntity);
                                         // commit transaction
                                         transaction.commit();
                                         // delete from side panel collection menu

@@ -10,8 +10,7 @@ public class CollectionHeaderEntity {
     @Column(name = "id")
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "collection_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private CollectionEntity collection;
 
     @Column(name = "key", nullable = false)

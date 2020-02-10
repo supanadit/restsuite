@@ -3,6 +3,8 @@ package com.supanadit.restsuite.entity;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "collection")
@@ -38,6 +40,12 @@ public class CollectionEntity {
     @Column(name = "body_raw_value")
     @Type(type = "text")
     private String bodyRawValue;
+
+    @OneToMany(mappedBy = "collection", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<CollectionHeaderEntity> headers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "collection", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<CollectionBodyEntity> body = new ArrayList<>();
 
     public CollectionEntity() {
     }
@@ -126,5 +134,21 @@ public class CollectionEntity {
 
     public void setCollectionStructure(CollectionStructureEntity collectionStructure) {
         this.collectionStructure = collectionStructure;
+    }
+
+    public List<CollectionHeaderEntity> getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(List<CollectionHeaderEntity> headers) {
+        this.headers = headers;
+    }
+
+    public List<CollectionBodyEntity> getBody() {
+        return body;
+    }
+
+    public void setBody(List<CollectionBodyEntity> body) {
+        this.body = body;
     }
 }
