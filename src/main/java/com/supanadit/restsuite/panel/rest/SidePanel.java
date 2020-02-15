@@ -1,14 +1,19 @@
 package com.supanadit.restsuite.panel.rest;
 
+import com.supanadit.restsuite.component.core.callback.ActionDialogCallback;
 import com.supanadit.restsuite.entity.CollectionEntity;
+import com.supanadit.restsuite.entity.CollectionHeaderEntity;
 import com.supanadit.restsuite.entity.CollectionStructureEntity;
 import com.supanadit.restsuite.entity.CollectionStructureFolderEntity;
 import com.supanadit.restsuite.listener.api.CollectionTreeMouseMenuListener;
 import com.supanadit.restsuite.panel.rest.callback.RestCallback;
+import com.supanadit.restsuite.panel.rest.dialog.FolderDialog;
 import com.supanadit.restsuite.panel.rest.dialog.renderer.CollectionTreeRenderer;
 import com.supanadit.restsuite.system.hibernate.HibernateUtil;
 import net.miginfocom.swing.MigLayout;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -21,9 +26,41 @@ public class SidePanel extends JScrollPane implements RestCallback {
     public DefaultTreeModel treeModel;
     public JTree tree;
     public RestPanel restPanel;
+    public FolderDialog folderDialog;
 
     public SidePanel(RestPanel restPanel) {
         this.restPanel = restPanel;
+
+        folderDialog = new FolderDialog();
+        folderDialog.addAction(new ActionDialogCallback() {
+            @Override
+            public void cancelAction() {
+                folderDialog.close();
+            }
+
+            @Override
+            public void saveAction() {
+                var collectionStructureFolderEntity = new CollectionStructureFolderEntity(folderDialog.getName());
+                // Initialize Transaction
+                Transaction transaction = null;
+                try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                    // start a transaction
+                    transaction = session.beginTransaction();
+                    // save the project objects
+                    session.saveOrUpdate(collectionStructureFolderEntity);
+                    // commit transaction
+                    transaction.commit();
+                    // Refresh side panel
+                    loadData();
+                } catch (Exception e) {
+                    if (transaction != null) {
+                        transaction.rollback();
+                    }
+                    e.printStackTrace();
+                }
+                folderDialog.close();
+            }
+        });
 
         Color background = UIManager.getColor("Panel.background");
 

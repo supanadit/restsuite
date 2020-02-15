@@ -1,6 +1,7 @@
 package com.supanadit.restsuite.listener.api;
 
 import com.supanadit.restsuite.entity.CollectionStructureEntity;
+import com.supanadit.restsuite.entity.CollectionStructureFolderEntity;
 import com.supanadit.restsuite.panel.rest.SidePanel;
 import com.supanadit.restsuite.system.hibernate.HibernateUtil;
 import org.hibernate.Session;
@@ -76,23 +77,47 @@ class CollectionMouseMenu extends JPopupMenu {
                                 add(deleteCollection);
                             }
                         } else {
-                            JMenuItem deleteFolder, duplicateFolder, moveFolder;
-                            JMenuItem addNewCollection;
+                            // Make sure user value is type of collection structure entity
+                            if (userValue instanceof CollectionStructureFolderEntity) {
+                                JMenuItem deleteFolder, duplicateFolder, moveFolder;
+                                JMenuItem addNewCollection;
 
-                            deleteFolder = new JMenuItem("Delete Folder");
-                            duplicateFolder = new JMenuItem("Duplicate Folder");
-                            moveFolder = new JMenuItem("Move Folder");
+                                deleteFolder = new JMenuItem("Delete Folder");
+                                deleteFolder.addActionListener(e -> {
+                                    // Create collection structure entity from userValue
+                                    var collectionStructureEntity = ((CollectionStructureFolderEntity) userValue);
+                                    // Initialize Transaction
+                                    Transaction transaction = null;
+                                    // Open Session
+                                    try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                                        // Start a transaction
+                                        transaction = session.beginTransaction();
+                                        // Delete collection structure entity with the relationship
+                                        session.remove(collectionStructureEntity);
+                                        // commit transaction
+                                        transaction.commit();
+                                        // delete from side panel collection menu
+                                        model.removeNodeFromParent(selectedNode);
+                                        // clear
+                                        sidePanel.restPanel.clear();
+                                    } catch (Exception ex) {
+                                        ex.printStackTrace();
+                                    }
+                                });
+                                duplicateFolder = new JMenuItem("Duplicate Folder");
+                                moveFolder = new JMenuItem("Move Folder");
 
-                            addNewCollection = new JMenuItem("Add New Collection");
+                                addNewCollection = new JMenuItem("Add New Collection");
 
-                            add(addNewCollection);
-                            addSeparator();
+                                add(addNewCollection);
+                                addSeparator();
 
-                            add(duplicateFolder);
-                            add(moveFolder);
+                                add(duplicateFolder);
+                                add(moveFolder);
 
-                            addSeparator();
-                            add(deleteFolder);
+                                addSeparator();
+                                add(deleteFolder);
+                            }
                         }
                     } else {
                         // Declare Variable
@@ -104,6 +129,9 @@ class CollectionMouseMenu extends JPopupMenu {
                         });
                         // Create Menu New Folder
                         addNewFolder = new JMenuItem("Add New Folder");
+                        addNewFolder.addActionListener(e -> {
+                            sidePanel.folderDialog.open();
+                        });
                         // Add menu new collection
                         add(addNewCollection);
                         // Add menu new folder
