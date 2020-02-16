@@ -73,7 +73,8 @@ public class RestPanel extends JPanel {
         });
 
         saveAPI.addActionListener(e -> {
-            saveApiDialog.setVisible(true);
+            saveApiDialog.open();
+            saveApiDialog.reloadFolder();
         });
 
         saveApiDialog.addAction(new ActionDialogCallback() {
