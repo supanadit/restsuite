@@ -10,7 +10,7 @@ public class CollectionStructureEntity {
     @Column(name = "id")
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "collection_structure_folder_id")
     private CollectionStructureFolderEntity collectionStructureFolderEntity;
 

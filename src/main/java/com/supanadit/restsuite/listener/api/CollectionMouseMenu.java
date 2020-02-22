@@ -1,6 +1,6 @@
 package com.supanadit.restsuite.listener.api;
 
-import com.supanadit.restsuite.entity.CollectionStructureEntity;
+import com.supanadit.restsuite.entity.CollectionEntity;
 import com.supanadit.restsuite.entity.CollectionStructureFolderEntity;
 import com.supanadit.restsuite.panel.rest.SidePanel;
 import com.supanadit.restsuite.system.hibernate.HibernateUtil;
@@ -37,7 +37,7 @@ class CollectionMouseMenu extends JPopupMenu {
                         // If not type of folder
                         if (!selectedNode.getAllowsChildren()) {
                             // Make sure user value is type of collection structure entity
-                            if (userValue instanceof CollectionStructureEntity) {
+                            if (userValue instanceof CollectionEntity) {
                                 JMenuItem deleteCollection, duplicateCollection, moveCollectionToFolder;
                                 // Create Menu for Delete Collection
                                 deleteCollection = new JMenuItem("Delete Collection");
@@ -48,7 +48,7 @@ class CollectionMouseMenu extends JPopupMenu {
                                 // Menu Delete Action
                                 deleteCollection.addActionListener((e) -> {
                                     // Create collection structure entity from userValue
-                                    CollectionStructureEntity collectionStructureEntity = ((CollectionStructureEntity) userValue);
+                                    CollectionEntity collectionEntity = ((CollectionEntity) userValue);
                                     // Initialize Transaction
                                     Transaction transaction = null;
                                     // Open Session
@@ -56,7 +56,7 @@ class CollectionMouseMenu extends JPopupMenu {
                                         // Start a transaction
                                         transaction = session.beginTransaction();
                                         // Delete collection structure entity with the relationship
-                                        session.remove(collectionStructureEntity);
+                                        session.remove(collectionEntity.getCollectionStructure());
                                         // commit transaction
                                         transaction.commit();
                                         // delete from side panel collection menu

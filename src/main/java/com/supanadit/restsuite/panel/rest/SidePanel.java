@@ -2,7 +2,6 @@ package com.supanadit.restsuite.panel.rest;
 
 import com.supanadit.restsuite.component.core.callback.ActionDialogCallback;
 import com.supanadit.restsuite.entity.CollectionEntity;
-import com.supanadit.restsuite.entity.CollectionHeaderEntity;
 import com.supanadit.restsuite.entity.CollectionStructureEntity;
 import com.supanadit.restsuite.entity.CollectionStructureFolderEntity;
 import com.supanadit.restsuite.listener.api.CollectionTreeMouseMenuListener;
@@ -14,7 +13,6 @@ import net.miginfocom.swing.MigLayout;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -104,17 +102,33 @@ public class SidePanel extends JScrollPane implements RestCallback {
             // Clear first
             root.removeAllChildren();
             // Folders
-//            List<CollectionStructureFolderEntity> folders = session.createQuery("from CollectionStructureFolderEntity", CollectionStructureFolderEntity.class).list();
-//            folders.forEach(s -> {
-//                // Create Node Menu
-//                DefaultMutableTreeNode folder = new DefaultMutableTreeNode(s);
-//                // This is folder and can add sub collection inside folder
-//                folder.setAllowsChildren(true);
-//                // add folder to root tree
-//                root.add(folder);
-//            });
+            List<CollectionStructureFolderEntity> folders = session.createQuery("from CollectionStructureFolderEntity", CollectionStructureFolderEntity.class).list();
+            folders.forEach(s -> {
+                // Create Node Menu
+                DefaultMutableTreeNode folder = new DefaultMutableTreeNode(s);
+                // This is folder and can add sub collection inside folder
+                folder.setAllowsChildren(true);
+                // Get all structure entity for this folder
+                Hibernate.initialize(s.getStructure());
+                for (CollectionStructureEntity structureEntity : s.getStructure()) {
+                    // Create Node Menu
+                    Hibernate.initialize(structureEntity.getCollectionEntity());
+                    DefaultMutableTreeNode collection = new DefaultMutableTreeNode(structureEntity.getCollectionEntity());
+                    // This is collection and cannot add sub collection inside collection
+                    collection.setAllowsChildren(false);
+                    // Add collection to folder
+                    folder.add(collection);
+                }
+                // Get sub folder include collection
+                for (CollectionStructureFolderEntity folderEntity : s.getChild()) {
+                    Hibernate.initialize(s.getChild());
+                    getSubFolder(folder, folderEntity);
+                }
+                // add folder to root tree
+                root.add(folder);
+            });
             // Collections
-            List<CollectionStructureEntity> collections = session.createQuery("from CollectionStructureEntity", CollectionStructureEntity.class).list();
+            List<CollectionStructureEntity> collections = session.createQuery("from CollectionStructureEntity where collectionStructureFolderEntity = null", CollectionStructureEntity.class).list();
             collections.forEach(s -> {
                 // Create Node Menu
                 DefaultMutableTreeNode folder = null;
@@ -138,6 +152,34 @@ public class SidePanel extends JScrollPane implements RestCallback {
             treeModel.reload();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void getCollection(DefaultMutableTreeNode folderNode, CollectionStructureFolderEntity folderEntity) {
+        Hibernate.initialize(folderEntity.getStructure());
+        for (CollectionStructureEntity collectionEntity : folderEntity.getStructure()) {
+            // Create Node Menu
+            Hibernate.initialize(collectionEntity.getCollectionEntity());
+            DefaultMutableTreeNode collection = new DefaultMutableTreeNode(collectionEntity.getCollectionEntity());
+            // This is collection and cannot add sub collection inside collection
+            collection.setAllowsChildren(false);
+            // Add collection to folder
+            folderNode.add(collection);
+        }
+    }
+
+    public void getSubFolder(DefaultMutableTreeNode parentFolderNode, CollectionStructureFolderEntity folderEntity) {
+        Hibernate.initialize(folderEntity.getChild());
+        for (CollectionStructureFolderEntity collectionStructureFolderEntity : folderEntity.getChild()) {
+            // Create Node Menu
+            Hibernate.initialize(collectionStructureFolderEntity);
+            DefaultMutableTreeNode folder = new DefaultMutableTreeNode(collectionStructureFolderEntity);
+            // This is collection and cannot add sub collection inside collection
+            folder.setAllowsChildren(true);
+            // Get Collection
+            getCollection(folder, collectionStructureFolderEntity);
+            // Add folder to folder
+            parentFolderNode.add(folder);
         }
     }
 
