@@ -125,7 +125,7 @@ class CollectionMouseMenu extends JPopupMenu {
                         // Create Menu New Collection
                         addNewCollection = new JMenuItem("Add New Collection");
                         addNewCollection.addActionListener(e -> {
-                            sidePanel.restPanel.clear();
+                            sidePanel.newApiDialog.open();
                         });
                         // Create Menu New Folder
                         addNewFolder = new JMenuItem("Add New Folder");

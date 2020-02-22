@@ -7,6 +7,7 @@ import com.supanadit.restsuite.entity.CollectionStructureFolderEntity;
 import com.supanadit.restsuite.listener.api.CollectionTreeMouseMenuListener;
 import com.supanadit.restsuite.panel.rest.callback.RestCallback;
 import com.supanadit.restsuite.panel.rest.dialog.FolderDialog;
+import com.supanadit.restsuite.panel.rest.dialog.NewApiDialog;
 import com.supanadit.restsuite.panel.rest.dialog.renderer.CollectionTreeRenderer;
 import com.supanadit.restsuite.system.hibernate.HibernateUtil;
 import net.miginfocom.swing.MigLayout;
@@ -26,9 +27,25 @@ public class SidePanel extends JScrollPane implements RestCallback {
     public JTree tree;
     public RestPanel restPanel;
     public FolderDialog folderDialog;
+    public NewApiDialog newApiDialog;
 
     public SidePanel(RestPanel restPanel) {
         this.restPanel = restPanel;
+
+        newApiDialog = new NewApiDialog();
+        newApiDialog.addAction(new ActionDialogCallback() {
+            @Override
+            public void cancelAction() {
+                newApiDialog.close();
+            }
+
+            @Override
+            public void saveAction() {
+                restPanel.clear();
+                restPanel.titleButton.setText(newApiDialog.getName());
+                newApiDialog.close();
+            }
+        });
 
         folderDialog = new FolderDialog();
         folderDialog.addAction(new ActionDialogCallback() {
@@ -75,9 +92,8 @@ public class SidePanel extends JScrollPane implements RestCallback {
             DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
             if (selectedNode != null) {
                 Object userValue = selectedNode.getUserObject();
-                if (userValue instanceof CollectionStructureEntity) {
-                    CollectionStructureEntity collectionStructureEntity = ((CollectionStructureEntity) userValue);
-                    CollectionEntity collectionEntity = collectionStructureEntity.getCollectionEntity();
+                if (userValue instanceof CollectionEntity) {
+                    CollectionEntity collectionEntity = (CollectionEntity) userValue;
                     restPanel.setData(collectionEntity);
                 }
                 if (selectedNode.getParent() == null) {

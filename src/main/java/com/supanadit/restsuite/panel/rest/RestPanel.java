@@ -40,11 +40,12 @@ public class RestPanel extends JPanel {
     public RequestTypeComboBox requestTypeComboBox;
     public SaveApi saveApiDialog;
     public RestCallback restCallback;
+    public RenameApi renameApiDialog;
 
     public RestPanel() {
         super(new MigLayout("insets 10 10 10 0"));
 
-        RenameApi renameApiDialog = new RenameApi();
+        renameApiDialog = new RenameApi();
         saveApiDialog = new SaveApi();
 
         Icon saveIcon = getIcon("save.png");
