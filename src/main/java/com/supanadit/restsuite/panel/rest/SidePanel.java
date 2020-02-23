@@ -43,6 +43,7 @@ public class SidePanel extends JScrollPane implements RestCallback {
             public void saveAction() {
                 restPanel.clear();
                 restPanel.titleButton.setText(newApiDialog.getName());
+                newApiDialog.setName(null);
                 newApiDialog.close();
             }
         });
@@ -74,6 +75,7 @@ public class SidePanel extends JScrollPane implements RestCallback {
                     }
                     e.printStackTrace();
                 }
+                folderDialog.setName(null);
                 folderDialog.close();
             }
         });
