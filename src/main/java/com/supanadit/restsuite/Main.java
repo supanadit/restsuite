@@ -1,6 +1,6 @@
 package com.supanadit.restsuite;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.supanadit.restsuite.component.MenuBar;
 import com.supanadit.restsuite.component.core.Frame;
 import com.supanadit.restsuite.helper.FontLoader;
@@ -53,7 +53,7 @@ public class Main {
         UIManager.put("Tree.font", FontLoader.getDefaultFont());
 
         SwingUtilities.invokeLater(() -> {
-            FlatDarculaLaf.install();
+            FlatIntelliJLaf.install();
 
             Frame frame = new Frame("Rest Suite");
             frame.setName("Rest API Testing for Professional");

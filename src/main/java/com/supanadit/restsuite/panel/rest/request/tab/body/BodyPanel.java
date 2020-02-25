@@ -3,6 +3,7 @@ package com.supanadit.restsuite.panel.rest.request.tab.body;
 import com.supanadit.restsuite.component.textarea.BodyTextArea;
 import com.supanadit.restsuite.component.combobox.RequestBodyRawTypeComboBox;
 import com.supanadit.restsuite.component.combobox.RequestBodyTypeComboBox;
+import com.supanadit.restsuite.helper.FontLoader;
 import com.supanadit.restsuite.model.BodyRawTypeModel;
 import com.supanadit.restsuite.model.BodyTypeModel;
 import net.miginfocom.swing.MigLayout;
@@ -31,6 +32,7 @@ public class BodyPanel extends JPanel {
         this.withOptions = withOptions;
 
         bodyTextArea = new BodyTextArea();
+        bodyTextArea.setFont(FontLoader.getCodeFont());
 
         spBody = new RTextScrollPane(bodyTextArea);
         Gutter gutter = spBody.getGutter();
