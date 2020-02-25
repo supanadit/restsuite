@@ -12,7 +12,7 @@ public class FontLoader {
         try {
             InputStream inputFile = Main.class.getClassLoader().getResourceAsStream("font/NotoSans-Regular.ttf");
             assert inputFile != null;
-            font = Font.createFont(Font.TRUETYPE_FONT, inputFile).deriveFont(14f);
+            font = Font.createFont(Font.TRUETYPE_FONT, inputFile).deriveFont(13f);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }

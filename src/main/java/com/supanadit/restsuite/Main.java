@@ -20,22 +20,37 @@ public class Main {
 
         Restsuite.createWorkspaceDirectory();
 
-        UIManager.put("Label.font", FontLoader.getDefaultFont());
-        UIManager.put("TabbedPane.font", FontLoader.getDefaultFont());
         UIManager.put("Button.font", FontLoader.getDefaultFont());
-        UIManager.put("Tree.font", FontLoader.getDefaultFont());
+        UIManager.put("ToggleButton.font", FontLoader.getDefaultFont());
+        UIManager.put("RadioButton.font", FontLoader.getDefaultFont());
+        UIManager.put("CheckBox.font", FontLoader.getDefaultFont());
+        UIManager.put("ColorChooser.font", FontLoader.getDefaultFont());
         UIManager.put("ComboBox.font", FontLoader.getDefaultFont());
-        UIManager.put("ComboBox.font", FontLoader.getDefaultFont());
+        UIManager.put("Label.font", FontLoader.getDefaultFont());
+        UIManager.put("List.font", FontLoader.getDefaultFont());
+        UIManager.put("MenuBar.font", FontLoader.getDefaultFont());
+        UIManager.put("MenuItem.font", FontLoader.getDefaultFont());
+        UIManager.put("RadioButtonMenuItem.font", FontLoader.getDefaultFont());
+        UIManager.put("CheckBoxMenuItem.font", FontLoader.getDefaultFont());
+        UIManager.put("Menu.font", FontLoader.getDefaultFont());
+        UIManager.put("PopupMenu.font", FontLoader.getDefaultFont());
+        UIManager.put("OptionPane.font", FontLoader.getDefaultFont());
+        UIManager.put("Panel.font", FontLoader.getDefaultFont());
+        UIManager.put("ProgressBar.font", FontLoader.getDefaultFont());
+        UIManager.put("ScrollPane.font", FontLoader.getDefaultFont());
+        UIManager.put("Viewport.font", FontLoader.getDefaultFont());
+        UIManager.put("TabbedPane.font", FontLoader.getDefaultFont());
         UIManager.put("Table.font", FontLoader.getDefaultFont());
         UIManager.put("TableHeader.font", FontLoader.getDefaultFont());
-        UIManager.put("FormattedTextField.font", FontLoader.getDefaultFont());
-        UIManager.put("Menu.font", FontLoader.getDefaultFont());
-        UIManager.put("MenuItem.font", FontLoader.getDefaultFont());
-        UIManager.put("CheckBoxMenuItem.font", FontLoader.getDefaultFont());
-        UIManager.put("CheckBox.font", FontLoader.getDefaultFont());
-        UIManager.put("PopupMenu.font", FontLoader.getDefaultFont());
-        UIManager.put("TextPane.font", FontLoader.getDefaultFont());
         UIManager.put("TextField.font", FontLoader.getDefaultFont());
+        UIManager.put("PasswordField.font", FontLoader.getDefaultFont());
+        UIManager.put("TextArea.font", FontLoader.getDefaultFont());
+        UIManager.put("TextPane.font", FontLoader.getDefaultFont());
+        UIManager.put("EditorPane.font", FontLoader.getDefaultFont());
+        UIManager.put("TitledBorder.font", FontLoader.getDefaultFont());
+        UIManager.put("ToolBar.font", FontLoader.getDefaultFont());
+        UIManager.put("ToolTip.font", FontLoader.getDefaultFont());
+        UIManager.put("Tree.font", FontLoader.getDefaultFont());
 
         SwingUtilities.invokeLater(() -> {
             FlatDarculaLaf.install();
