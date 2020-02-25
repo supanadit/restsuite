@@ -83,6 +83,7 @@ public class SidePanel extends JScrollPane implements RestCallback {
         Color background = UIManager.getColor("Panel.background");
 
         JPanel panel = new JPanel(new MigLayout("insets 10 0 0 0"));
+        panel.setBackground(background);
 
         root = new DefaultMutableTreeNode("Collection");
         treeModel = new DefaultTreeModel(root);

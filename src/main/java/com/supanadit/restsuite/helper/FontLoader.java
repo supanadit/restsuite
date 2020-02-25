@@ -10,7 +10,7 @@ public class FontLoader {
     public static Font getDefaultFont() {
         Font font = null;
         try {
-            InputStream inputFile = Main.class.getClassLoader().getResourceAsStream("font/opensans.ttf");
+            InputStream inputFile = Main.class.getClassLoader().getResourceAsStream("font/NotoSans-Regular.ttf");
             assert inputFile != null;
             font = Font.createFont(Font.TRUETYPE_FONT, inputFile).deriveFont(14f);
         } catch (FontFormatException | IOException e) {

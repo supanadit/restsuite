@@ -6,6 +6,7 @@ import com.supanadit.restsuite.component.combobox.RequestTypeComboBox;
 import com.supanadit.restsuite.component.core.callback.ActionDialogCallback;
 import com.supanadit.restsuite.component.input.api.InputTextURL;
 import com.supanadit.restsuite.entity.*;
+import com.supanadit.restsuite.helper.FontLoader;
 import com.supanadit.restsuite.model.ApiModel;
 import com.supanadit.restsuite.model.RequestTypeModel;
 import com.supanadit.restsuite.panel.rest.callback.RestCallback;
@@ -18,13 +19,17 @@ import com.supanadit.restsuite.panel.rest.request.tab.header.HeadersFormInputPan
 import com.supanadit.restsuite.panel.rest.request.tab.header.HeadersFormPanel;
 import com.supanadit.restsuite.panel.rest.response.ResponseTabPanel;
 import com.supanadit.restsuite.system.hibernate.HibernateUtil;
+import com.supanadit.restsuite.util.Converter;
 import net.miginfocom.swing.MigLayout;
+import org.apache.batik.transcoder.TranscoderException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,15 +47,15 @@ public class RestPanel extends JPanel {
     public RestCallback restCallback;
     public RenameApi renameApiDialog;
 
-    public RestPanel() {
+    public RestPanel() throws IOException, TranscoderException {
         super(new MigLayout("insets 10 10 10 0"));
 
         renameApiDialog = new RenameApi();
         saveApiDialog = new SaveApi();
 
-        Icon saveIcon = getIcon("save.png");
-        Icon editIcon = getIcon("edit.png");
-        Icon sendIcon = getIcon("send.png");
+        Icon saveIcon = svgIcon("floppy-disk.svg");
+        Icon editIcon = svgIcon("edit.svg");
+        Icon sendIcon = svgIcon("right-arrow.svg");
 
         apiURL = new InputTextURL();
 
@@ -127,6 +132,18 @@ public class RestPanel extends JPanel {
         assert iconURL != null;
         // Create Image icon from URL
         return new ImageIcon(new ImageIcon(iconURL).getImage().getScaledInstance(15, 15, Image.SCALE_DEFAULT));
+    }
+
+    public ImageIcon svgIcon(String iconName) throws IOException, TranscoderException {
+        String fullIconName = "icon/svg/".concat(iconName);
+        // Get Resources URL
+        URL iconURL = Main.class.getClassLoader().getResource(fullIconName);
+        // Make sure the url does not return null value
+        assert iconURL != null;
+        // Create Image icon from URL
+        BufferedImage iconImage = Converter.convertSVGToPNG(iconURL.toString());
+        // Convert Buffered image to Image icon
+        return new ImageIcon(iconImage);
     }
 
     public void save() {
