@@ -11,7 +11,7 @@ public class ActionDialog extends Dialog {
     protected JPanel bottomPanel;
 
     public ActionDialog(String title) {
-        super(title, 400, 130);
+        super(title, 400, 140);
         setResizable(false);
 
         panel = new JPanel(new MigLayout("insets 0 0 0 0"));
