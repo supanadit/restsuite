@@ -29,7 +29,7 @@ mvn clean compile assembly:single
 ## Next Release Features
 - Proxy Support
 - Setting
-- Project
+- Project / Workspace
 - Environment
 - Collection
 - Beautify response and body raw

@@ -1,12 +1,14 @@
 package com.supanadit.restsuite.panel;
 
 import com.supanadit.restsuite.component.MenuBar;
-import com.supanadit.restsuite.panel.api.ApiPanel;
+import com.supanadit.restsuite.panel.rest.RestMainPanel;
 import com.supanadit.restsuite.panel.socket.SocketIoPanel;
 import com.supanadit.restsuite.panel.sse.ServerSentEventPanel;
 import com.supanadit.restsuite.panel.websocket.WebsocketPanel;
+import org.apache.batik.transcoder.TranscoderException;
 
 import javax.swing.*;
+import java.io.IOException;
 
 public class MainPanel extends JTabbedPane {
     private static final String restAPI = "Rest API";
@@ -16,10 +18,9 @@ public class MainPanel extends JTabbedPane {
 
     private MenuBar menuBar;
 
-    public MainPanel(MenuBar menuBar) {
+    public MainPanel(MenuBar menuBar) throws IOException, TranscoderException {
         this.menuBar = menuBar;
-
-        add(restAPI, new ApiPanel());
+        add(restAPI, new RestMainPanel());
         add(webSocket, new WebsocketPanel());
         add(sse, new ServerSentEventPanel());
         add(socketIO, new SocketIoPanel());

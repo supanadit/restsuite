@@ -1,21 +1,39 @@
 package com.supanadit.restsuite.component.combobox;
 
+import com.supanadit.restsuite.model.BodyTypeModel;
 import com.supanadit.restsuite.renderer.RequestBodyTypeRenderer;
-import com.supanadit.restsuite.model.RequestBodyType;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
-public class RequestBodyTypeComboBox extends JComboBox<RequestBodyType> {
+public class RequestBodyTypeComboBox extends JComboBox<BodyTypeModel> {
+    ArrayList<BodyTypeModel> bodyTypeModels = new ArrayList<>();
+
     public RequestBodyTypeComboBox() {
         setRenderer(new RequestBodyTypeRenderer());
+
+        bodyTypeModels.add(BodyTypeModel.RAW());
+        bodyTypeModels.add(BodyTypeModel.FORM());
+
+        for (BodyTypeModel bodyTypeModel : bodyTypeModels) {
+            addItem(bodyTypeModel);
+        }
     }
 
-    public static RequestBodyTypeComboBox getComponent() {
-        RequestBodyTypeComboBox requestBodyTypeComboBox = new RequestBodyTypeComboBox();
+    public RequestBodyTypeComboBox(String type) {
+        this();
+        setType(type);
+    }
 
-        requestBodyTypeComboBox.addItem(RequestBodyType.RAW());
-        requestBodyTypeComboBox.addItem(RequestBodyType.FORM());
+    public void setType(String type) {
+        for (BodyTypeModel bodyTypeModel : getBodyTypeModels()) {
+            if (bodyTypeModel.getName().equals(type)) {
+                setSelectedItem(bodyTypeModel);
+            }
+        }
+    }
 
-        return requestBodyTypeComboBox;
+    public ArrayList<BodyTypeModel> getBodyTypeModels() {
+        return bodyTypeModels;
     }
 }
