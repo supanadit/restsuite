@@ -8,11 +8,10 @@ import java.io.IOException;
 
 public class RestMainPanel extends JPanel {
     public RestMainPanel() throws IOException, TranscoderException {
-        setLayout(new MigLayout("insets 0 0 0 0", "[][200!]"));
+        setLayout(new MigLayout("insets 0 0 0 0"));
 
         RestPanel restPanel = new RestPanel();
 
         add(restPanel, "push,grow");
-        add(new SidePanel(restPanel), "push,grow");
     }
 }
