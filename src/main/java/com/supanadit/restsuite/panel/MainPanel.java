@@ -1,7 +1,7 @@
 package com.supanadit.restsuite.panel;
 
 import com.supanadit.restsuite.component.MenuBar;
-import com.supanadit.restsuite.panel.rest.RestMainPanel;
+import com.supanadit.restsuite.panel.rest.RestPanel;
 import com.supanadit.restsuite.panel.socket.SocketIoPanel;
 import com.supanadit.restsuite.panel.sse.ServerSentEventPanel;
 import com.supanadit.restsuite.panel.websocket.WebsocketPanel;
@@ -20,7 +20,7 @@ public class MainPanel extends JTabbedPane {
 
     public MainPanel(MenuBar menuBar) throws IOException, TranscoderException {
         this.menuBar = menuBar;
-        add(restAPI, new RestMainPanel());
+        add(restAPI, new RestPanel());
         add(webSocket, new WebsocketPanel());
         add(sse, new ServerSentEventPanel());
         add(socketIO, new SocketIoPanel());
