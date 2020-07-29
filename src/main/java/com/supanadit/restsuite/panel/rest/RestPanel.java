@@ -29,7 +29,7 @@ public class RestPanel extends JPanel {
     public RestCallback restCallback;
 
     public RestPanel() throws IOException, TranscoderException {
-        super(new MigLayout());
+        super(new MigLayout("insets 10 10 10 10"));
 
         Icon saveIcon = svgIcon("floppy-disk.svg");
         Icon sendIcon = svgIcon("right-arrow.svg");

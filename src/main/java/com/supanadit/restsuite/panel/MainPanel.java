@@ -1,6 +1,5 @@
 package com.supanadit.restsuite.panel;
 
-import com.supanadit.restsuite.component.MenuBar;
 import com.supanadit.restsuite.panel.rest.RestPanel;
 import com.supanadit.restsuite.panel.socket.SocketIoPanel;
 import com.supanadit.restsuite.panel.sse.ServerSentEventPanel;
@@ -16,17 +15,10 @@ public class MainPanel extends JTabbedPane {
     private static final String sse = "SSE";
     private static final String socketIO = "Socket IO";
 
-    private MenuBar menuBar;
-
-    public MainPanel(MenuBar menuBar) throws IOException, TranscoderException {
-        this.menuBar = menuBar;
+    public MainPanel() throws IOException, TranscoderException {
         add(restAPI, new RestPanel());
         add(webSocket, new WebsocketPanel());
         add(sse, new ServerSentEventPanel());
         add(socketIO, new SocketIoPanel());
-    }
-
-    public MenuBar getMenuBar() {
-        return menuBar;
     }
 }

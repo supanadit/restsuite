@@ -66,10 +66,11 @@ public class Main {
             // frame.setJMenuBar(menuBar);
 
             try {
-                frame.add(new MainPanel(menuBar), BorderLayout.CENTER);
+                frame.add(new MainPanel(), BorderLayout.CENTER);
             } catch (IOException | TranscoderException e) {
                 e.printStackTrace();
             }
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setVisible(true);
         });
     }
