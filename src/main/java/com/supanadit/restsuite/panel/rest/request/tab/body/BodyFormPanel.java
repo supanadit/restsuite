@@ -1,7 +1,4 @@
 package com.supanadit.restsuite.panel.rest.request.tab.body;
-
-import com.supanadit.restsuite.entity.CollectionBodyEntity;
-import com.supanadit.restsuite.entity.CollectionHeaderEntity;
 import com.supanadit.restsuite.panel.rest.request.tab.header.HeadersFormInputPanel;
 import net.miginfocom.swing.MigLayout;
 
@@ -32,33 +29,6 @@ public class BodyFormPanel extends JScrollPane {
         formGroupPanel.add(bodyFormInputPanel, "pushx,growx,wrap");
         formGroupPanel.add(addField, "pushx,growx,wrap");
         listInputPanel.add(bodyFormInputPanel);
-        updateChange();
-    }
-
-    public void addFormInput(CollectionBodyEntity collectionBodyEntity) {
-        // Get Type
-        String type = collectionBodyEntity.getType();
-        // Get Key
-        String key = collectionBodyEntity.getKey();
-        // Get Value
-        String value = collectionBodyEntity.getValue();
-        // Declare body form input panel
-        BodyFormInputPanel bodyFormInputPanel = new BodyFormInputPanel(this, type, key, value);
-        // Set ID
-        bodyFormInputPanel.setId(collectionBodyEntity.getId());
-        // Add Form Input
-        addFormInput(bodyFormInputPanel);
-    }
-
-    public void clearFormInput() {
-        // Clone
-        ArrayList<BodyFormInputPanel> listInputPanelClone = listInputPanel;
-        // Clear original variable
-        listInputPanel = new ArrayList<>();
-        // Looping
-        for (BodyFormInputPanel formInputPanel : listInputPanelClone) {
-            formInputPanel.remove();
-        }
         updateChange();
     }
 

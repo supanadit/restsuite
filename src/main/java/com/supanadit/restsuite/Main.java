@@ -1,11 +1,9 @@
 package com.supanadit.restsuite;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.supanadit.restsuite.component.MenuBar;
 import com.supanadit.restsuite.component.core.Frame;
 import com.supanadit.restsuite.helper.FontLoader;
 import com.supanadit.restsuite.panel.MainPanel;
-import com.supanadit.restsuite.system.Restsuite;
 import org.apache.batik.transcoder.TranscoderException;
 
 import javax.swing.*;
@@ -17,8 +15,6 @@ public class Main {
         System.setProperty("awt.useSystemAAFontSettings", "lcd");
         System.setProperty("swing.aatext", "true");
         System.setProperty("sun.java2d.renderer", "sun.java2d.marlin.MarlinRenderingEngine");
-
-        Restsuite.createWorkspaceDirectory();
 
         UIManager.put("Button.font", FontLoader.getDefaultFont());
         UIManager.put("ToggleButton.font", FontLoader.getDefaultFont());
@@ -57,13 +53,6 @@ public class Main {
 
             Frame frame = new Frame("Rest Suite");
             frame.setName("Rest API Testing for Professional");
-
-            MenuBar menuBar = new MenuBar();
-            menuBar.getExitMenuItem().addActionListener(e -> {
-                frame.dispose();
-            });
-
-            // frame.setJMenuBar(menuBar);
 
             try {
                 frame.add(new MainPanel(), BorderLayout.CENTER);

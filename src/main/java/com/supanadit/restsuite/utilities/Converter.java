@@ -1,4 +1,4 @@
-package com.supanadit.restsuite.util;
+package com.supanadit.restsuite.utilities;
 
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
 import org.apache.batik.transcoder.TranscoderException;

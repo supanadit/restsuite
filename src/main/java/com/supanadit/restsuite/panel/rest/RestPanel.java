@@ -8,7 +8,7 @@ import com.supanadit.restsuite.model.ApiModel;
 import com.supanadit.restsuite.panel.rest.callback.RestCallback;
 import com.supanadit.restsuite.panel.rest.request.TabPanel;
 import com.supanadit.restsuite.panel.rest.response.ResponseTabPanel;
-import com.supanadit.restsuite.util.Converter;
+import com.supanadit.restsuite.utilities.Converter;
 import net.miginfocom.swing.MigLayout;
 import org.apache.batik.transcoder.TranscoderException;
 
@@ -30,8 +30,6 @@ public class RestPanel extends JPanel {
 
     public RestPanel() throws IOException, TranscoderException {
         super(new MigLayout("insets 10 10 10 10"));
-
-        Icon saveIcon = svgIcon("floppy-disk.svg");
         Icon sendIcon = svgIcon("right-arrow.svg");
 
         apiURL = new InputTextURL();
@@ -42,9 +40,6 @@ public class RestPanel extends JPanel {
 
         sendButton = new RequestApiButton(this);
         sendButton.setIcon(sendIcon);
-
-        JButton saveAPI = new JButton("Save");
-        saveAPI.setIcon(saveIcon);
 
         add(apiURL, "growx, pushx");
         add(requestTypeComboBox);
