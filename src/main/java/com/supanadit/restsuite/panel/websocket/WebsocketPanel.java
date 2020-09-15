@@ -22,7 +22,6 @@ public class WebsocketPanel extends JPanel {
         JTextArea logMessage = new JTextArea();
 
         setLayout(new MigLayout("insets 10 10 10 10"));
-        add(new JLabel("Websocket URL"), "growx,pushx,wrap");
         InputWebsocketURL socketURL = new InputWebsocketURL();
         add(socketURL, "growx,pushx");
 
