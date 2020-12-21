@@ -1,7 +1,8 @@
 package com.supanadit.restsuite;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.supanadit.restsuite.component.MenuBar;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.util.SystemInfo;
 import com.supanadit.restsuite.component.core.Frame;
 import com.supanadit.restsuite.helper.FontLoader;
 import com.supanadit.restsuite.panel.MainPanel;
@@ -53,15 +54,23 @@ public class Main {
         UIManager.put("Tree.font", FontLoader.getDefaultFont());
 
         SwingUtilities.invokeLater(() -> {
+            // on macOS enable screen menu bar
+            if (SystemInfo.isMacOS && System.getProperty("apple.laf.useScreenMenuBar") == null)
+                System.setProperty("apple.laf.useScreenMenuBar", "true");
+
             FlatIntelliJLaf.install();
+            FlatLaf.registerCustomDefaultsSource("com.formdev.flatlaf.demo");
+            JDialog.setDefaultLookAndFeelDecorated(true);
+            JFrame.setDefaultLookAndFeelDecorated(true);
 
             Frame frame = new Frame("Rest Suite");
             frame.setName("Rest API Testing for Professional");
 
-            MenuBar menuBar = new MenuBar();
-            menuBar.getExitMenuItem().addActionListener(e -> {
-                frame.dispose();
-            });
+
+//            MenuBar menuBar = new MenuBar();
+//            menuBar.getExitMenuItem().addActionListener(e -> {
+//                frame.dispose();
+//            });
 
             // frame.setJMenuBar(menuBar);
 
@@ -71,6 +80,8 @@ public class Main {
                 e.printStackTrace();
             }
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setLocationRelativeTo(null);
+            frame.setUndecorated(true);
             frame.setVisible(true);
         });
     }
