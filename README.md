@@ -20,7 +20,7 @@ java -jar restsuite-<version>.jar
 ```
 
 ## Requirements
-- Java 11
+- Java 11 ( Will upgrade to Java 17 )
 
 ## How to Build Jar
 

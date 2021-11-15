@@ -1,7 +1,6 @@
 package com.supanadit.restsuite;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.util.SystemInfo;
 import com.supanadit.restsuite.component.core.Frame;
 import com.supanadit.restsuite.helper.FontLoader;
@@ -58,21 +57,13 @@ public class Main {
             if (SystemInfo.isMacOS && System.getProperty("apple.laf.useScreenMenuBar") == null)
                 System.setProperty("apple.laf.useScreenMenuBar", "true");
 
-            FlatIntelliJLaf.install();
-            FlatLaf.registerCustomDefaultsSource("com.formdev.flatlaf.demo");
+            FlatIntelliJLaf.setup();
+
             JDialog.setDefaultLookAndFeelDecorated(true);
             JFrame.setDefaultLookAndFeelDecorated(true);
 
             Frame frame = new Frame("Rest Suite");
             frame.setName("Rest API Testing for Professional");
-
-
-//            MenuBar menuBar = new MenuBar();
-//            menuBar.getExitMenuItem().addActionListener(e -> {
-//                frame.dispose();
-//            });
-
-            // frame.setJMenuBar(menuBar);
 
             try {
                 frame.add(new MainPanel(), BorderLayout.CENTER);
@@ -81,7 +72,6 @@ public class Main {
             }
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
-            frame.setUndecorated(true);
             frame.setVisible(true);
         });
     }

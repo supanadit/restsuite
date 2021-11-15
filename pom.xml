@@ -52,7 +52,7 @@
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
-            <version>0.46</version>
+            <version>1.6.2</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
