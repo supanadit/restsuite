@@ -4,6 +4,10 @@
 
 Open Source Rest API Testing
 
+## Announcement
+
+I just working on new Restsuite, which is same project but different repository and technology, next Restsuite will implementing **Jetbrains Compose** and **Kotlin**.
+
 ## Features
 - Rest API Testing
 - Websocket Testing
